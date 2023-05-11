@@ -8,7 +8,7 @@ local M = {
 }
 
 M.setup = function(all_source_names)
-  local source_names = utils.table_copy(all_source_names)
+  local source_names = vim.deepcopy(all_source_names, { noref = 1 })
   table.insert(source_names, "migrations")
 
   -- For lists, the first value is the default value.

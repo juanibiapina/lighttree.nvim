@@ -852,11 +852,6 @@ table_merge_internal = function(base_table, override_table)
   return base_table
 end
 
----DEPRECATED: Use vim.deepcopy(source_table, { noref = 1 }) instead.
-M.table_copy = function(source_table)
-  return vim.deepcopy(source_table, { noref = 1 })
-end
-
 ---DEPRECATED: Use vim.tbl_deep_extend("force", base_table, source_table) instead.
 M.table_merge = function(base_table, override_table)
   local merged_table = table_merge_internal({}, base_table)
