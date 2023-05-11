@@ -38,8 +38,6 @@ local config = {
   resize_timer_interval = 500, -- in ms, needed for containers to redraw right aligned and faded content
                                -- set to -1 to disable the resize timer entirely
   --                           -- NOTE: this will speed up to 50 ms for 1 second following a resize
-  sort_case_insensitive = false, -- used when sorting files and directories in the tree
-  sort_function = nil , -- uses a custom function for sorting files and directories in the tree
   use_popups_for_input = true, -- If false, inputs will use vim.ui.input() instead of custom floats.
   use_default_mappings = true,
   -- source_selector provides clickable tabs to switch between sources.
