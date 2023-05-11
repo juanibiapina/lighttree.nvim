@@ -1164,15 +1164,6 @@ M.show_nodes = function(sourceItems, state, parentId, callback)
     end
   end
 
-  if config.add_blank_line_at_top and not parentId then
-    table.insert(sourceItems, 1, {
-      type = "message",
-      name = "",
-      path = "",
-      id = "blank_line_at_top",
-    })
-  end
-
   if state.group_empty_dirs then
     if parent then
       local scan_mode = require("neo-tree").config.filesystem.scan_mode
