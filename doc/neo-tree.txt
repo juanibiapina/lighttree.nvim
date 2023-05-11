@@ -39,10 +39,6 @@ Neo-tree is a plugin for nvim that can display tree structures in a sidebar,
 floating window, or in a split. The current version includes a filesystem
 browser, a buffer list, and a git status view.
 
-If you want to use this in splits like |netrw| instead of as a sidebar or
-floating window, use the *Split commands, such as |NeoTreeRevealInSplit|. You
-may use both styles at the same time if you want.
-
 
 COMMANDS                                       *:Neotree*  *neo-tree-commands*
 

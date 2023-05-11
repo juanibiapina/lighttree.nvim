@@ -710,25 +710,6 @@ configurable and take either strings, tables, or functions. You can take sane
 defaults or build your tree items from scratch. There should be the ability to
 add any features you can think of through existing hooks in the setup function.
 
-## What is a Breaking Change?
-
-As of v1.30, a breaking change is defined as anything that _changes_ existing:
-
-- vim commands (`:NeoTreeShow`, `:NeoTreeReveal`, etc)
-- configuration options that are passed into the `setup()` function
-- `NeoTree*` highlight groups
-- lua functions exported in the following modules that are not prefixed with `_`:
-    * `neo-tree`
-    * `neo-tree.events`
-    * `neo-tree.sources.manager`
-    * `neo-tree.sources.*` (init.lua files)
-    * `neo-tree.sources.*.commands`
-    * `neo-tree.ui.renderer`
-    * `neo-tree.utils`
-
-If there are other functions you would like to use that are not yet considered
-part of the public API, please open an issue so we can discuss it.
-
 ## Contributions
 
 Contributions are encouraged. Please see [CONTRIBUTING](CONTRIBUTING.md) for more details.
