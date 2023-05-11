@@ -27,7 +27,6 @@ local M = {
   NEO_TREE_WINDOW_AFTER_OPEN = "neo_tree_window_after_open",
   NEO_TREE_WINDOW_BEFORE_CLOSE = "neo_tree_window_before_close",
   NEO_TREE_WINDOW_BEFORE_OPEN = "neo_tree_window_before_open",
-  VIM_AFTER_SESSION_LOAD = "vim_after_session_load",
   VIM_BUFFER_ADDED = "vim_buffer_added",
   VIM_BUFFER_CHANGED = "vim_buffer_changed",
   VIM_BUFFER_DELETED = "vim_buffer_deleted",

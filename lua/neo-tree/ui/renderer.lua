@@ -31,25 +31,6 @@ local tabid_to_tabnr = function(tabid)
   return vim.api.nvim_tabpage_is_valid(tabid) and vim.api.nvim_tabpage_get_number(tabid)
 end
 
-local cleaned_up = false
----Clean up invalid neotree buffers (e.g after a session restore)
----@param force boolean if true, force cleanup. Otherwise only cleanup once
-M.clean_invalid_neotree_buffers = function(force)
-  if cleaned_up and not force then
-    return
-  end
-
-  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-    local bufname = vim.fn.bufname(buf)
-    local is_neotree_buffer = string.match(bufname, "neo%-tree [^ ]+ %[%d+]")
-    local is_valid_neotree, _ = pcall(vim.api.nvim_buf_get_var, buf, "neo_tree_source")
-    if is_neotree_buffer and not is_valid_neotree then
-      vim.api.nvim_buf_delete(buf, { force = true })
-    end
-  end
-  cleaned_up = true
-end
-
 local resize_monitor_timer = nil
 local start_resize_monitor = function()
   local interval = M.resize_timer_interval or -1

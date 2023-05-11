@@ -52,7 +52,6 @@ local define_events = function()
     return args
   end
 
-  events.define_autocmd_event(events.VIM_AFTER_SESSION_LOAD, { "SessionLoadPost" }, 200)
   events.define_autocmd_event(events.VIM_BUFFER_ADDED, { "BufAdd" }, 200, update_opened_buffers)
   events.define_autocmd_event(
     events.VIM_BUFFER_DELETED,
@@ -679,16 +678,6 @@ M.merge_config = function(user_config, is_auto_config)
     end
     manager.setup(source_name, M.config[source_name], M.config, module)
     manager.redraw(source_name)
-  end
-
-  if M.config.auto_clean_after_session_restore then
-    require("neo-tree.ui.renderer").clean_invalid_neotree_buffers(false)
-    events.subscribe({
-      event = events.VIM_AFTER_SESSION_LOAD,
-      handler = function()
-        require("neo-tree.ui.renderer").clean_invalid_neotree_buffers(true)
-      end,
-    })
   end
 
   events.subscribe({
