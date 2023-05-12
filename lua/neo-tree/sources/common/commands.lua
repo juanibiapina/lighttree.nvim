@@ -9,7 +9,6 @@ local inputs = require("neo-tree.ui.inputs")
 local popups = require("neo-tree.ui.popups")
 local log = require("neo-tree.log")
 local help = require("neo-tree.sources.common.help")
-local Preview = require("neo-tree.sources.common.preview")
 
 ---Gets the node parent folder
 ---@param state table to look for nodes
@@ -471,31 +470,11 @@ M.delete_visual = function(state, selected_nodes, callback)
   fs_actions.delete_nodes(paths_to_delete, callback)
 end
 
-M.preview = function(state)
-  Preview.show(state)
-end
-
-M.revert_preview = function()
-  Preview.hide()
-end
---
 -- Multi-purpose function to back out of whatever we are in
 M.cancel = function(state)
-  if Preview.is_active() then
-    Preview.hide()
-  else
-    if state.current_position == "float" then
-      renderer.close_all_floating_windows()
-    end
+  if state.current_position == "float" then
+    renderer.close_all_floating_windows()
   end
-end
-
-M.toggle_preview = function(state)
-  Preview.toggle(state)
-end
-
-M.focus_preview = function()
-  Preview.focus()
 end
 
 ---Open file or directory
@@ -515,7 +494,6 @@ local open_with_cmd = function(state, open_cmd, toggle_directory, open_file)
   end
 
   local function open()
-    M.revert_preview()
     local path = node.path or node:get_id()
     local bufnr = node.extra and node.extra.bufnr
     if node.type == "terminal" then

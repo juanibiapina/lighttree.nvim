@@ -51,7 +51,6 @@ cc._add_common_commands(M, "node") -- common tree commands
 cc._add_common_commands(M, "^open") -- open commands
 cc._add_common_commands(M, "^close_window$")
 cc._add_common_commands(M, "source$") -- source navigation
-cc._add_common_commands(M, "preview") -- preview
 cc._add_common_commands(M, "^cancel$") -- cancel
 cc._add_common_commands(M, "help") -- help commands
 cc._add_common_commands(M, "with_window_picker$") -- open using window picker

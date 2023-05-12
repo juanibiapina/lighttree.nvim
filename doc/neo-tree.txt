@@ -13,7 +13,6 @@ Mappings .................... |neo-tree-mappings|
 Configuration ............... |neo-tree-configuration|
   Setup ..................... |neo-tree-setup|
   Filtered Items ............ |neo-tree-filtered-items|
-  Preview Mode .............. |neo-tree-preview-mode|
   Hijack Netrw Behavior ..... |neo-tree-netrw-hijack|
   Component Configs ......... |neo-tree-component-configs|
   Git Status ................ |neo-tree-git-status|
@@ -169,14 +168,6 @@ z         = close_all_nodes: Close all nodes in the tree.
 
            expand_all_nodes: Expand all directory nodes in the tree recursively.
 
-P          = toggle_preview: Toggles "preview mode", see |neo-tree-preview-mode| 
-
-l           = focus_preview: Focus the active preview window
-
-<esc>      = revert_preview: Ends "preview_mode" if it is enabled, and reverts
-                             any preview windows to what was being shown before
-                             preview mode began.
-
 S             = open_split:  Same as open, but opens in a new horizontal split.
 
 s             = open_vsplit: Same as open, but opens in a vertical split.
@@ -315,34 +306,6 @@ f = filter_on_submit:       Same as above, but does not search until you hit
                             filtered.
 
 <C-x> = clear_filter:       Removes the filter.
-
-PREVIEW MODE                                             *neo-tree-preview-mode*
-
-Preview mode will temporarily show whatever file the cursor is on without 
-switching focus from the Neo-tree window. By default, files will be previewed 
-in a new floating window. This can also be configured to automatically choose 
-an existing split by configuring the command like this:
-
->lua
-    require("neo-tree").setup({
-      window = {
-        mappings = {
-          ["P"] = { "toggle_preview", config = { use_float = false } },
-        }
-      }
-    })
-<
-Anything that causes Neo-tree to lose focus will end preview mode. When
-`use_float = false`, the window that was taken over by preview mode will revert
-back to whatever was shown in that window before preview mode began.
-
-If you want to work with the floating preview mode window in autocmds or other
-custom code, the window will have the `neo-tree-preview` filetype. 
-
-When preview mode is not using floats, the window will have the window local
-variable `neo_tree_preview` set to `1` to indicate that it is being used as a
-preview window. You can refer to this in statusline and winbar configs to mark a
-window as being used as a preview.
 
 
 CUSTOM MAPPINGS                                       *neo-tree-custom-mappings*
@@ -1586,7 +1549,6 @@ Currently, this source supports the following commands:
 >lua
     ["o"] = "jump_to_symbol",
     ["r"] = "rename",
-    ["P"] = "preview", (and related commands)
     ["s"] = "split", (and related commands)
 <
 vim:tw=80:ts=2:et:ft=help:
