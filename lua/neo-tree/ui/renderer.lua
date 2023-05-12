@@ -139,25 +139,6 @@ M.close = function(state)
   return window_existed
 end
 
-M.close_floating_window = function(source_name)
-  local found_windows = {}
-  for _, win in ipairs(floating_windows) do
-    if win.source_name == source_name then
-      table.insert(found_windows, win)
-    end
-  end
-
-  local valid_window_was_closed = false
-  for _, win in ipairs(found_windows) do
-    if not valid_window_was_closed then
-      valid_window_was_closed = M.is_window_valid(win.winid)
-    end
-    -- regardless of whether the window is valid or not, nui will cleanup
-    win:unmount()
-  end
-  return valid_window_was_closed
-end
-
 M.close_all_floating_windows = function()
   while #floating_windows > 0 do
     local win = table.remove(floating_windows)
