@@ -228,8 +228,6 @@ use {
             ["q"] = "close_window",
             ["R"] = "refresh",
             ["?"] = "show_help",
-            ["<"] = "prev_source",
-            [">"] = "next_source",
           }
         },
         nesting_rules = {},
@@ -611,25 +609,6 @@ add `"document_symbols"` to `config.sources` and open it with the command
 :Neotree document_symbols
 ```
 
-
-
-### Source Selector
-![Neo-tree source selector](https://github.com/nvim-neo-tree/resources/raw/main/images/Neo-tree-source-selector.png)
-
-You can enable a clickable source selector in either the winbar (requires neovim 0.8+) or the statusline.
-To do so, set one of these options to `true`:
-
-```lua
-    require("neo-tree").setup({
-        source_selector = {
-            winbar = false,
-            statusline = false
-        }
-    })
-```
-
-There are many configuration options to change the style of these tabs. 
-See [lua/neo-tree/defaults.lua](lua/neo-tree/defaults.lua) for details.
 
 
 ## Configuration and Customization
