@@ -295,7 +295,6 @@ use {
           follow_current_file = true, -- This will find and focus the file in the active buffer every
                                        -- time the current file is changed while the tree is open.
           group_empty_dirs = true, -- when true, empty folders will be grouped together
-          show_unloaded = true,
           window = {
             mappings = {
               ["bd"] = "buffer_delete",

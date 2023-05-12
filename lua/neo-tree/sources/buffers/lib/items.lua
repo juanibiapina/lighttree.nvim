@@ -25,7 +25,7 @@ M.get_opened_buffers = function(state)
 
   local function add_buffer(bufnr, path)
     local is_loaded = vim.api.nvim_buf_is_loaded(bufnr)
-    if is_loaded or state.show_unloaded then
+    if is_loaded then
       local is_listed = vim.fn.buflisted(bufnr)
       if is_listed == 1 then
         if path == "" then
