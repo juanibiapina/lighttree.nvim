@@ -17,7 +17,7 @@ local config = {
   enable_diagnostics = true,
   enable_git_status = true,
   enable_modified_markers = true, -- Show markers for files with unsaved changes.
-  enable_opened_markers = true,   -- Enable tracking of opened files. Required for `components.name.highlight_opened_files`
+  enable_opened_markers = true,   -- Enable tracking of opened files.
   enable_refresh_on_write = true, -- Refresh the tree when a file is written. Only used if `use_libuv_file_watcher` is false.
   git_status_async = true,
   -- These options are for people with VERY large git repos
@@ -119,9 +119,6 @@ local config = {
     },
     name = {
       trailing_slash = false,
-      highlight_opened_files = false, -- Requires `enable_opened_markers = true`. 
-                                      -- Take values in { false (no highlight), true (only loaded), 
-                                      -- "all" (both loaded and unloaded)}. For more information,
       use_git_status_colors = true,
       highlight = "NeoTreeFileName",
     },

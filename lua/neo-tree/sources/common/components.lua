@@ -328,17 +328,6 @@ M.name = function(config, node, state)
     end
   end
 
-  local hl_opened = config.highlight_opened_files
-  if hl_opened then
-    local opened_buffers = state.opened_buffers or {}
-    if
-      (hl_opened == "all" and opened_buffers[node.path])
-      or (opened_buffers[node.path] and opened_buffers[node.path].loaded)
-    then
-      highlight = highlights.FILE_NAME_OPENED
-    end
-  end
-
   if type(config.right_padding) == "number" then
     if config.right_padding > 0 then
       text = text .. string.rep(" ", config.right_padding)
