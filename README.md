@@ -6,41 +6,6 @@ netrw split style, or all of them at once!
 
 ![Neo-tree file system](https://github.com/nvim-neo-tree/resources/blob/main/images/Neo-tree-with-right-aligned-symbols.png)
 
-### Breaking Changes BAD :bomb: :imp:
-
-The biggest and most important feature of Neo-tree is that we will never
-knowingly push a breaking change and interrupt your day. Bugs happen, but
-breaking changes can always be avoided. When breaking changes are needed, there
-will be a new branch that you can opt into, when it is a good time for you.
-
-See [What is a Breaking Change?](#what-is-a-breaking-change) for details.
-
-See [Changelog 2.0](https://github.com/nvim-neo-tree/neo-tree.nvim/wiki/Changelog#20)
-for breaking changes and deprecations in 2.0.
-
-
-### User Experience GOOD :slightly_smiling_face: :thumbsup:
-
-Aside from being polite about breaking changes, Neo-tree is also focused on the
-little details of user experience. Everything should work exactly as you would
-expect a sidebar to work without all of the glitchy behavior that is normally
-accepted in (neo)vim sidebars. I can't stand glitchy behavior, and neither
-should you!
-
-- Neo-tree won't let other buffers take over its window.
-- Neo-tree won't leave its window scrolled to the last line when there is
-  plenty of room to display the whole tree.
-- Neo-tree does not need to be manually refreshed (set `use_libuv_file_watcher=true`)
-- Neo-tree can intelligently follow the current file (set `follow_current_file=true`)
-- Neo-tree is thoughtful about maintaining or setting focus on the right node
-- Neo-tree windows in different tabs are completely separate
-- `respect_gitignore` actually works!
-
-Neo-tree is smooth, efficient, stable, and pays attention to the little details.
-If you find anything janky, wanky, broken, or unintuitive, please open an issue
-so we can fix it.
-
-
 ## Minimal Quickstart
 
 #### Minimal Example for Packer:
@@ -564,7 +529,6 @@ add `"document_symbols"` to `config.sources` and open it with the command
 ```
 
 
-
 ## Configuration and Customization
 
 This is designed to be flexible. The way that is achieved is by making
@@ -591,70 +555,3 @@ things like adding a component to show the
 [Harpoon](https://github.com/ThePrimeagen/harpoon) index for files, or
 responding to the `"file_opened"` event to auto clear the search when you open a
 file.
-
-
-## Why?
-
-There are many tree plugins for (neo)vim, so why make another one? Well, I
-wanted something that was:
-
-1. Easy to maintain and enhance.
-2. Stable.
-3. Easy to customize.
-
-### Easy to maintain and enhance
-
-This plugin is designed to grow and be flexible. This is accomplished by making
-the code as decoupled and functional as possible. Hopefully new contributors
-will find it easy to work with.
-
-One big difference between this plugin and the ones that came before it, which
-is also what finally pushed me over the edge into making a new plugin, is that
-we now have libraries to build upon that did not exist when other tree plugins
-were created. Most notably, [nui.nvim](https://github.com/MunifTanjim/nui.nvim)
-and [plenary.nvm](https://github.com/nvim-lua/plenary.nvim). Building upon
-shared libraries will go a long way in making neo-tree easy to maintain.
-
-### Stable
-
-This project will have releases and release tags that follow a simplified
-Semantic Versioning scheme. The quickstart instructions will always refer to
-the latest stable major version. Following the **main** branch is for
-contributors and those that always want bleeding edge. There will be branches
-for **v1.x**, **v2.x**, etc which will receive updates after a short testing
-period in **main**. You should be safe to follow those branches and be sure
-your tree won't break in an update. There will also be tags for each release
-pushed to those branches named **v1.1**, **v1.2**, etc. If stability is
-critical to you, or a bug accidentally make it into **v1.x**, you can use those
-tags instead. It's possible we may backport bug fixes to those tags, but no
-garauntees on that.
-
-There will never be a breaking change within a major version (1.x, 2.x, etc.) If
-a breaking change is needed, there will be depracation warnings in the prior
-major version, and the breaking change will happen in the next major version.
-
-### Easy to Customize
-
-Neo-tree follows in the spirit of plugins like
-[lualine.nvim](https://github.com/nvim-lualine/lualine.nvim) and
-[nvim-cokeline](https://github.com/noib3/nvim-cokeline). Everything will be
-configurable and take either strings, tables, or functions. You can take sane
-defaults or build your tree items from scratch. There should be the ability to
-add any features you can think of through existing hooks in the setup function.
-
-## Contributions
-
-Contributions are encouraged. Please see [CONTRIBUTING](CONTRIBUTING.md) for more details.
-
-## Acknowledgements
-
-This project relies upon these two excellent libraries:
-- [nui.nvim](https://github.com/MunifTanjim/nui.nvim) for all UI components, including the tree!
-- [plenary.nvim](https://github.com/nvim-lua/plenary.nvim) for backend utilities, such as scanning the filesystem.
-
-The design is heavily inspired by these excellent plugins:
-- [lualine.nvim](https://github.com/nvim-lualine/lualine.nvim)
-- [nvim-cokeline](https://github.com/noib3/nvim-cokeline)
-
-Everything I know about writing a tree control in lua, I learned from:
-- [nvim-tree.lua](https://github.com/nvim-tree/nvim-tree.lua)
