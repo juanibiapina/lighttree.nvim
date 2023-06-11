@@ -59,22 +59,6 @@ M._for_each_state = function(source_name, action)
   end
 end
 
----For use in tests only, completely resets the state of all sources.
----This closes all windows as well since they would be broken by this action.
-M._clear_state = function()
-  fs_watch.unwatch_all()
-  renderer.close_all_floating_windows()
-  for _, data in pairs(source_data) do
-    for _, state in pairs(data.state_by_tab) do
-      renderer.close(state)
-    end
-    for _, state in pairs(data.state_by_win) do
-      renderer.close(state)
-    end
-  end
-  source_data = {}
-end
-
 M.set_default_config = function(source_name, config)
   if source_name == nil then
     error("set_default_config: source_name cannot be nil")
