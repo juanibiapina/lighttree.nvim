@@ -226,7 +226,6 @@ local config = {
       ["c"] = "copy", -- takes text input for destination, also accepts the config.show_path and config.insert_as options
       ["m"] = "move", -- takes text input for destination, also accepts the config.show_path and config.insert_as options
       ["e"] = "toggle_auto_expand_width",
-      ["q"] = "close_window",
       ["?"] = "show_help",
     },
   },

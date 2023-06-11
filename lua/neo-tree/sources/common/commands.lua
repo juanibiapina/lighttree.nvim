@@ -182,10 +182,6 @@ M.close_all_nodes = function(state)
   renderer.redraw(state)
 end
 
-M.close_window = function(state)
-  renderer.close(state)
-end
-
 M.toggle_auto_expand_width = function(state)
   if state.window.position == "float" then
     return
