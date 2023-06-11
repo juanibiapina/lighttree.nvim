@@ -38,7 +38,6 @@ M.setup = function(all_source_names)
     dir = { type = M.PATH, stat_type = "directory" },
     reveal_file = { type = M.PATH, stat_type = "file" },
     git_base = { type = M.REF },
-    toggle = { type = M.FLAG },
     reveal = { type = M.FLAG },
     reveal_force_cwd = { type = M.FLAG },
   }

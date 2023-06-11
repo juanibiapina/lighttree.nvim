@@ -31,7 +31,6 @@ local M = {
 ---                    "right",
 ---                    "float",
 ---                    "current"
----  toggle = boolean  Whether to toggle the visibility of the Neo-tree window.
 ---  reveal = boolean  Whether to reveal the current file in the Neo-tree window.
 ---  reveal_file = string The specific file to reveal.
 ---  dir = string      The root directory to set.
@@ -72,14 +71,6 @@ M.execute = function(args)
     state = manager.get_state(args.source, nil, winid)
   else
     state = manager.get_state(args.source, nil, nil)
-  end
-
-  -- Next handle toggle, the rest is irrelevant if there is a window to toggle
-  if args.toggle then
-    if renderer.close(state) then
-      -- It was open, and now it's not.
-      return
-    end
   end
 
   -- Handle position override

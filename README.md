@@ -368,10 +368,6 @@ Where to show it, can be one of:
 | float    | Open as floating window. |
 | current  | Open within the current window, like netrw or vinegar would. |
 
-#### `toggle`
-This is a boolean flag. Adding this means that the window will be closed if it
-is already open.
-
 #### `dir`
 The directory to set as the root/cwd of the specified window. If you include a
 directory as one of the arguments, it will be assumed to be this option, you

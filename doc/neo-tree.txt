@@ -43,19 +43,14 @@ COMMANDS                                       *:Neotree*  *neo-tree-commands*
 Neo-tree does not define any default keybindings for nvim. The suggested
 keybindings are:
 
-    nnoremap / :Neotree toggle current reveal_force_cwd<cr>
     nnoremap | :Neotree reveal<cr>
     nnoremap gd :Neotree float reveal_file=<cfile> reveal_force_cwd<cr>
-    nnoremap <leader>b :Neotree toggle show buffers right<cr>
     nnoremap <leader>s :Neotree float git_status<cr>
 
 The single |:Neotree| command accepts a range of arguments that give you full
 control over the details of what and where it will show. Arguments can be
 specified as either a key=value pair or just as the value. The key=value form
-is more verbose but may help with clarity. For example, the "buffers" command
-above can also be specified as:
->vim
-    :Neotree action=show source=buffers position=right toggle=true
+is more verbose but may help with clarity.
 <
 These arguments can be specified in any order. Here is the full list of 
 arguments you can use:
@@ -82,10 +77,6 @@ Where to show it, can be one of:
     right   : Open as right hand sidebar.
     float   : Open as floating window.
     current : Open within the current window, like netrw or vinegar would.
-
-toggle~
-This is a boolean flag. Adding this means that the window will be closed if it
-is already open.
 
 dir~
 The directory to set as the root/cwd of the specified window. If you include a
