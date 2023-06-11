@@ -24,7 +24,6 @@ local M = {
 ---                    "filesystem",
 ---                    "buffers",
 ---                    "git_status",
---                     "migrations"
 ---  position = string The position this action will affect. This will default
 ---                    to the the last used position or the position specified
 ---                    in the user's config for the given source. Can be one of:
@@ -40,11 +39,6 @@ local M = {
 M.execute = function(args)
   local nt = require("neo-tree")
   nt.ensure_config()
-
-  if args.source == "migrations" then
-    require("neo-tree.setup.deprecations").show_migrations()
-    return
-  end
 
   args.action = args.action or "focus"
 

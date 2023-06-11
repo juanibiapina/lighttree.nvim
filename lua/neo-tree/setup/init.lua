@@ -420,16 +420,6 @@ M.merge_config = function(user_config, is_auto_config)
   local default_config = vim.deepcopy(defaults)
   user_config = vim.deepcopy(user_config or {})
 
-  local migrations = require("neo-tree.setup.deprecations").migrate(user_config)
-  if #migrations > 0 then
-    -- defer to make sure it is the last message printed
-    vim.defer_fn(function()
-      vim.cmd(
-        "echohl WarningMsg | echo 'Some options have changed, please run `:Neotree migrations` to see the changes' | echohl NONE"
-      )
-    end, 50)
-  end
-
   if user_config.log_level ~= nil then
     M.set_log_level(user_config.log_level)
   end
