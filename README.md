@@ -249,32 +249,6 @@ use {
 
           commands = {} -- Add a custom command or override a global one using the same function name
         },
-        buffers = {
-          follow_current_file = true, -- This will find and focus the file in the active buffer every
-                                       -- time the current file is changed while the tree is open.
-          group_empty_dirs = true, -- when true, empty folders will be grouped together
-          window = {
-            mappings = {
-              ["bd"] = "buffer_delete",
-              ["<bs>"] = "navigate_up",
-              ["."] = "set_root",
-            }
-          },
-        },
-        git_status = {
-          window = {
-            position = "float",
-            mappings = {
-              ["A"]  = "git_add_all",
-              ["gu"] = "git_unstage_file",
-              ["ga"] = "git_add_file",
-              ["gr"] = "git_revert_file",
-              ["gc"] = "git_commit",
-              ["gp"] = "git_push",
-              ["gg"] = "git_commit_and_push",
-            }
-          }
-        }
       })
 
       vim.cmd([[nnoremap \ :Neotree reveal<cr>]])

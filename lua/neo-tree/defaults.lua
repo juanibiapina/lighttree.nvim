@@ -1,12 +1,6 @@
 local config = {
-  -- If a user has a sources list it will replace this one.
-  -- Only sources listed here will be loaded.
-  -- You can also add an external source by adding it's name to this list.
-  -- The name used here must be the same name you would use in a require() call.
   sources = {
     "filesystem",
-    "buffers",
-    "git_status",
   },
   -- popup_border_style is for input and confirmation dialogs.
   -- Configurtaion of floating window is done in the individual source sections.
@@ -338,32 +332,6 @@ local config = {
                           -- "disabled",    -- netrw left alone, neo-tree does not handle opening dirs
     use_libuv_file_watcher = false, -- This will use the OS level file watchers to detect changes
                                     -- instead of relying on nvim autocmd events.
-  },
-  buffers = {
-    bind_to_cwd = true,
-    follow_current_file = true, -- This will find and focus the file in the active buffer every time
-                                -- the current file is changed while the tree is open.
-    group_empty_dirs = true,  -- when true, empty directories will be grouped together
-    window = {
-      mappings = {
-        ["<bs>"] = "navigate_up",
-        ["."] = "set_root",
-        ["bd"] = "buffer_delete",
-      },
-    },
-  },
-  git_status = {
-    window = {
-      mappings = {
-        ["A"] = "git_add_all",
-        ["gu"] = "git_unstage_file",
-        ["ga"] = "git_add_file",
-        ["gr"] = "git_revert_file",
-        ["gc"] = "git_commit",
-        ["gp"] = "git_push",
-        ["gg"] = "git_commit_and_push",
-      },
-    },
   },
   example = {
     renderers = {
