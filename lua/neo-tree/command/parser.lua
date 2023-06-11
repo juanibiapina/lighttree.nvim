@@ -39,7 +39,6 @@ M.setup = function(all_source_names)
     reveal_file = { type = M.PATH, stat_type = "file" },
     git_base = { type = M.REF },
     reveal = { type = M.FLAG },
-    reveal_force_cwd = { type = M.FLAG },
   }
 
   local arg_type_lookup = {}

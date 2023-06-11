@@ -44,8 +44,8 @@ Neo-tree does not define any default keybindings for nvim. The suggested
 keybindings are:
 
     nnoremap | :Neotree reveal<cr>
-    nnoremap gd :Neotree float reveal_file=<cfile> reveal_force_cwd<cr>
-    nnoremap <leader>s :Neotree float git_status<cr>
+    nnoremap gd :Neotree float reveal_file=<cfile>
+    nnoremap <leader>ns :Neotree float git_status<cr>
 
 The single |:Neotree| command accepts a range of arguments that give you full
 control over the details of what and where it will show. Arguments can be
@@ -104,13 +104,6 @@ need to specify both. Use this if you want to reveal something other than the
 current file. If you include a path to a file as one of the arguments, it will
 be assumed to be this option. Like "dir", you can pass any value that can be
 passed to the 'expand' function.
-
-reveal_force_cwd~
-This is a boolean flag. Normally, if you use one of the reveal options and the
-given file is not within the current working directory, you will be asked if you
-want to change the current working directory. If you include this flag, it will
-automatically change the directory without prompting. This option implies
-"reveal", so you do not need to specify both.
 
 
 ===============================================================================

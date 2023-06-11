@@ -419,15 +419,8 @@ One neat trick you can do with this is to open a Neotree window which is
 focused on the file under the cursor using the `<cfile>` keyword:
 
 ```
-nnoremap gd :Neotree float reveal_file=<cfile> reveal_force_cwd<cr>
+nnoremap gd :Neotree float reveal_file=<cfile>
 ```
-
-#### `reveal_force_cwd`
-This is a boolean flag. Normally, if you use one of the reveal options and the
-given file is not within the current working directory, you will be asked if you
-want to change the current working directory. If you include this flag, it will
-automatically change the directory without prompting. This option implies
-"reveal", so you do not need to specify both.
 
 See `:h neo-tree-commands` for details and a full listing of available arguments.
 
