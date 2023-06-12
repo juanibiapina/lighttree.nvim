@@ -622,57 +622,6 @@ M.toggle_directory = function(state, toggle_directory)
   M.toggle_node(state, toggle_directory)
 end
 
----Marks potential windows with letters and will open the give node in the picked window.
----@param state table The state of the source
----@param path string The path to open
----@param cmd string Command that is used to perform action on picked window
-local use_window_picker = function(state, path, cmd)
-  local success, picker = pcall(require, "window-picker")
-  if not success then
-    print(
-      "You'll need to install window-picker to use this command: https://github.com/s1n7ax/nvim-window-picker"
-    )
-    return
-  end
-  local events = require("neo-tree.events")
-  local event_result = events.fire_event(events.FILE_OPEN_REQUESTED, {
-    state = state,
-    path = path,
-    open_cmd = cmd,
-  }) or {}
-  if event_result.handled then
-    events.fire_event(events.FILE_OPENED, path)
-    return
-  end
-  local picked_window_id = picker.pick_window()
-  if picked_window_id then
-    vim.api.nvim_set_current_win(picked_window_id)
-    local result, err = pcall(vim.cmd, cmd .. " " .. vim.fn.fnameescape(path))
-    if result or err == "Vim(edit):E325: ATTENTION" then
-      -- fixes #321
-      vim.api.nvim_buf_set_option(0, "buflisted", true)
-      events.fire_event(events.FILE_OPENED, path)
-    else
-      log.error("Error opening file:", err)
-    end
-  end
-end
-
----Marks potential windows with letters and will open the give node in the picked window.
-M.open_with_window_picker = function(state, toggle_directory)
-  open_with_cmd(state, "edit", toggle_directory, use_window_picker)
-end
-
----Marks potential windows with letters and will open the give node in a split next to the picked window.
-M.split_with_window_picker = function(state, toggle_directory)
-  open_with_cmd(state, "split", toggle_directory, use_window_picker)
-end
-
----Marks potential windows with letters and will open the give node in a vertical split next to the picked window.
-M.vsplit_with_window_picker = function(state, toggle_directory)
-  open_with_cmd(state, "vsplit", toggle_directory, use_window_picker)
-end
-
 M.show_help = function(state)
   help.show(state)
 end

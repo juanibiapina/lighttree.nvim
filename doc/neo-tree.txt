@@ -135,17 +135,6 @@ t             = open_tabnew: Same as open, but opens in a new tab.
               open_tab_drop: Same as open, but opens in a new tab with the 
                              |:drop| command with the |:tab| modifier. 
 
-w = open_with_window_picker: Uses the `window-picker` plugin to select a window
-                             to open the selected node in. Requires that
-                             https://github.com/s1n7ax/nvim-window-picker
-                             be installed.
-
-   split_with_window_picker: Same as `open_with_window_picker` but opens split
-                             in selected node instead.
-
-  vsplit_with_window_picker: Same as `open_with_window_picker` but opens
-                             vertical split in selected node instead.
-
 [g      = prev_git_modified: Jump to the previous file reported by `git status`
                              that is within the current working directory.
                              This will loop around if you are on the last one.

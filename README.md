@@ -42,8 +42,6 @@ use {
       "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
       "MunifTanjim/nui.nvim",
       {
-        -- only needed if you want to use the commands with "_with_window_picker" suffix
-        's1n7ax/nvim-window-picker',
         tag = "v1.*",
         config = function()
           require'window-picker'.setup({
@@ -154,12 +152,9 @@ use {
             ["<cr>"] = "open",
             ["S"] = "open_split",
             ["s"] = "open_vsplit",
-            -- ["S"] = "split_with_window_picker",
-            -- ["s"] = "vsplit_with_window_picker",
             ["t"] = "open_tabnew",
             -- ["<cr>"] = "open_drop",
             -- ["t"] = "open_tab_drop",
-            ["w"] = "open_with_window_picker",
             ["C"] = "close_node",
             -- ['C'] = 'close_all_subnodes',
             ["z"] = "close_all_nodes",
