@@ -47,10 +47,6 @@ local function create_state(tabid, sd, winid)
   return state
 end
 
-M._get_all_states = function()
-  return all_states
-end
-
 M._for_each_state = function(source_name, action)
   for _, state in ipairs(all_states) do
     if source_name == nil or state.name == source_name then
@@ -97,23 +93,6 @@ M.get_state = function(source_name, tabid, winid)
     end
     return tab_state
   end
-end
-
----Returns the state for the current buffer, assuming it is a neo-tree buffer.
----@param winid number|nil The window id to use, if nil, the current window is used.
----@return table|nil The state for the current buffer, or nil if it is not a
----neo-tree buffer.
-M.get_state_for_window = function(winid)
-  local winid = winid or vim.api.nvim_get_current_win()
-  local bufnr = vim.api.nvim_win_get_buf(winid)
-  local source_status, source_name = pcall(vim.api.nvim_buf_get_var, bufnr, "neo_tree_source")
-  if not source_status or not position_status then
-    return nil
-  end
-
-  local tabid = vim.api.nvim_get_current_tabpage()
-
-  return M.get_state(source_name, tabid, winid)
 end
 
 M.get_path_to_reveal = function(include_terminals)
@@ -182,19 +161,6 @@ M.unsubscribe_all = function(source_name)
     end
   end
   sd.subscriptions = {}
-end
-
-M.close = function(source_name, at_position)
-  local state = M.get_state(source_name)
-  if at_position then
-    if state.current_position == at_position then
-      return renderer.close(state)
-    else
-      return false
-    end
-  else
-    return renderer.close(state)
-  end
 end
 
 M.close_all = function(at_position)
@@ -348,31 +314,6 @@ local dispose_state = function(state)
   state.disposed = true
 end
 
-M.dispose = function(source_name, tabid)
-  for i, state in ipairs(all_states) do
-    if source_name == nil or state.name == source_name then
-      if not tabid or tabid == state.tabid then
-        log.trace(state.name, " disposing of tab: ", tabid)
-        dispose_state(state)
-        table.remove(all_states, i)
-      end
-    end
-  end
-end
-
-M.dispose_tab = function(tabid)
-  if not tabid then
-    error("dispose_tab: tabid cannot be nil")
-  end
-  for i, state in ipairs(all_states) do
-    if tabid == state.tabid then
-      log.trace(state.name, " disposing of tab: ", tabid, state.name)
-      dispose_state(state)
-      table.remove(all_states, i)
-    end
-  end
-end
-
 M.dispose_invalid_tabs = function()
   -- Iterate in reverse because we are removing items during loop
   for i = #all_states,1,-1 do
@@ -395,31 +336,6 @@ M.dispose_window = function(winid)
       log.trace(state.name, " disposing of window: ", winid, state.name)
       dispose_state(state)
       table.remove(all_states, i)
-    end
-  end
-end
-
-M.float = function(source_name)
-  local state = M.get_state(source_name)
-  state.current_position = "float"
-  local path_to_reveal = M.get_path_to_reveal()
-  M.navigate(source_name, state.path, path_to_reveal)
-end
-
----Focus the window, opening it if it is not already open.
----@param source_name string Source name.
----@param path_to_reveal string|nil Node to focus after the items are loaded.
----@param callback function|nil Callback to call after the items are loaded.
-M.focus = function(source_name, path_to_reveal, callback)
-  local state = M.get_state(source_name)
-  state.current_position = nil
-  if path_to_reveal then
-    M.navigate(source_name, state.path, path_to_reveal, callback)
-  else
-    if not state.dirty and renderer.window_exists(state) then
-      vim.api.nvim_set_current_win(state.winid)
-    else
-      M.navigate(source_name, state.path, nil, callback)
     end
   end
 end

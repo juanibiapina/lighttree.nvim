@@ -5,7 +5,7 @@ local utils = require("neo-tree.utils")
 local renderer = require("neo-tree.ui.renderer")
 local inputs = require("neo-tree.ui.inputs")
 local completion = require("neo-tree.command.completion")
-local do_show_or_focus, handle_reveal
+local handle_reveal
 
 local M = {
   complete_args = completion.complete_args,
