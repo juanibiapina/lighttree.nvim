@@ -21,7 +21,7 @@ M.execute = function(args)
   local nt = require("neo-tree")
   nt.ensure_config()
 
-  -- get curent window
+  -- get current window
   local winid = vim.api.nvim_get_current_win()
 
   -- Get the correct state
