@@ -64,9 +64,6 @@ function create_item(context, path, _type, bufnr)
     item.children = {}
     item.loaded = false
     context.folders[path] = item
-    if context.state.search_pattern then
-      table.insert(context.state.default_expanded_nodes, item.id)
-    end
   else
     item.base = item.name:match("^([-_,()%s%w%i]+)%.")
     item.ext = item.name:match("%.([-_,()%s%w%i]+)$")

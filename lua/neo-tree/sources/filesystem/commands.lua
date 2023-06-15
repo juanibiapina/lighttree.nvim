@@ -24,10 +24,6 @@ M.add_directory = function(state)
   cc.add_directory(state, utils.wrap(fs.show_new_children, state))
 end
 
-M.clear_filter = function(state)
-  fs.reset_search(state, true)
-end
-
 M.copy = function(state)
   cc.copy(state, utils.wrap(refresh, state))
 end
@@ -74,36 +70,6 @@ M.expand_all_nodes = function(state)
   cc.expand_all_nodes(state, toggle_dir_no_redraw)
 end
 
----Shows the filter input, which will filter the tree.
-M.filter_as_you_type = function(state)
-  filter.show_filter(state, true)
-end
-
----Shows the filter input, which will filter the tree.
-M.filter_on_submit = function(state)
-  filter.show_filter(state, false)
-end
-
----Shows the filter input in fuzzy finder mode.
-M.fuzzy_finder = function(state)
-  filter.show_filter(state, true, true)
-end
-
----Shows the filter input in fuzzy finder mode.
-M.fuzzy_finder_directory = function(state)
-  filter.show_filter(state, true, "directory")
-end
-
----Shows the filter input in fuzzy sorter
-M.fuzzy_sorter = function(state)
-  filter.show_filter(state, true, true, true)
-end
-
----Shows the filter input in fuzzy sorter with only directories
-M.fuzzy_sorter_directory = function(state)
-  filter.show_filter(state, true, "directory", true)
-end
-
 ---Navigate up one level.
 M.navigate_up = function(state)
   local parent_path, _ = utils.split_path(state.path)
@@ -114,9 +80,6 @@ M.navigate_up = function(state)
   local node = state.tree:get_node()
   if node then
     path_to_reveal = node:get_id()
-  end
-  if state.search_pattern then
-    fs.reset_search(state, false)
   end
   log.debug("Changing directory to:", parent_path)
   fs._navigate_internal(state, parent_path, path_to_reveal, nil, false)
@@ -209,9 +172,6 @@ M.set_root = function(state)
   local tree = state.tree
   local node = tree:get_node()
   if node.type == "directory" then
-    if state.search_pattern then
-      fs.reset_search(state, false)
-    end
     fs._navigate_internal(state, node.id, nil, nil, false)
   end
 end

@@ -219,7 +219,6 @@ create_nodes = function(source_items, state, level)
       link_to = item.link_to,
       path = item.path,
       ext = item.ext,
-      search_pattern = item.search_pattern,
       level = level,
       is_last_child = is_last_child,
     }

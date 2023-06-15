@@ -16,25 +16,4 @@ local utils = require("neo-tree.utils")
 
 local M = {}
 
-M.current_filter = function(config, node, state)
-  local filter = node.search_pattern or ""
-  if filter == "" then
-    return {}
-  end
-  return {
-    {
-      text = "Find",
-      highlight = highlights.DIM_TEXT,
-    },
-    {
-      text = string.format('"%s"', filter),
-      highlight = config.highlight or highlights.FILTER_TERM,
-    },
-    {
-      text = "in",
-      highlight = highlights.DIM_TEXT,
-    },
-  }
-end
-
 return vim.tbl_deep_extend("force", common, M)

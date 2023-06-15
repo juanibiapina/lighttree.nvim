@@ -113,7 +113,6 @@ end
 M._navigate_internal = function(state, path, path_to_reveal, callback, async)
   log.trace("navigate_internal", state.current_position, path, path_to_reveal)
   state.dirty = false
-  local is_search = utils.truthy(state.search_pattern)
   local path_changed = false
   if not path and not state.bind_to_cwd then
     path = state.path
@@ -140,7 +139,6 @@ M._navigate_internal = function(state, path, path_to_reveal, callback, async)
   else
     local is_current = state.current_position == "current"
     local follow_file = state.follow_current_file
-      and not is_search
       and not is_current
       and manager.get_path_to_reveal()
     local handled = false
@@ -162,7 +160,7 @@ M._navigate_internal = function(state, path, path_to_reveal, callback, async)
     manager.set_cwd(state)
   end
   local config = require("neo-tree").config
-  if config.enable_git_status and not is_search and config.git_status_async then
+  if config.enable_git_status and config.git_status_async then
     git.status_async(state.path, state.git_base, config.git_status_async_options)
   end
 end
@@ -176,56 +174,6 @@ M.navigate = function(state, path, path_to_reveal, callback, async)
   utils.debounce("filesystem_navigate", function()
     M._navigate_internal(state, path, path_to_reveal, callback, async)
   end, utils.debounce_strategy.CALL_FIRST_AND_LAST, 100)
-end
-
-M.reset_search = function(state, refresh, open_current_node)
-  log.trace("reset_search")
-  -- Cancel any pending search
-  require("neo-tree.sources.filesystem.lib.filter_external").cancel()
-  -- reset search state
-  state.fuzzy_finder_mode = nil
-  state.use_fzy = nil
-  state.fzy_sort_result_scores = nil
-  state.fzy_sort_file_list_cache = nil
-  state.sort_function_override = nil
-
-  if refresh == nil then
-    refresh = true
-  end
-  if state.open_folders_before_search then
-    state.force_open_folders = vim.deepcopy(state.open_folders_before_search, { noref = 1 })
-  else
-    state.force_open_folders = nil
-  end
-  state.search_pattern = nil
-  state.open_folders_before_search = nil
-  if open_current_node then
-    local success, node = pcall(state.tree.get_node, state.tree)
-    if success and node then
-      local path = node:get_id()
-      renderer.position.set(state, path)
-      if node.type == "directory" then
-        path = utils.remove_trailing_slash(path)
-        log.trace("opening directory from search: ", path)
-        M.navigate(state, nil, path, function()
-          pcall(renderer.focus_node, state, path, false)
-        end)
-      else
-        utils.open_file(state, path)
-        if
-          refresh
-          and state.current_position ~= "current"
-          and state.current_position ~= "float"
-        then
-          M.navigate(state, nil, path)
-        end
-      end
-    end
-  else
-    if refresh then
-      M.navigate(state)
-    end
-  end
 end
 
 M.show_new_children = function(state, node_or_path)

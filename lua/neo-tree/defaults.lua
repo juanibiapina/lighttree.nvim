@@ -93,7 +93,6 @@ local config = {
     directory = {
       { "indent" },
       { "icon" },
-      { "current_filter" },
       {
         "container",
         content = {
@@ -223,23 +222,10 @@ local config = {
     window = {
       mappings = {
         ["H"] = "toggle_hidden",
-        ["/"] = "fuzzy_finder",
-        ["D"] = "fuzzy_finder_directory",
-        --["/"] = "filter_as_you_type", -- this was the default until v1.28
-        ["#"] = "fuzzy_sorter", -- fuzzy sorting using the fzy algorithm
-        -- ["D"] = "fuzzy_sorter_directory",
-        ["f"] = "filter_on_submit",
-        ["<C-x>"] = "clear_filter",
         ["<bs>"] = "navigate_up",
         ["."] = "set_root",
         ["[g"] = "prev_git_modified",
         ["]g"] = "next_git_modified",
-      },
-      fuzzy_finder_mappings = { -- define keymaps for filter popup window in fuzzy_finder_mode
-        ["<down>"] = "move_cursor_down",
-        ["<C-n>"] = "move_cursor_down",
-        ["<up>"] = "move_cursor_up",
-        ["<C-p>"] = "move_cursor_up",
       },
     },
     async_directory_scan = "auto", -- "auto"   means refreshes are async, but it's synchronous when called from the Neotree commands.

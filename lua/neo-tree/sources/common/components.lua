@@ -53,27 +53,6 @@ end
 
 M.container = container.render
 
-M.current_filter = function(config, node, state)
-  local filter = node.search_pattern or ""
-  if filter == "" then
-    return {}
-  end
-  return {
-    {
-      text = "Find",
-      highlight = highlights.DIM_TEXT,
-    },
-    {
-      text = string.format('"%s"', filter),
-      highlight = config.highlight or highlights.FILTER_TERM,
-    },
-    {
-      text = "in",
-      highlight = highlights.DIM_TEXT,
-    },
-  }
-end
-
 M.diagnostics = function(config, node, state)
   local diag = state.diagnostics_lookup or {}
   local diag_state = diag[node:get_id()]

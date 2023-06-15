@@ -3,7 +3,6 @@ local uv = vim.loop
 
 local renderer = require("neo-tree.ui.renderer")
 local utils = require("neo-tree.utils")
-local filter_external = require("neo-tree.sources.filesystem.lib.filter_external")
 local file_items = require("neo-tree.sources.common.file-items")
 local log = require("neo-tree.log")
 local fs_watch = require("neo-tree.sources.filesystem.lib.fs_watch")
@@ -384,94 +383,64 @@ M.get_items = function(state, parent_id, path_to_reveal, callback, async, recurs
   local root = file_items.create_item(context, parent_id or state.path, "directory")
   root.name = vim.fn.fnamemodify(root.path, ":~")
   root.loaded = true
-  root.search_pattern = state.search_pattern
   context.root = root
   context.folders[root.path] = root
   state.default_expanded_nodes = state.force_open_folders or { state.path }
 
-  if state.search_pattern then
-    local search_opts = {
-      filtered_items = state.filtered_items,
-      find_command = state.find_command,
-      limit = state.search_limit or 50,
-      path = root.path,
-      term = state.search_pattern,
-      find_args = state.find_args,
-      find_by_full_path_words = state.find_by_full_path_words,
-      fuzzy_finder_mode = state.fuzzy_finder_mode,
-      on_insert = function(err, path)
-        if err then
-          log.debug(err)
-        else
-          file_items.create_item(context, path)
-        end
-      end,
-      on_exit = vim.schedule_wrap(function()
-        job_complete(context)
-      end),
-    }
-    if state.use_fzy then
-      filter_external.fzy_sort_files(search_opts, state)
-    else
-      -- Use the external command because the plenary search is slow
-      filter_external.find_files(search_opts)
-    end
-  else
-    -- In the case of a refresh or navigating up, we need to make sure that all
-    -- open folders are loaded.
-    local path = parent_id or state.path
-    context.paths_to_load = {}
-    if parent_id == nil then
-      if utils.truthy(state.force_open_folders) then
-        for _, f in ipairs(state.force_open_folders) do
-          table.insert(context.paths_to_load, f)
-        end
-      elseif state.tree then
-        context.paths_to_load = renderer.get_expanded_nodes(state.tree, state.path)
+  -- In the case of a refresh or navigating up, we need to make sure that all
+  -- open folders are loaded.
+  local path = parent_id or state.path
+  context.paths_to_load = {}
+  if parent_id == nil then
+    if utils.truthy(state.force_open_folders) then
+      for _, f in ipairs(state.force_open_folders) do
+        table.insert(context.paths_to_load, f)
       end
-      -- Ensure that there are no nested files in the list of folders to load
-      context.paths_to_load = vim.tbl_filter(function(p)
-        local stats = vim.loop.fs_stat(p)
-        return stats and stats.type == "directory"
-      end, context.paths_to_load)
-      if path_to_reveal then
-        -- be sure to load all of the folders leading up to the path to reveal
-        local path_to_reveal_parts = utils.split(path_to_reveal, utils.path_separator)
-        table.remove(path_to_reveal_parts) -- remove the file name
-        -- add all parent folders to the list of paths to load
-        utils.reduce(path_to_reveal_parts, "", function(acc, part)
-          local current_path = utils.path_join(acc, part)
-          if #current_path > #path then -- within current root
-            table.insert(context.paths_to_load, current_path)
-            table.insert(state.default_expanded_nodes, current_path)
-          end
-          return current_path
-        end)
-        context.paths_to_load = utils.unique(context.paths_to_load)
-      end
+    elseif state.tree then
+      context.paths_to_load = renderer.get_expanded_nodes(state.tree, state.path)
     end
+    -- Ensure that there are no nested files in the list of folders to load
+    context.paths_to_load = vim.tbl_filter(function(p)
+      local stats = vim.loop.fs_stat(p)
+      return stats and stats.type == "directory"
+    end, context.paths_to_load)
+    if path_to_reveal then
+      -- be sure to load all of the folders leading up to the path to reveal
+      local path_to_reveal_parts = utils.split(path_to_reveal, utils.path_separator)
+      table.remove(path_to_reveal_parts) -- remove the file name
+      -- add all parent folders to the list of paths to load
+      utils.reduce(path_to_reveal_parts, "", function(acc, part)
+        local current_path = utils.path_join(acc, part)
+        if #current_path > #path then -- within current root
+          table.insert(context.paths_to_load, current_path)
+          table.insert(state.default_expanded_nodes, current_path)
+        end
+        return current_path
+      end)
+      context.paths_to_load = utils.unique(context.paths_to_load)
+    end
+  end
 
-    local filtered_items = state.filtered_items or {}
-    context.is_a_never_show_file = function(fname)
-      if fname then
-        local _, name = utils.split_path(fname)
-        if name then
-          if filtered_items.never_show and filtered_items.never_show[name] then
-            return true
-          end
-          if utils.is_filtered_by_pattern(filtered_items.never_show_by_pattern, fname, name) then
-            return true
-          end
+  local filtered_items = state.filtered_items or {}
+  context.is_a_never_show_file = function(fname)
+    if fname then
+      local _, name = utils.split_path(fname)
+      if name then
+        if filtered_items.never_show and filtered_items.never_show[name] then
+          return true
+        end
+        if utils.is_filtered_by_pattern(filtered_items.never_show_by_pattern, fname, name) then
+          return true
         end
       end
-      return false
     end
-    table.insert(context.paths_to_load, path)
-    if async then
-      async_scan(context, path)
-    else
-      sync_scan(context, path)
-    end
+    return false
+  end
+  table.insert(context.paths_to_load, path)
+  if async then
+    async_scan(context, path)
+  else
+    sync_scan(context, path)
   end
 end
 
