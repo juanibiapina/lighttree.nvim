@@ -461,7 +461,6 @@ M.merge_config = function(user_config, is_auto_config)
   source_default_config.components = require("neo-tree.sources.filesystem.components")
   source_default_config.commands = require("neo-tree.sources.filesystem.commands")
   source_default_config.name = source_name
-  source_default_config.display_name = module.display_name
 
   if user_config.use_default_mappings == false then
     default_config.window.mappings = {}
