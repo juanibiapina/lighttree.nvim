@@ -160,7 +160,6 @@ local config = {
 
   window = { -- see https://github.com/MunifTanjim/nui.nvim/tree/main/lua/nui/popup for
              -- possible options. These can also be functions that return these options.
-    position = "left", -- left, right, top, bottom, float, current
     width = 40, -- applies to left and right positions
     height = 15, -- applies to top and bottom positions
     auto_expand_width = false, -- expand the window when file exceeds the window width. does not work with position = "float"
@@ -309,9 +308,8 @@ local config = {
     follow_current_file = false, -- This will find and focus the file in the active buffer every time
                                  -- the current file is changed while the tree is open.
     hijack_netrw_behavior = "open_default", -- netrw disabled, opening a directory opens neo-tree
-                                            -- in whatever position is specified in window.position
                           -- "open_current",-- netrw disabled, opening a directory opens within the
-                                            -- window like netrw would, regardless of window.position
+                                            -- window like netrw would
                           -- "disabled",    -- netrw left alone, neo-tree does not handle opening dirs
     use_libuv_file_watcher = false, -- This will use the OS level file watchers to detect changes
                                     -- instead of relying on nvim autocmd events.

@@ -777,9 +777,8 @@ local set_window_mappings = function(state)
 end
 
 create_window = function(state)
-  local default_position = utils.resolve_config_option(state, "window.position", "left")
   local relative = utils.resolve_config_option(state, "window.relative", "editor")
-  state.current_position = state.current_position or default_position
+  state.current_position = "current"
 
   local bufname = string.format("neo-tree %s [%s]", state.name, state.id)
   local size_opt, default_size
@@ -949,8 +948,7 @@ M.window_exists = function(state)
   local window_exists
   local winid = utils.get_value(state, "winid", 0, true)
   local bufnr = utils.get_value(state, "bufnr", 0, true)
-  local default_position = utils.get_value(state, "window.position", "left", true)
-  local position = state.current_position or default_position
+  local position = "current"
 
   if winid == 0 then
     window_exists = false
