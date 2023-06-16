@@ -486,7 +486,6 @@ M.merge_config = function(user_config, is_auto_config)
   for name, rndr in pairs(M.config[source_name].renderers) do
     M.config[source_name].renderers[name] = merge_global_components_config(rndr, M.config)
   end
-  local module = require(mod_root)
   if M.config.commands then
     M.config[source_name].commands =
       vim.tbl_extend("keep", M.config[source_name].commands or {}, M.config.commands)
