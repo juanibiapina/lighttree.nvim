@@ -466,13 +466,6 @@ M.delete_visual = function(state, selected_nodes, callback)
   fs_actions.delete_nodes(paths_to_delete, callback)
 end
 
--- Multi-purpose function to back out of whatever we are in
-M.cancel = function(state)
-  if state.current_position == "float" then
-    renderer.close_all_floating_windows()
-  end
-end
-
 ---Open file or directory
 ---@param state table The state of the source
 ---@param open_cmd string The vim command to use to open the file

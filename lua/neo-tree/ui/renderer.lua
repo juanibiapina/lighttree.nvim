@@ -139,13 +139,6 @@ M.close = function(state)
   return window_existed
 end
 
-M.close_all_floating_windows = function()
-  while #floating_windows > 0 do
-    local win = table.remove(floating_windows)
-    win:unmount()
-  end
-end
-
 M.get_nui_popup = function(winid)
   for _, win in ipairs(floating_windows) do
     if win.winid == winid then
