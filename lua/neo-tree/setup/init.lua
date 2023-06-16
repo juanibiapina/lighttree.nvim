@@ -444,19 +444,9 @@ M.merge_config = function(user_config, is_auto_config)
   -- used to either limit the sources that or loaded, or add extra external sources
   local all_sources = {}
 
-  source = "filesystem"
-
   local name = "filesystem"
-  local module
-
-  _, module = pcall(require, "neo-tree.sources.filesystem")
-
-  name = module.name or name
   all_sources[name] = "neo-tree.sources.filesystem"
 
-  default_config[name] = module.default_config or default_config[name]
-
-  log.debug("Sources to load: ", vim.inspect(all_sources))
   require("neo-tree.command.parser").setup()
 
   -- setup the default values for all sources
