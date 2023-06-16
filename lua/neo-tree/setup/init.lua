@@ -174,7 +174,6 @@ M.buffer_enter_event = function()
     setlocal winhighlight=Normal:NeoTreeFloatNormal,FloatBorder:NeoTreeFloatBorder
     setlocal nolist nospell nonumber norelativenumber
     ]])
-    events.fire_event(events.NEO_TREE_POPUP_BUFFER_ENTER)
     return
   end
 
