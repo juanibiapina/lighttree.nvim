@@ -3,7 +3,6 @@
 local cc = require("neo-tree.sources.common.commands")
 local fs = require("neo-tree.sources.filesystem")
 local utils = require("neo-tree.utils")
-local filter = require("neo-tree.sources.filesystem.lib.filter")
 local renderer = require("neo-tree.ui.renderer")
 local log = require("neo-tree.log")
 
