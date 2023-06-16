@@ -1000,11 +1000,6 @@ or clear the filter. The arg is the path of the file opened.
 Fired after a file (or folder) has been renamed. The arg is an table containing
 `source` and `destination` properties.
 
-"neo_tree_buffer_enter"~
-Fired after entering a neo-tree buffer. It is also right after neo-tree applies
-it's own settings, so it's the ideal place to apply any local settings you would
-like to have.
-
 "neo_tree_popup_buffer_enter"~
 Fired after entering a neo-tree popup buffer. This includes things such as file
 rename prompts and filter inputs. It runs right after neo-tree applies it's own

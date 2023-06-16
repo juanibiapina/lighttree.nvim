@@ -165,7 +165,6 @@ M.buffer_enter_event = function()
       vim.cmd("setlocal winhighlight=" .. winhighlight)
     end
 
-    events.fire_event(events.NEO_TREE_BUFFER_ENTER)
     vim.api.nvim_win_set_var(0, "neo_tree_settings_applied", true)
     return
   end
