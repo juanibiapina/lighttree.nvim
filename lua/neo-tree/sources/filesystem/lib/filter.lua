@@ -12,21 +12,4 @@ local manager = require("neo-tree.sources.manager")
 
 local M = {}
 
-local cmds = {
-  move_cursor_down = function(state, scroll_padding)
-    renderer.focus_node(state, nil, true, 1, scroll_padding)
-  end,
-
-  move_cursor_up = function(state, scroll_padding)
-    renderer.focus_node(state, nil, true, -1, scroll_padding)
-    vim.cmd("redraw!")
-  end,
-}
-
-local function create_input_mapping_handle(cmd, state, scroll_padding)
-  return function()
-    cmd(state, scroll_padding)
-  end
-end
-
 return M
