@@ -810,39 +810,7 @@ create_window = function(state)
   }
   events.fire_event(events.NEO_TREE_WINDOW_BEFORE_OPEN, event_args)
 
-  if state.current_position == "float" then
-    state.force_float = nil
-    -- First get the default options for floating windows.
-    local sourceTitle = state.name:gsub("^%l", string.upper)
-    win_options = popups.popup_options("Neo-tree " .. sourceTitle, 40, win_options)
-    win_options.win_options = nil
-    win_options.zindex = 40
-
-    -- Then override with source specific options.
-    local b = win_options.border
-    win_options.size = utils.resolve_config_option(state, "window.popup.size", default_popup_size)
-    win_options.position = utils.resolve_config_option(state, "window.popup.position", "50%")
-    win_options.border = utils.resolve_config_option(state, "window.popup.border", b)
-
-    win = NuiPopup(win_options)
-    win:mount()
-    win.source_name = state.name
-    win.original_options = state.window
-    table.insert(floating_windows, win)
-
-    win:on({ "BufHidden" }, function()
-      vim.schedule(function()
-        win:unmount()
-      end)
-    end, { once = true })
-    state.winid = win.winid
-    state.bufnr = win.bufnr
-    log.debug("Created floating window with winid: ", win.winid, " and bufnr: ", win.bufnr)
-    vim.api.nvim_buf_set_name(state.bufnr, bufname)
-
-    -- why is this necessary?
-    vim.api.nvim_set_current_win(win.winid)
-  elseif state.current_position == "current" then
+  if state.current_position == "current" then
     -- state.id is always the window id or tabnr that this state was created for
     -- in the case of a position = current state object, it will be the window id
     local winid = state.id
