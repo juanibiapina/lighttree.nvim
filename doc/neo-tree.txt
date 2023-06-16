@@ -1005,18 +1005,11 @@ Fired after entering a neo-tree buffer. It is also right after neo-tree applies
 it's own settings, so it's the ideal place to apply any local settings you would
 like to have.
 
-"neo_tree_buffer_leave"~
-Fired after a neo-tree buffer was exited. Technically it fires when entering a
-buffer that is not neo-tree, when the last buffer enter event was neo-tree.
-
 "neo_tree_popup_buffer_enter"~
 Fired after entering a neo-tree popup buffer. This includes things such as file
 rename prompts and filter inputs. It runs right after neo-tree applies it's own
 settings, so it's the ideal place to apply any local settings you would like to
 have.
-
-"neo_tree_popup_buffer_leave"~
-Fired after leaving a neo-tree popup buffer.
 
 "neo_tree_window_before_open"~
 Fired before opening a new Neo-tree window. Called with the following arg:

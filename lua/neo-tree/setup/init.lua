@@ -145,16 +145,11 @@ local restore_local_window_settings = function(winid)
   end
 end
 
-local last_buffer_enter_filetype = nil
 M.buffer_enter_event = function()
   -- if it is a neo-tree window, just set local options
   if vim.bo.filetype == "neo-tree" then
-    if last_buffer_enter_filetype == "neo-tree" then
-      -- we've switched to another neo-tree window
-      events.fire_event(events.NEO_TREE_BUFFER_LEAVE)
-    else
-      store_local_window_settings()
-    end
+    store_local_window_settings()
+
     vim.cmd([[
     setlocal cursorline
     setlocal cursorlineopt=line
@@ -171,7 +166,6 @@ M.buffer_enter_event = function()
     end
 
     events.fire_event(events.NEO_TREE_BUFFER_ENTER)
-    last_buffer_enter_filetype = vim.bo.filetype
     vim.api.nvim_win_set_var(0, "neo_tree_settings_applied", true)
     return
   end
@@ -182,17 +176,8 @@ M.buffer_enter_event = function()
     setlocal nolist nospell nonumber norelativenumber
     ]])
     events.fire_event(events.NEO_TREE_POPUP_BUFFER_ENTER)
-    last_buffer_enter_filetype = vim.bo.filetype
     return
   end
-
-  if last_buffer_enter_filetype == "neo-tree" then
-    events.fire_event(events.NEO_TREE_BUFFER_LEAVE)
-  end
-  if last_buffer_enter_filetype == "neo-tree-popup" then
-    events.fire_event(events.NEO_TREE_POPUP_BUFFER_LEAVE)
-  end
-  last_buffer_enter_filetype = vim.bo.filetype
 
   -- there is nothing more we want to do with floating windows
   if utils.is_floating() then
