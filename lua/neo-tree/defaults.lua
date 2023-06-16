@@ -211,7 +211,6 @@ local config = {
       ["p"] = "paste_from_clipboard",
       ["c"] = "copy", -- takes text input for destination, also accepts the config.show_path and config.insert_as options
       ["m"] = "move", -- takes text input for destination, also accepts the config.show_path and config.insert_as options
-      ["e"] = "toggle_auto_expand_width",
       ["?"] = "show_help",
     },
   },
