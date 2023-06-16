@@ -444,36 +444,38 @@ M.merge_config = function(user_config, is_auto_config)
   -- used to either limit the sources that or loaded, or add extra external sources
   local all_sources = {}
   local all_source_names = {}
-  for _, source in ipairs(user_config.sources or default_config.sources) do
-    local parts = utils.split(source, ".")
-    local name = parts[#parts]
-    local is_internal_ns, is_external_ns = false, false
-    local module
 
-    if #parts == 1 then
-      -- might be a module name in the internal namespace
-      is_internal_ns, module = pcall(require, "neo-tree.sources." .. source)
-    end
-    if is_internal_ns then
+  source = "filesystem"
+
+  local parts = utils.split(source, ".")
+  local name = parts[#parts]
+  local is_internal_ns, is_external_ns = false, false
+  local module
+
+  if #parts == 1 then
+    -- might be a module name in the internal namespace
+    is_internal_ns, module = pcall(require, "neo-tree.sources." .. source)
+  end
+  if is_internal_ns then
+    name = module.name or name
+    all_sources[name] = "neo-tree.sources." .. name
+  else
+    -- fully qualified module name
+    -- or just a root level module name
+    is_external_ns, module = pcall(require, source)
+    if is_external_ns then
       name = module.name or name
-      all_sources[name] = "neo-tree.sources." .. name
+      all_sources[name] = source
     else
-      -- fully qualified module name
-      -- or just a root level module name
-      is_external_ns, module = pcall(require, source)
-      if is_external_ns then
-        name = module.name or name
-        all_sources[name] = source
-      else
-        log.error("Source module not found", source)
-        name = nil
-      end
-    end
-    if name then
-      default_config[name] = module.default_config or default_config[name]
-      table.insert(all_source_names, name)
+      log.error("Source module not found", source)
+      name = nil
     end
   end
+  if name then
+    default_config[name] = module.default_config or default_config[name]
+    table.insert(all_source_names, name)
+  end
+
   log.debug("Sources to load: ", vim.inspect(all_sources))
   require("neo-tree.command.parser").setup(all_source_names)
 
