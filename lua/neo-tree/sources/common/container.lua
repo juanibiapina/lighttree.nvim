@@ -265,7 +265,7 @@ local merge_content = function(context)
           remaining_width = 0
         else
           remaining_width = remaining_width - width
-          if context.enable_character_fade and not context.auto_expand_width then
+          if context.enable_character_fade then
             local fade_chars = 3 - remaining_width
             if fade_chars > 0 then
               try_fade_content(layer.left, fade_chars)
@@ -277,7 +277,7 @@ local merge_content = function(context)
       end
     end
 
-    if remaining_width == 0 and not context.auto_expand_width then
+    if remaining_width == 0 then
       i = 0
       break
     end
