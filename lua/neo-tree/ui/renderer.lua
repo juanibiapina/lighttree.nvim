@@ -933,21 +933,12 @@ end
 ---Renders the given tree and expands window width if needed
 --@param state table The state containing tree to render. Almost same as state.tree:render()
 render_tree = function(state)
-  local should_auto_expand = state.window.auto_expand_width and state.current_position ~= "float"
-  local should_pre_render = should_auto_expand or state.current_position == "current"
-  if should_pre_render and M.tree_is_visible(state) then
-    log.trace("pre-rendering tree")
+  if M.tree_is_visible(state) then
     state._in_pre_render = true
     state.tree:render()
     state._in_pre_render = false
     state.window.last_user_width = vim.api.nvim_win_get_width(state.winid)
-    if should_auto_expand and state.longest_node > state.window.last_user_width then
-      log.trace(string.format("auto_expand_width: on. Expanding width to %s.", state.longest_node))
-      vim.api.nvim_win_set_width(state.winid, state.longest_node)
-      state.win_width = state.longest_node
-    end
-  end
-  if M.tree_is_visible(state) then
+
     state.tree:render()
   end
 end

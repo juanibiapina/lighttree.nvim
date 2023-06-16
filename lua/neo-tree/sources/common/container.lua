@@ -310,7 +310,6 @@ M.render = function(config, node, state, available_width)
     left_padding = config.left_padding,
     right_padding = config.right_padding,
     enable_character_fade = config.enable_character_fade,
-    auto_expand_width = state.window.auto_expand_width and state.window.position ~= "float",
   }
 
   render_content(config, node, state, context)
