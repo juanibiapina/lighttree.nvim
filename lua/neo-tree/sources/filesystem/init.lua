@@ -137,23 +137,13 @@ M._navigate_internal = function(state, path, path_to_reveal, callback, async)
     )
     fs_scan.get_items(state, nil, path_to_reveal, callback)
   else
-    local is_current = state.current_position == "current"
-    local follow_file = state.follow_current_file
-      and not is_current
-      and manager.get_path_to_reveal()
-    local handled = false
-    if utils.truthy(follow_file) then
-      handled = follow_internal(callback, true, async)
+    local success, msg = pcall(renderer.position.save, state)
+    if success then
+      log.trace("navigate_internal: position saved")
+    else
+      log.trace("navigate_internal: FAILED to save position: ", msg)
     end
-    if not handled then
-      local success, msg = pcall(renderer.position.save, state)
-      if success then
-        log.trace("navigate_internal: position saved")
-      else
-        log.trace("navigate_internal: FAILED to save position: ", msg)
-      end
-      fs_scan.get_items(state, nil, nil, callback, async)
-    end
+    fs_scan.get_items(state, nil, nil, callback, async)
   end
 
   if path_changed and state.bind_to_cwd then
@@ -320,18 +310,6 @@ M.setup = function(config, global_config)
         handler = wrap(manager.opened_buffers_changed),
       })
     end
-  end
-
-  -- Configure event handler for follow_current_file option
-  if config.follow_current_file then
-    manager.subscribe(M.name, {
-      event = events.VIM_BUFFER_ENTER,
-      handler = function(args)
-        if utils.is_real_file(args.afile) then
-          M.follow()
-        end
-      end,
-    })
   end
 end
 
