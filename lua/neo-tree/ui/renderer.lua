@@ -1,11 +1,8 @@
 local vim = vim
 local NuiLine = require("nui.line")
 local NuiTree = require("nui.tree")
-local NuiSplit = require("nui.split")
-local NuiPopup = require("nui.popup")
 local utils = require("neo-tree.utils")
 local highlights = require("neo-tree.ui.highlights")
-local popups = require("neo-tree.ui.popups")
 local events = require("neo-tree.events")
 local keymap = require("nui.utils.keymap")
 local autocmd = require("nui.utils.autocmd")
@@ -810,34 +807,27 @@ create_window = function(state)
   }
   events.fire_event(events.NEO_TREE_WINDOW_BEFORE_OPEN, event_args)
 
-  if state.current_position == "current" then
-    -- state.id is always the window id or tabnr that this state was created for
-    -- in the case of a position = current state object, it will be the window id
-    local winid = state.id
-    if not vim.api.nvim_win_is_valid(winid) then
-      log.warn("Window ", winid, "  is no longer valid!")
-      return
-    end
-    local bufnr = vim.fn.bufnr(bufname)
-    if bufnr < 1 then
-      bufnr = vim.api.nvim_create_buf(false, false)
-      vim.api.nvim_buf_set_name(bufnr, bufname)
-    end
-    state.winid = winid
-    state.bufnr = bufnr
-    vim.api.nvim_buf_set_option(bufnr, "buftype", "nofile")
-    vim.api.nvim_buf_set_option(bufnr, "swapfile", false)
-    vim.api.nvim_buf_set_option(bufnr, "filetype", "neo-tree")
-    vim.api.nvim_buf_set_option(bufnr, "modifiable", false)
-    vim.api.nvim_buf_set_option(bufnr, "undolevels", -1)
-    vim.api.nvim_win_set_buf(winid, bufnr)
-  else
-    win = NuiSplit(win_options)
-    win:mount()
-    state.winid = win.winid
-    state.bufnr = win.bufnr
-    vim.api.nvim_buf_set_name(state.bufnr, bufname)
+  -- state.id is always the window id or tabnr that this state was created for
+  -- in the case of a position = current state object, it will be the window id
+  local winid = state.id
+  if not vim.api.nvim_win_is_valid(winid) then
+    log.warn("Window ", winid, "  is no longer valid!")
+    return
   end
+  local bufnr = vim.fn.bufnr(bufname)
+  if bufnr < 1 then
+    bufnr = vim.api.nvim_create_buf(false, false)
+    vim.api.nvim_buf_set_name(bufnr, bufname)
+  end
+  state.winid = winid
+  state.bufnr = bufnr
+  vim.api.nvim_buf_set_option(bufnr, "buftype", "nofile")
+  vim.api.nvim_buf_set_option(bufnr, "swapfile", false)
+  vim.api.nvim_buf_set_option(bufnr, "filetype", "neo-tree")
+  vim.api.nvim_buf_set_option(bufnr, "modifiable", false)
+  vim.api.nvim_buf_set_option(bufnr, "undolevels", -1)
+  vim.api.nvim_win_set_buf(winid, bufnr)
+
   event_args.winid = state.winid
   events.fire_event(events.NEO_TREE_WINDOW_AFTER_OPEN, event_args)
 
