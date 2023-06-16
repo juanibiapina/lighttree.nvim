@@ -452,13 +452,8 @@ M.merge_config = function(user_config, is_auto_config)
   local mod_root = "neo-tree.sources.filesystem"
 
   local module = require(mod_root)
-  default_config[source_name] = default_config[source_name]
-    or {
-      renderers = {},
-      components = {},
-    }
   local source_default_config = default_config[source_name]
-  source_default_config.components = require("neo-tree.sources.filesystem.components")
+  source_default_config.components = require("neo-tree.sources.common.components")
   source_default_config.commands = require("neo-tree.sources.filesystem.commands")
   source_default_config.name = source_name
 
