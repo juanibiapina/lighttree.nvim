@@ -91,7 +91,6 @@ M.hijack = function()
       state = manager.get_state("filesystem")
     else
       log.debug("hijack_netrw: opening default")
-      manager.close_all_except("filesystem")
       state = manager.get_state("filesystem")
     end
     require("neo-tree.sources.filesystem")._navigate_internal(state, bufname, nil, remove_dir_buf)
