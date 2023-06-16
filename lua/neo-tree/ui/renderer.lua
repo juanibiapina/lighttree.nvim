@@ -317,14 +317,6 @@ local prepare_node = function(item, state)
     local line = item.line
     -- Only use it once, we don't want to accidentally use stale data
     item.line = nil
-    if
-      line
-      and item.wanted_width
-      and state.longest_node
-      and item.wanted_width <= state.longest_node
-    then
-      return line
-    end
   end
   local line = NuiLine()
 
@@ -346,10 +338,6 @@ local prepare_node = function(item, state)
   end
 
   local wanted_width = 0
-  if state.current_position == "current" then
-    local longest = state.longest_node or 0
-    remaining_cols = math.min(remaining_cols, longest + 4)
-  end
 
   local should_pad = false
 
@@ -380,7 +368,6 @@ local prepare_node = function(item, state)
   line.wanted_width = wanted_width
   if pre_render then
     item.line = line
-    state.longest_node = math.max(state.longest_node, line.wanted_width)
   else
     item.line = nil
   end
@@ -1030,9 +1017,6 @@ M.show_nodes = function(sourceItems, state, parentId, callback)
     if success and parent then
       level = parent:get_depth()
     end
-    state.longest_node = state.longest_node or 0
-  else
-    state.longest_node = 0
   end
 
   local config = require("neo-tree").config
