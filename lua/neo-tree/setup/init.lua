@@ -616,7 +616,7 @@ M.merge_config = function(user_config, is_auto_config)
     end,
   })
 
-  --Dispose ourselves if the tab closes
+  --Dispose ourselves if the window closes
   events.subscribe({
     event = events.VIM_WIN_CLOSED,
     handler = function(args)
