@@ -458,10 +458,10 @@ M.merge_config = function(user_config, is_auto_config)
       components = {},
     }
   local source_default_config = default_config[source_name]
-  source_default_config.components = module.components or require(mod_root .. ".components")
-  source_default_config.commands = module.commands or require(mod_root .. ".commands")
+  source_default_config.components = require("neo-tree.sources.filesystem.components")
+  source_default_config.commands = require("neo-tree.sources.filesystem.commands")
   source_default_config.name = source_name
-  source_default_config.display_name = module.display_name or source_default_config.name
+  source_default_config.display_name = module.display_name
 
   if user_config.use_default_mappings == false then
     default_config.window.mappings = {}
