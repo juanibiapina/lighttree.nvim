@@ -137,7 +137,6 @@ use {
         -- see `:h neo-tree-global-custom-commands`
         commands = {},
         window = {
-          position = "left",
           width = 40,
           mapping_options = {
             noremap = true,
@@ -214,9 +213,8 @@ use {
                                        -- time the current file is changed while the tree is open.
           group_empty_dirs = false, -- when true, empty folders will be grouped together
           hijack_netrw_behavior = "open_default", -- netrw disabled, opening a directory opens neo-tree
-                                                  -- in whatever position is specified in window.position
                                 -- "open_current",  -- netrw disabled, opening a directory opens within the
-                                                  -- window like netrw would, regardless of window.position
+                                                  -- window like netrw would
                                 -- "disabled",    -- netrw left alone, neo-tree does not handle opening dirs
           use_libuv_file_watcher = false, -- This will use the OS level file watchers to detect changes
                                           -- instead of relying on nvim autocmd events.
@@ -257,32 +255,13 @@ into a buffer after installing Neo-tree by running:
 
 ## The `:Neotree` Command
 
-The single `:Neotree` command accepts a range of arguments that give you full
-control over the details of what and where it will show. For example, the following 
-command will open a file browser on the right hand side, "revealing" the currently
-active file:
-
-```
-:Neotree filesystem reveal right
-```
+The single `:Neotree` command accepts a range of arguments.
 
 Arguments can be specified as either a key=value pair or just as the value. The
-key=value form is more verbose but may help with clarity. For example, the command
-above can also be specified as:
-
-```
-:Neotree source=filesystem reveal=true position=right
-```
+key=value form is more verbose but may help with clarity.
 
 All arguments are optional and can be specified in any order. If you issue the command
-without any arguments, it will use default values for everything. For example:
-
-```
-:Neotree
-```
-
-will open the filesystem source on the left hand side and focus it, if you are using 
-the default config.
+without any arguments, it will use default values for everything.
 
 ### Tab Completion
 
@@ -295,36 +274,6 @@ them with `/` or `./`.
 
 Here is the full list of arguments you can use:
 
-#### `action`
-What to do. Can be one of:
-
-| Option | Description |
-|--------|-------------|
-| focus | Show and/or switch focus to the specified Neotree window. DEFAULT |
-| show  | Show the window, but keep focus on your current window. |
-| close | Close the window(s) specified. Can be combined with "position" and/or "source" to specify which window(s) to close. |
-
-#### `source`
-What to show. Can be one of:
-
-| Option | Description |
-|--------|-------------|
-| filesystem | Show a file browser. DEFAULT |
-| buffers    | Show a list of currently open buffers. |
-| git_status | Show the output of `git status` in a tree layout. |
-
-#### `position`
-Where to show it, can be one of:
-
-| Option  | Description |
-|---------|-------------|
-| left     | Open as left hand sidebar. DEFAULT |
-| right    | Open as right hand sidebar. |
-| top      | Open as top window. |
-| bottom   | Open as bottom window. |
-| float    | Open as floating window. |
-| current  | Open within the current window, like netrw or vinegar would. |
-
 #### `dir`
 The directory to set as the root/cwd of the specified window. If you include a
 directory as one of the arguments, it will be assumed to be this option, you
@@ -336,7 +285,7 @@ current file. For example:
 :Neotree ./relative/path
 :Neotree /home/user/relative/path
 :Neotree dir=/home/user/relative/path
-:Neotree position=current dir=relative/path
+:Neotree dir=relative/path
 ```
 
 #### `git_base`
@@ -368,8 +317,8 @@ passed to the 'expand' function. For example:
 
 ```
 :Neotree reveal_file=/home/user/my/file.text
-:Neotree position=current dir=%:p:h:h reveal_file=%:p
-:Neotree current %:p:h:h %:p
+:Neotree dir=%:p:h:h reveal_file=%:p
+:Neotree %:p:h:h %:p
 ```
 
 One neat trick you can do with this is to open a Neotree window which is
@@ -393,10 +342,8 @@ See `:h neo-tree-file-nesting` for more details about file nesting.
 :[v]split .
 ```
 
-If `"filesystem.window.position"` is set to `"current"`, or if you have specified
-`filesystem.hijack_netrw_behavior = "open_current"`, then any command
-that would open a directory will open neo-tree in the specified window.
-
+Any command that would open a directory will now open neo-tree in the specified
+window.
 
 ## Sources
 
