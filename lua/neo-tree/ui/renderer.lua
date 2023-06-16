@@ -309,15 +309,7 @@ local prepare_node = function(item, state)
       return nil
     end
   end
-  -- pre_render is used to calculate the longest node width
-  -- without actually rendering the node.
-  -- We'll try to reuse that work if possible.
-  local pre_render = state._in_pre_render
-  if item.line and not pre_render then
-    local line = item.line
-    -- Only use it once, we don't want to accidentally use stale data
-    item.line = nil
-  end
+
   local line = NuiLine()
 
   local renderer = state.renderers[item.type]
@@ -366,11 +358,6 @@ local prepare_node = function(item, state)
   end
 
   line.wanted_width = wanted_width
-  if pre_render then
-    item.line = line
-  else
-    item.line = nil
-  end
 
   return line
 end
@@ -919,10 +906,6 @@ end
 
 render_tree = function(state)
   if M.tree_is_visible(state) then
-    state._in_pre_render = true
-    state.tree:render()
-
-    state._in_pre_render = false
     state.tree:render()
   end
 end
