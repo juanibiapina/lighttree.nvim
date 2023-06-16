@@ -930,15 +930,12 @@ M.tree_is_visible = function(state)
   return M.window_exists(state) and vim.api.nvim_win_get_buf(state.winid) == state.bufnr
 end
 
----Renders the given tree and expands window width if needed
---@param state table The state containing tree to render. Almost same as state.tree:render()
 render_tree = function(state)
   if M.tree_is_visible(state) then
     state._in_pre_render = true
     state.tree:render()
-    state._in_pre_render = false
-    state.window.last_user_width = vim.api.nvim_win_get_width(state.winid)
 
+    state._in_pre_render = false
     state.tree:render()
   end
 end
@@ -1025,7 +1022,6 @@ M.show_nodes = function(sourceItems, state, parentId, callback)
   --local id = string.format("show_nodes %s:%s [%s]", state.name, state.force_float, state.tabid)
   --utils.debounce(id, function()
   events.fire_event(events.BEFORE_RENDER, state)
-  state.longest_width_exact = 0
   local parent
   local level = 0
   if parentId ~= nil then
