@@ -480,22 +480,6 @@ M.merge_config = function(user_config, is_auto_config)
 
   merge_renderers(default_config, source_default_config, user_config)
 
-  --validate the window.position
-  local pos_key = source_name .. ".window.position"
-  local position = utils.get_value(user_config, pos_key, "left", true)
-  local valid_positions = {
-    left = true,
-    right = true,
-    top = true,
-    bottom = true,
-    float = true,
-    current = true,
-  }
-  if not valid_positions[position] then
-    log.error("Invalid value for ", pos_key, ": ", position)
-    user_config[source_name].window.position = "left"
-  end
-
   -- apply the users config
   M.config = vim.tbl_deep_extend("force", default_config, user_config)
 
