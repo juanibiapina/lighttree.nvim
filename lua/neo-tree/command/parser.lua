@@ -7,9 +7,7 @@ local M = {
   REF = "<REF>",
 }
 
-M.setup = function(all_source_names)
-  local source_names = vim.deepcopy(all_source_names, { noref = 1 })
-
+M.setup = function()
   -- For lists, the first value is the default value.
   local arguments = {
     action = {
@@ -30,10 +28,6 @@ M.setup = function(all_source_names)
         "float",
         "current",
       },
-    },
-    source = {
-      type = M.LIST,
-      values = source_names,
     },
     dir = { type = M.PATH, stat_type = "directory" },
     reveal_file = { type = M.PATH, stat_type = "file" },

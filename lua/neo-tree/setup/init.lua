@@ -443,41 +443,21 @@ M.merge_config = function(user_config, is_auto_config)
 
   -- used to either limit the sources that or loaded, or add extra external sources
   local all_sources = {}
-  local all_source_names = {}
 
   source = "filesystem"
 
-  local parts = utils.split(source, ".")
-  local name = parts[#parts]
-  local is_internal_ns, is_external_ns = false, false
+  local name = "filesystem"
   local module
 
-  if #parts == 1 then
-    -- might be a module name in the internal namespace
-    is_internal_ns, module = pcall(require, "neo-tree.sources." .. source)
-  end
-  if is_internal_ns then
-    name = module.name or name
-    all_sources[name] = "neo-tree.sources." .. name
-  else
-    -- fully qualified module name
-    -- or just a root level module name
-    is_external_ns, module = pcall(require, source)
-    if is_external_ns then
-      name = module.name or name
-      all_sources[name] = source
-    else
-      log.error("Source module not found", source)
-      name = nil
-    end
-  end
-  if name then
-    default_config[name] = module.default_config or default_config[name]
-    table.insert(all_source_names, name)
-  end
+  _, module = pcall(require, "neo-tree.sources.filesystem")
+
+  name = module.name or name
+  all_sources[name] = "neo-tree.sources.filesystem"
+
+  default_config[name] = module.default_config or default_config[name]
 
   log.debug("Sources to load: ", vim.inspect(all_sources))
-  require("neo-tree.command.parser").setup(all_source_names)
+  require("neo-tree.command.parser").setup()
 
   -- setup the default values for all sources
   normalize_mappings(default_config)
