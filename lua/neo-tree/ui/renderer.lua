@@ -782,11 +782,7 @@ create_window = function(state)
 
   local bufname = string.format("neo-tree %s [%s]", state.name, state.id)
   local size_opt, default_size
-  if state.current_position == "top" or state.current_position == "bottom" then
-    size_opt, default_size = "window.height", "15"
-  else
-    size_opt, default_size = "window.width", "40"
-  end
+  size_opt, default_size = "window.width", "40"
   local win_options = {
     ns_id = highlights.ns_id,
     size = utils.resolve_config_option(state, size_opt, default_size),
@@ -833,12 +829,6 @@ create_window = function(state)
     win.source_name = state.name
     win.original_options = state.window
     table.insert(floating_windows, win)
-
-    if require("neo-tree").config.close_floats_on_escape_key then
-      win:map("n", "<esc>", function(_)
-        win:unmount()
-      end, { noremap = true })
-    end
 
     win:on({ "BufHidden" }, function()
       vim.schedule(function()
