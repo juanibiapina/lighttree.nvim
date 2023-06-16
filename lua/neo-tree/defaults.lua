@@ -5,7 +5,6 @@ local config = {
   -- popup_border_style is for input and confirmation dialogs.
   -- Configurtaion of floating window is done in the individual source sections.
   -- "NC" is a special style that works well with NormalNC set
-  default_source = "filesystem",
   enable_diagnostics = true,
   enable_git_status = true,
   enable_modified_markers = true, -- Show markers for files with unsaved changes.
