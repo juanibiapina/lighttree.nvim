@@ -547,9 +547,6 @@ M.merge_config = function(user_config, is_auto_config)
   end
   --print(vim.inspect(default_config.filesystem))
 
-  -- Moving user_config.sources to user_config.orig_sources
-  user_config.orig_sources = user_config.sources and user_config.sources or {}
-
   -- apply the users config
   M.config = vim.tbl_deep_extend("force", default_config, user_config)
 
