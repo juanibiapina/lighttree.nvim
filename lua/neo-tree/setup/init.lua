@@ -441,12 +441,6 @@ M.merge_config = function(user_config, is_auto_config)
 
   highlights.setup()
 
-  -- used to either limit the sources that or loaded, or add extra external sources
-  local all_sources = {}
-
-  local name = "filesystem"
-  all_sources[name] = "neo-tree.sources.filesystem"
-
   require("neo-tree.command.parser").setup()
 
   -- setup the default values for all sources
@@ -454,53 +448,53 @@ M.merge_config = function(user_config, is_auto_config)
   normalize_mappings(user_config)
   merge_renderers(default_config, nil, user_config)
 
-  for source_name, mod_root in pairs(all_sources) do
-    local module = require(mod_root)
-    default_config[source_name] = default_config[source_name]
-      or {
-        renderers = {},
-        components = {},
-      }
-    local source_default_config = default_config[source_name]
-    source_default_config.components = module.components or require(mod_root .. ".components")
-    source_default_config.commands = module.commands or require(mod_root .. ".commands")
-    source_default_config.name = source_name
-    source_default_config.display_name = module.display_name or source_default_config.name
+  local source_name = "filesystem"
+  local mod_root = "neo-tree.sources.filesystem"
 
-    if user_config.use_default_mappings == false then
-      default_config.window.mappings = {}
-      source_default_config.window.mappings = {}
-    end
-    -- Make sure all the mappings are normalized so they will merge properly.
-    normalize_mappings(source_default_config)
-    normalize_mappings(user_config[source_name])
-    -- merge the global config with the source specific config
-    source_default_config.window = vim.tbl_deep_extend(
-      "force",
-      default_config.window or {},
-      source_default_config.window or {},
-      user_config.window or {}
-    )
-
-    merge_renderers(default_config, source_default_config, user_config)
-
-    --validate the window.position
-    local pos_key = source_name .. ".window.position"
-    local position = utils.get_value(user_config, pos_key, "left", true)
-    local valid_positions = {
-      left = true,
-      right = true,
-      top = true,
-      bottom = true,
-      float = true,
-      current = true,
+  local module = require(mod_root)
+  default_config[source_name] = default_config[source_name]
+    or {
+      renderers = {},
+      components = {},
     }
-    if not valid_positions[position] then
-      log.error("Invalid value for ", pos_key, ": ", position)
-      user_config[source_name].window.position = "left"
-    end
+  local source_default_config = default_config[source_name]
+  source_default_config.components = module.components or require(mod_root .. ".components")
+  source_default_config.commands = module.commands or require(mod_root .. ".commands")
+  source_default_config.name = source_name
+  source_default_config.display_name = module.display_name or source_default_config.name
+
+  if user_config.use_default_mappings == false then
+    default_config.window.mappings = {}
+    source_default_config.window.mappings = {}
   end
-  --print(vim.inspect(default_config.filesystem))
+  -- Make sure all the mappings are normalized so they will merge properly.
+  normalize_mappings(source_default_config)
+  normalize_mappings(user_config[source_name])
+  -- merge the global config with the source specific config
+  source_default_config.window = vim.tbl_deep_extend(
+    "force",
+    default_config.window or {},
+    source_default_config.window or {},
+    user_config.window or {}
+  )
+
+  merge_renderers(default_config, source_default_config, user_config)
+
+  --validate the window.position
+  local pos_key = source_name .. ".window.position"
+  local position = utils.get_value(user_config, pos_key, "left", true)
+  local valid_positions = {
+    left = true,
+    right = true,
+    top = true,
+    bottom = true,
+    float = true,
+    current = true,
+  }
+  if not valid_positions[position] then
+    log.error("Invalid value for ", pos_key, ": ", position)
+    user_config[source_name].window.position = "left"
+  end
 
   -- apply the users config
   M.config = vim.tbl_deep_extend("force", default_config, user_config)
@@ -511,18 +505,16 @@ M.merge_config = function(user_config, is_auto_config)
 
   file_nesting.setup(M.config.nesting_rules)
 
-  for source_name, mod_root in pairs(all_sources) do
-    for name, rndr in pairs(M.config[source_name].renderers) do
-      M.config[source_name].renderers[name] = merge_global_components_config(rndr, M.config)
-    end
-    local module = require(mod_root)
-    if M.config.commands then
-      M.config[source_name].commands =
-        vim.tbl_extend("keep", M.config[source_name].commands or {}, M.config.commands)
-    end
-    manager.setup(source_name, M.config[source_name], M.config, module)
-    manager.redraw(source_name)
+  for name, rndr in pairs(M.config[source_name].renderers) do
+    M.config[source_name].renderers[name] = merge_global_components_config(rndr, M.config)
   end
+  local module = require(mod_root)
+  if M.config.commands then
+    M.config[source_name].commands =
+      vim.tbl_extend("keep", M.config[source_name].commands or {}, M.config.commands)
+  end
+  manager.setup(source_name, M.config[source_name], M.config, module)
+  manager.redraw(source_name)
 
   events.subscribe({
     event = events.VIM_COLORSCHEME,
