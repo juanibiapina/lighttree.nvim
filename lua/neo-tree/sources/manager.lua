@@ -163,25 +163,6 @@ M.unsubscribe_all = function(source_name)
   sd.subscriptions = {}
 end
 
-M.close_all = function(at_position)
-  local tabid = vim.api.nvim_get_current_tabpage()
-  for source_name, _ in pairs(source_data) do
-    M._for_each_state(source_name, function(state)
-      if state.tabid == tabid then
-        if at_position then
-          if state.current_position == at_position then
-            log.trace("Closing " .. source_name .. " at position " .. at_position)
-            pcall(renderer.close, state)
-          end
-        else
-          log.trace("Closing " .. source_name)
-          pcall(renderer.close, state)
-        end
-      end
-    end)
-  end
-end
-
 ---Redraws the tree with updated diagnostics without scanning the filesystem again.
 M.diagnostics_changed = function(source_name, args)
   if not type(args) == "table" then

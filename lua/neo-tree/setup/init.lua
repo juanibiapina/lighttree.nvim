@@ -263,9 +263,6 @@ M.win_enter_event = function()
     return
   end
 
-  -- if the new win is not a floating window, make sure all neo-tree floats are closed
-  manager.close_all("float")
-
   if vim.o.filetype == "neo-tree" then
     local _, position = pcall(vim.api.nvim_buf_get_var, 0, "neo_tree_position")
     if position == "current" then
