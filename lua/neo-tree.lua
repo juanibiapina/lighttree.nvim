@@ -63,9 +63,6 @@ M.paste_default_config = function()
   end)
 end
 
-M.buffer_enter_event = setup.buffer_enter_event
-M.win_enter_event = setup.win_enter_event
-
 M.set_log_level = function(level)
   log.set_level(level)
 end
