@@ -317,7 +317,7 @@ end
 M.navigate = function(state_or_source_name, path, path_to_reveal, callback, async)
   local state, source_name
   if type(state_or_source_name) == "string" then
-    state = M.get_state("filesystem")
+    state = M.get_state()
     source_name = state_or_source_name
   elseif type(state_or_source_name) == "table" then
     state = state_or_source_name

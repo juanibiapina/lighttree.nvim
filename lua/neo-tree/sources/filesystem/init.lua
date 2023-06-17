@@ -19,10 +19,6 @@ local wrap = function(func)
   return utils.wrap(func, M.name)
 end
 
-local get_state = function(tabid)
-  return manager.get_state("filesystem", tabid)
-end
-
 M._navigate_internal = function(state, path, path_to_reveal, callback, async)
   log.trace("navigate_internal", state.current_position, path, path_to_reveal)
   state.dirty = false
@@ -132,7 +128,7 @@ M.setup = function(config, global_config)
     manager.subscribe(M.name, {
       event = events.BEFORE_RENDER,
       handler = function(state)
-        local this_state = get_state()
+        local this_state = manager.get_state()
         if state == this_state then
           config.before_render(this_state)
         end
@@ -147,7 +143,7 @@ M.setup = function(config, global_config)
     manager.subscribe(M.name, {
       event = events.BEFORE_RENDER,
       handler = function(state)
-        local this_state = get_state()
+        local this_state = manager.get_state()
         if state == this_state then
           state.git_status_lookup = git.status(state.git_base)
         end
