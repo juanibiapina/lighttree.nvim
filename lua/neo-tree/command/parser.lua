@@ -146,7 +146,6 @@ local parse_arg = function(result, arg)
 end
 
 M.parse = function(args, strict_checking)
-  require("neo-tree").ensure_config()
   local result = {}
 
   if type(args) == "string" then

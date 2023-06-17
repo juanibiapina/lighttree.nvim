@@ -18,9 +18,6 @@ local M = {
 ---  dir = string      The root directory to set.
 ---  git_base = string The git base used for diff
 M.execute = function(args)
-  local nt = require("neo-tree")
-  nt.ensure_config()
-
   -- get current window
   local winid = vim.api.nvim_get_current_win()
 

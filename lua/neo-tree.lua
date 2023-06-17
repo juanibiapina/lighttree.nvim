@@ -5,12 +5,6 @@ local setup = require("neo-tree.setup")
 
 local M = {}
 
-M.ensure_config = function()
-  if not M.config then
-    M.setup({ log_to_file = false }, true)
-  end
-end
-
 M.get_prior_window = function(ignore_filetypes)
   ignore_filetypes = ignore_filetypes or {}
   local ignore = utils.list_to_dict(ignore_filetypes)
@@ -44,11 +38,11 @@ M.set_log_level = function(level)
   log.set_level(level)
 end
 
-M.setup = function(config, is_auto_config)
+M.setup = function(config)
   M.config = require("neo-tree.setup").merge_config(config)
 
   local netrw = require("neo-tree.setup.netrw")
-  if not is_auto_config and netrw.get_hijack_netrw() then
+  if netrw.get_hijack_netrw() then
     vim.cmd("silent! autocmd! FileExplorer *")
     netrw.hijack()
   end

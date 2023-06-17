@@ -333,7 +333,6 @@ end
 ---@param callback function Callback to call after the items are loaded.
 ---@param async boolean Whether to load the items asynchronously, may not be respected by all sources.
 M.navigate = function(state_or_source_name, path, path_to_reveal, callback, async)
-  require("neo-tree").ensure_config()
   local state, source_name
   if type(state_or_source_name) == "string" then
     state = M.get_state(state_or_source_name)
