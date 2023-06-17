@@ -468,53 +468,10 @@ M.map = function(tbl, fn)
 end
 
 M.get_appropriate_window = function(state)
-  -- Avoid triggering autocommands when switching windows
-  local eventignore = vim.o.eventignore
-  vim.o.eventignore = "all"
-
-  local current_window = vim.api.nvim_get_current_win()
-
-  -- use last window if possible
-  local suitable_window_found = false
-  local nt = require("neo-tree")
   local ignore_ft = nt.config.open_files_do_not_replace_types
-  local ignore = M.list_to_dict(ignore_ft)
-  ignore["neo-tree"] = true
   if nt.config.open_files_in_last_window then
     local prior_window = nt.get_prior_window(ignore)
-    if prior_window > 0 then
-      local success = pcall(vim.api.nvim_set_current_win, prior_window)
-      if success then
-        suitable_window_found = true
-      end
-    end
   end
-  -- find a suitable window to open the file in
-  if not suitable_window_found then
-    vim.cmd("wincmd w")
-  end
-  local attempts = 0
-  while attempts < 5 and not suitable_window_found do
-    local bt = vim.bo.buftype or "normal"
-    if ignore[vim.bo.filetype] or ignore[bt] or M.is_floating() then
-      attempts = attempts + 1
-      vim.cmd("wincmd w")
-    else
-      suitable_window_found = true
-    end
-  end
-  if not suitable_window_found then
-    -- go back to the neotree window, this will forve it to open a new split
-    vim.api.nvim_set_current_win(current_window)
-  end
-
-  local winid = vim.api.nvim_get_current_win()
-  local is_neo_tree_window = vim.bo.filetype == "neo-tree"
-  vim.api.nvim_set_current_win(current_window)
-
-  vim.o.eventignore = eventignore
-
-  return winid, is_neo_tree_window
 end
 
 ---Resolves the width to a number
@@ -569,45 +526,14 @@ M.open_file = function(state, path, open_cmd, bufnr)
       open_cmd = open_cmd,
       bufnr = bufnr,
     }) or {}
+
     if event_result.handled then
       events.fire_event(events.FILE_OPENED, path)
       return
     end
-    if state.current_position == "current" then
-      result, err = pcall(vim.cmd, open_cmd .. " " .. bufnr_or_path)
-    else
-      local winid, is_neo_tree_window = M.get_appropriate_window(state)
-      vim.api.nvim_set_current_win(winid)
-      -- TODO: make this configurable, see issue #43
-      if is_neo_tree_window then
-        local width = vim.api.nvim_win_get_width(0)
-        if width == vim.o.columns then
-          -- Neo-tree must be the only window, restore it's status as a sidebar
-          width = M.get_value(state, "window.width", 40, false)
-          width = M.resolve_width(width)
-        end
 
-        local split_command = "vsplit"
-        -- respect window position in user config when Neo-tree is the only window
-        if state.current_position == "left" then
-          split_command = "rightbelow vs"
-        elseif state.current_position == "right" then
-          split_command = "leftabove vs"
-        end
-        if path == "[No Name]" then
-          result, err = pcall(vim.cmd, split_command)
-          if result then
-            vim.cmd("b" .. bufnr)
-          end
-        else
-          result, err = pcall(vim.cmd, split_command .. " " .. escaped_path)
-        end
+    result, err = pcall(vim.cmd, open_cmd .. " " .. bufnr_or_path)
 
-        vim.api.nvim_win_set_width(winid, width)
-      else
-        result, err = pcall(vim.cmd, open_cmd .. " " .. bufnr_or_path)
-      end
-    end
     if result or err == "Vim(edit):E325: ATTENTION" then
       -- fixes #321
       vim.api.nvim_buf_set_option(0, "buflisted", true)
