@@ -20,8 +20,8 @@ local source_data = {
 local all_states = {}
 local default_configs = {}
 
-local function create_state(tabid, sd, winid)
-  local default_config = default_configs[sd.name]
+local function create_state(tabid, winid)
+  local default_config = default_configs["filesystem"]
   local state = vim.deepcopy(default_config, { noref = 1 })
   state.tabid = tabid
   state.winid = winid
@@ -62,7 +62,7 @@ M.get_state = function(tabid, winid)
   if type(winid) == "number" then
     local win_state = sd.state_by_win[winid]
     if not win_state then
-      win_state = create_state(tabid, sd, winid)
+      win_state = create_state(tabid, winid)
       sd.state_by_win[winid] = win_state
     end
     return win_state
@@ -73,7 +73,7 @@ M.get_state = function(tabid, winid)
       sd.state_by_win[tab_state.winid] = nil
     end
     if not tab_state then
-      tab_state = create_state(tabid, sd)
+      tab_state = create_state(tabid)
       sd.state_by_tab[tabid] = tab_state
     end
     return tab_state
