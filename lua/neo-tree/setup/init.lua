@@ -332,15 +332,6 @@ local merge_renderers = function(default_config, source_default_config, user_con
         source_default_config.renderers[name] = r
       end
     end
-
-    -- if user sets renderers, completely wipe the default ones
-    local source_name = source_default_config.name
-    for name, _ in pairs(source_default_config.renderers) do
-      local user = utils.get_value(user_config, source_name .. ".renderers." .. name)
-      if user then
-        source_default_config.renderers[name] = nil
-      end
-    end
   end
 end
 
