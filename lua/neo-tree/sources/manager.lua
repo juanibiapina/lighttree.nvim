@@ -70,9 +70,8 @@ end
 --TODO: we need to track state per window when working with netwrw style "current"
 --position. How do we know which one to return when this is called?
 M.get_state = function(source_name, tabid, winid)
-  if source_name == nil then
-    error("get_state: source_name cannot be nil")
-  end
+  source_name = "filesystem"
+
   tabid = tabid or vim.api.nvim_get_current_tabpage()
   local sd = get_source_data(source_name)
   if type(winid) == "number" then
