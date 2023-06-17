@@ -20,7 +20,7 @@ local wrap = function(func)
 end
 
 local get_state = function(tabid)
-  return manager.get_state(M.name, tabid)
+  return manager.get_state("filesystem", tabid)
 end
 
 local follow_internal = function(callback, force_show, async)
