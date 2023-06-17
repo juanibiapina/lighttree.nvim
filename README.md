@@ -180,7 +180,6 @@ use {
             ["?"] = "show_help",
           }
         },
-        nesting_rules = {},
         hijack_netrw = true, -- netrw disabled, opening a directory opens neo-tree
                     -- false,    -- netrw left alone, neo-tree does not handle opening dirs
         filesystem = {
@@ -316,10 +315,6 @@ nnoremap gd :Neotree float reveal_file=<cfile>
 ```
 
 See `:h neo-tree-commands` for details and a full listing of available arguments.
-
-### File Nesting
-
-See `:h neo-tree-file-nesting` for more details about file nesting.
 
 
 ### Netrw Hijack

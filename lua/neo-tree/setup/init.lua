@@ -3,7 +3,6 @@ local defaults = require("neo-tree.defaults")
 local mapping_helper = require("neo-tree.setup.mapping-helper")
 local events = require("neo-tree.events")
 local log = require("neo-tree.log")
-local file_nesting = require("neo-tree.sources.common.file-nesting")
 local highlights = require("neo-tree.ui.highlights")
 local manager = require("neo-tree.sources.manager")
 local netrw = require("neo-tree.setup.netrw")
@@ -417,8 +416,6 @@ M.merge_config = function(user_config)
   if not M.config.enable_git_status then
     M.config.git_status_async = false
   end
-
-  file_nesting.setup(M.config.nesting_rules)
 
   for name, rndr in pairs(M.config["filesystem"].renderers) do
     M.config["filesystem"].renderers[name] = merge_global_components_config(rndr, M.config)

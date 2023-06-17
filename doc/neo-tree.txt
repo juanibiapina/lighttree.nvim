@@ -18,7 +18,6 @@ Configuration ............... |neo-tree-configuration|
   Diagnostics ............... |neo-tree-diagnostics|
   Indent markers ............ |neo-tree-indent-markers|
   Expanders ................. |neo-tree-expanders|
-  File nesting .............. |neo-tree-file-nesting|
   Highlights ................ |neo-tree-highlights|
   Events .................... |neo-tree-events|
   Components and Renderers .. |neo-tree-renderers|
@@ -797,27 +796,6 @@ component:
       },
     })
 <
-
-FILE NESTING                                             *neo-tree-file-nesting*
-
-By default, file nesting is disabled since the `nesting_rules` table is empty.
-To enable this feature, fill in the `nesting_rules` table with the following
-structure:
->lua
-    require("neo-tree").setup({
-      nesting_rules = {
-        ["js"] = { "js.map" },
-      }
-    })
-<
-This will render:
->
-    FILENAME.js
-        FILENAME.js.map
-
-<
-The default mapping to expand/collapse nested files is <space>.
-
 
 HIGHLIGHTS                                                 *neo-tree-highlights*
 

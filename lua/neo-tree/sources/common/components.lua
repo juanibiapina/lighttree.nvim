@@ -12,7 +12,6 @@
 
 local highlights = require("neo-tree.ui.highlights")
 local utils = require("neo-tree.utils")
-local file_nesting = require("neo-tree.sources.common.file-nesting")
 local container = require("neo-tree.sources.common.container")
 local log = require("neo-tree.log")
 
@@ -332,8 +331,7 @@ M.indent = function(config, node, state)
   local padding = config.padding or 0
   local level = node.level
   local with_markers = config.with_markers
-  local with_expanders = config.with_expanders == nil and file_nesting.is_enabled()
-    or config.with_expanders
+  local with_expanders = config.with_expanders == nil and false or config.with_expanders
   local marker_highlight = config.highlight or highlights.INDENT_MARKER
   local expander_highlight = config.expander_highlight or config.highlight or highlights.EXPANDER
 

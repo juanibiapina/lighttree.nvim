@@ -1,5 +1,4 @@
 local vim = vim
-local files_nesting = require("neo-tree.sources.common.file-nesting")
 local utils = require("neo-tree.utils")
 local log = require("neo-tree.log")
 local git = require("neo-tree.git")
@@ -68,11 +67,6 @@ function create_item(context, path, _type, bufnr)
     item.base = item.name:match("^([-_,()%s%w%i]+)%.")
     item.ext = item.name:match("%.([-_,()%s%w%i]+)$")
     item.exts = item.name:match("^[-_,()%s%w%i]+%.(.*)")
-
-    if files_nesting.can_have_nesting(item) then
-      item.children = {}
-      context.nesting[path] = item
-    end
   end
 
   item.is_reveal_target = (path == context.path_to_reveal)
@@ -133,26 +127,11 @@ function set_parents(context, item)
     return
   end
 
-  local nesting_parent_path = files_nesting.get_parent(item)
-  local nesting_parent = context.nesting[nesting_parent_path]
-
-  if
-    nesting_parent_path
-    and not nesting_parent
-    and utils.truthy(vim.loop.fs_stat(nesting_parent_path))
-  then
-    local success
-    success, nesting_parent = pcall(create_item, context, nesting_parent_path)
-    if not success then
-      log.error("error, creating item for ", nesting_parent_path)
-    end
-  end
-
   local parent = context.folders[item.parent_path]
   if not utils.truthy(item.parent_path) then
     return
   end
-  if parent == nil and nesting_parent == nil then
+  if parent == nil then
     local success
     success, parent = pcall(create_item, context, item.parent_path, "directory")
     if not success then
@@ -161,12 +140,9 @@ function set_parents(context, item)
     context.folders[parent.id] = parent
     set_parents(context, parent)
   end
-  if nesting_parent then
-    table.insert(nesting_parent.children, item)
-    item.is_nested = true
-  else
-    table.insert(parent.children, item)
-  end
+
+  table.insert(parent.children, item)
+
   context.item_exists[item.id] = true
 
   if item.filtered_by == nil and type(parent.filtered_by) == "table" then

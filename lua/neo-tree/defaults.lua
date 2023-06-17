@@ -132,7 +132,6 @@ local config = {
       { "bufnr" }
     }
   },
-  nesting_rules = {},
   window = { -- see https://github.com/MunifTanjim/nui.nvim/tree/main/lua/nui/popup for
              -- possible options. These can also be functions that return these options.
     width = 40, -- applies to left and right positions
