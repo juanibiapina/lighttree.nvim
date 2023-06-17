@@ -113,7 +113,7 @@ M._navigate_internal = function(state, path, path_to_reveal, callback, async)
   log.trace("navigate_internal", state.current_position, path, path_to_reveal)
   state.dirty = false
   local path_changed = false
-  if not path and not state.bind_to_cwd then
+  if not path then
     path = state.path
   end
   if path == nil then
@@ -145,9 +145,6 @@ M._navigate_internal = function(state, path, path_to_reveal, callback, async)
     fs_scan.get_items(state, nil, nil, callback, async)
   end
 
-  if path_changed and state.bind_to_cwd then
-    manager.set_cwd(state)
-  end
   local config = require("neo-tree").config
   if config.enable_git_status and config.git_status_async then
     git.status_async(state.path, state.git_base, config.git_status_async_options)
@@ -279,12 +276,10 @@ M.setup = function(config, global_config)
   end
 
   --Configure event handlers for cwd changes
-  if config.bind_to_cwd then
-    manager.subscribe(M.name, {
-      event = events.VIM_DIR_CHANGED,
-      handler = wrap(manager.dir_changed),
-    })
-  end
+  manager.subscribe(M.name, {
+    event = events.VIM_DIR_CHANGED,
+    handler = wrap(manager.dir_changed),
+  })
 
   --Configure event handlers for lsp diagnostic updates
   if global_config.enable_diagnostics then
