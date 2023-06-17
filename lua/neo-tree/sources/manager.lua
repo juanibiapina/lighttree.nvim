@@ -109,7 +109,7 @@ M.subscribe = function(source_name, event)
     sd.subscriptions = {}
   end
   if not utils.truthy(event.id) then
-    event.id = sd.name .. "." .. event.event
+    event.id = "filesystem." .. event.event
   end
   log.trace("subscribing to event: " .. event.id)
   sd.subscriptions[event] = true
