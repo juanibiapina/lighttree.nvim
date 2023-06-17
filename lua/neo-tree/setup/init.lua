@@ -186,58 +186,6 @@ M.buffer_enter_event = function()
   if netrw.hijack() then
     return
   end
-
-  -- For all others, make sure another buffer is not hijacking our window
-  -- ..but not if the position is "current"
-  local prior_buf = vim.fn.bufnr("#")
-  if prior_buf < 1 then
-    return
-  end
-  local winid = vim.api.nvim_get_current_win()
-  local prior_type = vim.api.nvim_buf_get_option(prior_buf, "filetype")
-  if prior_type == "neo-tree" then
-    local success, position = pcall(vim.api.nvim_buf_get_var, prior_buf, "neo_tree_position")
-    if not success then
-      -- just bail out now, the rest of these lookups will probably fail too.
-      return
-    end
-
-    if position == "current" then
-      -- nothing to do here, files are supposed to open in same window
-      return
-    end
-
-    local current_tabid = vim.api.nvim_get_current_tabpage()
-    local neo_tree_tabid = vim.api.nvim_buf_get_var(prior_buf, "neo_tree_tabid")
-    if neo_tree_tabid ~= current_tabid then
-      -- This a new tab, so the alternate being neo-tree doesn't matter.
-      return
-    end
-    local neo_tree_winid = vim.api.nvim_buf_get_var(prior_buf, "neo_tree_winid")
-    local current_winid = vim.api.nvim_get_current_win()
-    if neo_tree_winid ~= current_winid then
-      -- This is not the neo-tree window, so the alternate being neo-tree doesn't matter.
-      return
-    end
-
-    local bufname = vim.api.nvim_buf_get_name(0)
-    log.debug("redirecting buffer " .. bufname .. " to new split")
-    vim.cmd("b#")
-    -- Using schedule at this point  fixes problem with syntax
-    -- highlighting in the buffer. I also prevents errors with diagnostics
-    -- trying to work with the buffer as it's being closed.
-    vim.schedule(function()
-      -- try to delete the buffer, only because if it was new it would take
-      -- on options from the neo-tree window that are undesirable.
-      pcall(vim.cmd, "bdelete " .. bufname)
-      local fake_state = {
-        window = {
-          position = position,
-        },
-      }
-      utils.open_file(fake_state, bufname)
-    end)
-  end
 end
 
 M.win_enter_event = function()
@@ -409,7 +357,6 @@ M.merge_config = function(user_config)
   events.clear_all_events()
   define_events()
 
-  -- Prevent accidentally opening another file in the neo-tree window.
   events.subscribe({
     event = events.VIM_BUFFER_ENTER,
     handler = M.buffer_enter_event,
