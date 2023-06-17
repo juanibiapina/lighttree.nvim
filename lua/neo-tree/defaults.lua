@@ -158,7 +158,6 @@ local config = {
     mappings = {
       ["<cr>"] = "open",
       -- ["<cr>"] = "open_drop",
-      -- ["t"] = "open_tab_drop",
       ["C"] = "close_node",
       ["z"] = "close_all_nodes",
       --["Z"] = "expand_all_nodes",

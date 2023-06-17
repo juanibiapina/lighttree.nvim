@@ -124,9 +124,6 @@ z         = close_all_nodes: Close all nodes in the tree.
 
                   open_drop: Same as open, but opens with the |:drop| command. 
 
-              open_tab_drop: Same as open, but opens in a new tab with the 
-                             |:drop| command with the |:tab| modifier. 
-
 [g      = prev_git_modified: Jump to the previous file reported by `git status`
                              that is within the current working directory.
                              This will loop around if you are on the last one.
