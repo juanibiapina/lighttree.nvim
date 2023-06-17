@@ -22,7 +22,7 @@ M.execute = function(args)
   local winid = vim.api.nvim_get_current_win()
 
   -- Get the correct state
-  local state = manager.get_state("filesystem", nil, winid)
+  local state = manager.get_state(nil, winid)
 
   -- Handle setting directory if requested
   local path_changed = false

@@ -53,7 +53,7 @@ M.hijack = function()
       pcall(vim.api.nvim_buf_delete, dir_bufnr, { force = true })
     end)
 
-    local state = manager.get_state("filesystem", nil, winid)
+    local state = manager.get_state(nil, winid)
 
     require("neo-tree.sources.filesystem")._navigate_internal(state, bufname, nil, remove_dir_buf)
   end, 10, utils.debounce_strategy.CALL_LAST_ONLY)

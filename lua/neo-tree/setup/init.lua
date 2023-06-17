@@ -207,7 +207,7 @@ M.win_enter_event = function()
         -- Sometime the split is just the first step in the process of opening somethig else,
         -- so instead of fixing this right away, we add a short delay and check back again to see
         -- if the buffer is still in this window.
-        local old_state = manager.get_state("filesystem", nil, neo_tree_winid)
+        local old_state = manager.get_state(nil, neo_tree_winid)
         vim.schedule(function()
           local bufnr = vim.api.nvim_get_current_buf()
           if bufnr ~= current_bufnr then
@@ -215,7 +215,7 @@ M.win_enter_event = function()
             return
           end
           -- create a new tree for this window
-          local state = manager.get_state("filesystem", nil, current_winid)
+          local state = manager.get_state(nil, current_winid)
           state.path = old_state.path
           state.current_position = "current"
           local renderer = require("neo-tree.ui.renderer")
