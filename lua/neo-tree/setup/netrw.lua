@@ -4,12 +4,6 @@ local manager = require("neo-tree.sources.manager")
 local command = require("neo-tree.command")
 local M = {}
 
-local get_position = function(source_name)
-  local nt = require("neo-tree")
-  local pos = utils.get_value(nt.config, source_name .. ".window.position", "left", true)
-  return pos
-end
-
 M.get_hijack_netrw_behavior = function()
   local nt = require("neo-tree")
   local option = "filesystem.hijack_netrw_behavior"
@@ -27,8 +21,8 @@ M.get_hijack_netrw_behavior = function()
 end
 
 M.hijack = function()
-  local hijack_behavior = M.get_hijack_netrw_behavior()
-  if hijack_behavior == "disabled" then
+  local hijack = M.get_hijack_netrw_behavior()
+  if hijack == "disabled" then
     return false
   end
 
@@ -42,9 +36,7 @@ M.hijack = function()
     return false
   end
 
-  -- record where we are now
-  local pos = get_position("filesystem")
-  local should_open_current = hijack_behavior == "open_current" or pos == "current"
+  local should_open_current = true
   local winid = vim.api.nvim_get_current_win()
   local dir_bufnr = vim.api.nvim_get_current_buf()
 
