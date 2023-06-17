@@ -281,22 +281,5 @@ local config = {
     use_libuv_file_watcher = false, -- This will use the OS level file watchers to detect changes
                                     -- instead of relying on nvim autocmd events.
   },
-  example = {
-    renderers = {
-      custom = {
-        {"indent"},
-        {"icon", default="C" },
-        {"custom"},
-        {"name"}
-      }
-    },
-    window = {
-      mappings = {
-        ["<cr>"] = "toggle_node",
-        ["<C-e>"] = "example_command",
-        ["d"] = "show_debug_info",
-      },
-    },
-  },
 }
 return config
