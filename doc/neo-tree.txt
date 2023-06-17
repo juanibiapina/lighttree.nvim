@@ -587,12 +587,11 @@ NETRW HIJACK BEHAVIOR                                    *neo-tree-netrw-hijack*
 
 Neo-tree can and does hijack Netrw by default. This is configurable and can be
 disabled if you use Netrw, or have other plugins that use Netrw functionality.
-This can be controlled by setting the `filesystem.hijack_netrw` option.
+This can be controlled by setting the `hijack_netrw` option.
 
     require("neo-tree").setup({
-      filesystem = {
-        hijack_netrw_behavior = true,
-                             -- false,
+      hijack_netrw = true,
+                  -- false,
     })
 <
 

@@ -6,7 +6,7 @@ local M = {}
 
 M.get_hijack_netrw = function()
   local nt = require("neo-tree")
-  local option = "filesystem.hijack_netrw"
+  local option = "hijack_netrw"
   local hijack_behavior = utils.get_value(nt.config, option, true, true)
   return hijack_behavior
 end
