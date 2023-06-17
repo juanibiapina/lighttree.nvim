@@ -156,7 +156,6 @@ local config = {
       nowait = true,
     },
     mappings = {
-      ["<2-LeftMouse>"] = "open",
       ["<cr>"] = "open",
       ["S"] = "open_split",
       ["s"] = "open_vsplit",
