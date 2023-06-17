@@ -216,10 +216,8 @@ local get_params_for_cwd = function(state)
   local winid = state.id == tabid and -1 or state.id
 
   if state.cwd_target then
-    local target = state.cwd_target.sidebar
-    if state.current_position == "current" then
-      target = state.cwd_target.current
-    end
+    local target = state.cwd_target.current
+
     if target == "window" then
       return winid, to_tabnr(tabid)
     elseif target == "global" then
