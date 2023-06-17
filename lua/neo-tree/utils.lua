@@ -468,7 +468,6 @@ M.map = function(tbl, fn)
 end
 
 M.get_appropriate_window = function(state)
-  local ignore_ft = nt.config.open_files_do_not_replace_types
   if nt.config.open_files_in_last_window then
     local prior_window = nt.get_prior_window(ignore)
   end
