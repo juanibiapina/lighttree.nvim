@@ -37,6 +37,7 @@ local function create_state(tabid, sd, winid)
   local default_config = default_configs[sd.name]
   local state = vim.deepcopy(default_config, { noref = 1 })
   state.tabid = tabid
+  state.winid = winid
   state.id = winid or tabid
   state.dirty = true
   state.position = {
@@ -212,8 +213,7 @@ end
 
 local get_params_for_cwd = function(state)
   local tabid = state.tabid
-  -- the id is either the tabid for sidebars or the winid for splits
-  local winid = state.id == tabid and -1 or state.id
+  local winid = state.winid or -1
 
   return winid, to_tabnr(tabid)
 end
@@ -284,7 +284,7 @@ M.dispose_window = function(winid)
     error("dispose_window: winid cannot be nil")
   end
   for i, state in ipairs(all_states) do
-    if state.id == winid then
+    if state.winid == winid then
       log.trace(state.name, " disposing of window: ", winid, state.name)
       dispose_state(state)
       table.remove(all_states, i)

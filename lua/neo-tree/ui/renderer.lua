@@ -783,7 +783,7 @@ create_window = function(state)
 
   -- state.id is always the window id or tabnr that this state was created for
   -- in the case of a position = current state object, it will be the window id
-  local winid = state.id
+  local winid = state.winid
   if not vim.api.nvim_win_is_valid(winid) then
     log.warn("Window ", winid, "  is no longer valid!")
     return
