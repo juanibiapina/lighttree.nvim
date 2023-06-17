@@ -36,33 +36,24 @@ M.hijack = function()
     -- We will want to replace the "directory" buffer with either the "alternate"
     -- buffer or a new blank one.
     local replace_with_bufnr = vim.fn.bufnr("#")
-    local is_currently_neo_tree = false
+
     if replace_with_bufnr > 0 then
       if vim.api.nvim_buf_get_option(replace_with_bufnr, "filetype") == "neo-tree" then
-        -- don't hijack the current window if it's already a Neo-tree sidebar
-        local _, position = pcall(vim.api.nvim_buf_get_var, replace_with_bufnr, "neo_tree_position")
-        if position ~= "current" then
-          is_currently_neo_tree = true
-        else
-          replace_with_bufnr = -1
-        end
+        replace_with_bufnr = -1
       end
     end
+
     if replace_with_bufnr > 0 then
       log.trace("Replacing buffer in netrw hijack", replace_with_bufnr)
       pcall(vim.api.nvim_win_set_buf, winid, replace_with_bufnr)
     end
+
     local remove_dir_buf = vim.schedule_wrap(function()
       log.trace("Deleting buffer in netrw hijack", dir_bufnr)
       pcall(vim.api.nvim_buf_delete, dir_bufnr, { force = true })
     end)
 
-    local state
-    if is_currently_neo_tree then
-      state = manager.get_state("filesystem")
-    else
-      state = manager.get_state("filesystem", nil, winid)
-    end
+    local state = manager.get_state("filesystem", nil, winid)
 
     require("neo-tree.sources.filesystem")._navigate_internal(state, bufname, nil, remove_dir_buf)
   end, 10, utils.debounce_strategy.CALL_LAST_ONLY)
