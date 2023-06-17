@@ -516,14 +516,6 @@ M.open = function(state, toggle_directory)
   open_with_cmd(state, "e", toggle_directory)
 end
 
----Open file or directory in a split of the closest window
----@param state table The state of the source
----@param toggle_directory function The function to call to toggle a directory
----open/closed
-M.open_split = function(state, toggle_directory)
-  open_with_cmd(state, "split", toggle_directory)
-end
-
 ---Open file or directory in a vertical split of the closest window
 ---@param state table The state of the source
 ---@param toggle_directory function The function to call to toggle a directory
