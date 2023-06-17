@@ -157,7 +157,6 @@ local config = {
     },
     mappings = {
       ["<cr>"] = "open",
-      ["s"] = "open_vsplit",
       -- ["<cr>"] = "open_drop",
       -- ["t"] = "open_tab_drop",
       ["C"] = "close_node",

@@ -122,8 +122,6 @@ z         = close_all_nodes: Close all nodes in the tree.
 
            expand_all_nodes: Expand all directory nodes in the tree recursively.
 
-s             = open_vsplit: Same as open, but opens in a vertical split.
-
                   open_drop: Same as open, but opens with the |:drop| command. 
 
               open_tab_drop: Same as open, but opens in a new tab with the 
