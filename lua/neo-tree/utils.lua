@@ -491,11 +491,7 @@ M.get_appropriate_window = function(state)
   end
   -- find a suitable window to open the file in
   if not suitable_window_found then
-    if state.current_position == "right" then
-      vim.cmd("wincmd t")
-    else
-      vim.cmd("wincmd w")
-    end
+    vim.cmd("wincmd w")
   end
   local attempts = 0
   while attempts < 5 and not suitable_window_found do
