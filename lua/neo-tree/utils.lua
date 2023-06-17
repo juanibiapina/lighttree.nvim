@@ -467,10 +467,6 @@ M.map = function(tbl, fn)
   return t
 end
 
-M.get_appropriate_window = function(state)
-  local prior_window = nt.get_prior_window(ignore)
-end
-
 ---Resolves the width to a number
 ---@param width number|string|function
 M.resolve_width = function(width)
