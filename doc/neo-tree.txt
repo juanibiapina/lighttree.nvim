@@ -587,28 +587,14 @@ NETRW HIJACK BEHAVIOR                                    *neo-tree-netrw-hijack*
 
 Neo-tree can and does hijack Netrw by default. This is configurable and can be
 disabled if you use Netrw, or have other plugins that use Netrw functionality.
-This can be controlled by setting the `filesystem.hijack_netrw_behavior` option
-to one of:
+This can be controlled by setting the `filesystem.hijack_netrw` option.
 
-disabled               Netrw left alone, neo-tree does not handle opening dirs.
-
-open_default (default) Netrw disabled, opening a directory opens neo-tree
-                       in whatever position is specified in `window.position`.
-
-open_current           Netrw disabled, opening a directory opens within the
-                       window like netrw would, regardless of `window.position`.
-
->lua
     require("neo-tree").setup({
       filesystem = {
-        hijack_netrw_behavior = "open_default",
-                             -- "open_current",
-                             -- "disabled", 
+        hijack_netrw_behavior = true,
+                             -- false,
     })
 <
-
-
-
 
 COMPONENT CONFIGS                                   *neo-tree-component-configs*
 

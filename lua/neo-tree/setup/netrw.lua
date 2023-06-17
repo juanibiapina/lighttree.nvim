@@ -4,25 +4,16 @@ local manager = require("neo-tree.sources.manager")
 local command = require("neo-tree.command")
 local M = {}
 
-M.get_hijack_netrw_behavior = function()
+M.get_hijack_netrw = function()
   local nt = require("neo-tree")
-  local option = "filesystem.hijack_netrw_behavior"
-  local hijack_behavior = utils.get_value(nt.config, option, "open_default", true)
-  if hijack_behavior == "disabled" then
-    return hijack_behavior
-  elseif hijack_behavior == "open_default" then
-    return hijack_behavior
-  elseif hijack_behavior == "open_current" then
-    return hijack_behavior
-  else
-    log.error("Invalid value for " .. option .. ": " .. hijack_behavior)
-    return "disabled"
-  end
+  local option = "filesystem.hijack_netrw"
+  local hijack_behavior = utils.get_value(nt.config, option, true, true)
+  return hijack_behavior
 end
 
 M.hijack = function()
-  local hijack = M.get_hijack_netrw_behavior()
-  if hijack == "disabled" then
+  local hijack = M.get_hijack_netrw()
+  if not hijack then
     return false
   end
 

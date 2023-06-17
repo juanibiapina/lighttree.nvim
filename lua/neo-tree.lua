@@ -70,7 +70,7 @@ end
 M.setup = function(config, is_auto_config)
   M.config = require("neo-tree.setup").merge_config(config, is_auto_config)
   local netrw = require("neo-tree.setup.netrw")
-  if not is_auto_config and netrw.get_hijack_netrw_behavior() ~= "disabled" then
+  if not is_auto_config and netrw.get_hijack_netrw() then
     vim.cmd("silent! autocmd! FileExplorer *")
     netrw.hijack()
   end
