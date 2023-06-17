@@ -468,9 +468,7 @@ M.map = function(tbl, fn)
 end
 
 M.get_appropriate_window = function(state)
-  if nt.config.open_files_in_last_window then
-    local prior_window = nt.get_prior_window(ignore)
-  end
+  local prior_window = nt.get_prior_window(ignore)
 end
 
 ---Resolves the width to a number
