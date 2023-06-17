@@ -139,10 +139,6 @@ use {
             nowait = true,
           },
           mappings = {
-            ["<space>"] = { 
-                "toggle_node", 
-                nowait = false, -- disable `nowait` if you have existing combos starting with this char that you want to use 
-            },
             ["<cr>"] = "open",
             ["C"] = "close_node",
             -- ['C'] = 'close_all_subnodes',
