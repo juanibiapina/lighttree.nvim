@@ -124,8 +124,6 @@ z         = close_all_nodes: Close all nodes in the tree.
 
 s             = open_vsplit: Same as open, but opens in a vertical split.
 
-t             = open_tabnew: Same as open, but opens in a new tab.
-
                   open_drop: Same as open, but opens with the |:drop| command. 
 
               open_tab_drop: Same as open, but opens in a new tab with the 

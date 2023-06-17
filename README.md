@@ -146,7 +146,6 @@ use {
             ["<2-LeftMouse>"] = "open",
             ["<cr>"] = "open",
             ["s"] = "open_vsplit",
-            ["t"] = "open_tabnew",
             -- ["<cr>"] = "open_drop",
             -- ["t"] = "open_tab_drop",
             ["C"] = "close_node",

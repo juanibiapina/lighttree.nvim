@@ -524,14 +524,6 @@ M.open_vsplit = function(state, toggle_directory)
   open_with_cmd(state, "vsplit", toggle_directory)
 end
 
----Open file or directory in a new tab
----@param state table The state of the source
----@param toggle_directory function The function to call to toggle a directory
----open/closed
-M.open_tabnew = function(state, toggle_directory)
-  open_with_cmd(state, "tabnew", toggle_directory)
-end
-
 ---Open file or directory or focus it if a buffer already exists with it
 ---@param state table The state of the source
 ---@param toggle_directory function The function to call to toggle a directory

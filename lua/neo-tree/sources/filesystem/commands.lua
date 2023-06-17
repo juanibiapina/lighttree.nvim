@@ -148,9 +148,6 @@ end
 M.open_vsplit = function(state)
   cc.open_vsplit(state, utils.wrap(fs.toggle_directory, state))
 end
-M.open_tabnew = function(state)
-  cc.open_tabnew(state, utils.wrap(fs.toggle_directory, state))
-end
 M.open_drop = function(state)
   cc.open_drop(state, utils.wrap(fs.toggle_directory, state))
 end
