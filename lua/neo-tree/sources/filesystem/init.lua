@@ -24,22 +24,20 @@ local get_state = function(tabid)
 end
 
 local follow_internal = function(callback, force_show, async)
-  log.trace("follow called")
   if vim.bo.filetype == "neo-tree" or vim.bo.filetype == "neo-tree-popup" then
     return
   end
+
   local path_to_reveal = manager.get_path_to_reveal()
   if not utils.truthy(path_to_reveal) then
     return false
   end
 
   local state = get_state()
-  if state.current_position == "float" then
-    return false
-  end
   if not state.path then
     return false
   end
+
   local window_exists = renderer.window_exists(state)
   if window_exists then
     local node = state.tree and state.tree:get_node()
@@ -60,7 +58,6 @@ local follow_internal = function(callback, force_show, async)
     return false
   end
 
-  log.debug("follow file: ", path_to_reveal)
   local show_only_explicitly_opened = function()
     local eod = state.explicitly_opened_directories or {}
     local expanded_nodes = renderer.get_expanded_nodes(state.tree)
