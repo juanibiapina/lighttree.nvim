@@ -280,7 +280,6 @@ local dispose_state = function(state)
   pcall(renderer.close, state)
   source_data[state.name].state_by_tab[state.id] = nil
   source_data[state.name].state_by_win[state.id] = nil
-  state.disposed = true
 end
 
 M.dispose_invalid_tabs = function()
