@@ -58,16 +58,12 @@ M.hijack = function()
     end)
 
     local state
-    if not is_currently_neo_tree then
-      log.debug("hijack_netrw: opening current")
-      state = manager.get_state("filesystem", nil, winid)
-    elseif is_currently_neo_tree then
-      log.debug("hijack_netrw: opening in existing Neo-tree")
+    if is_currently_neo_tree then
       state = manager.get_state("filesystem")
     else
-      log.debug("hijack_netrw: opening default")
-      state = manager.get_state("filesystem")
+      state = manager.get_state("filesystem", nil, winid)
     end
+
     require("neo-tree.sources.filesystem")._navigate_internal(state, bufname, nil, remove_dir_buf)
   end, 10, utils.debounce_strategy.CALL_LAST_ONLY)
 
