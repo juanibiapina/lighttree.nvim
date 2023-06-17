@@ -61,7 +61,6 @@ M.hijack = function()
     if not is_currently_neo_tree then
       log.debug("hijack_netrw: opening current")
       state = manager.get_state("filesystem", nil, winid)
-      state.current_position = "current"
     elseif is_currently_neo_tree then
       log.debug("hijack_netrw: opening in existing Neo-tree")
       state = manager.get_state("filesystem")
