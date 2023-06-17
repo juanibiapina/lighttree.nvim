@@ -239,12 +239,7 @@ See `:h neo-tree` for full documentation. You can also preview that online at
 
 
 To see all of the default config options with commentary, you can view it online
-at [lua/neo-tree/defaults.lua](lua/neo-tree/defaults.lua). You can also paste it
-into a buffer after installing Neo-tree by running: 
-
-```
-:lua require("neo-tree").paste_default_config()
-```
+at [lua/neo-tree/defaults.lua](lua/neo-tree/defaults.lua).
 
 ## The `:Neotree` Command
 
