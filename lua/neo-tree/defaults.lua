@@ -210,10 +210,6 @@ local config = {
                                    -- "never"  means directory scans are never async.
     scan_mode = "shallow", -- "shallow": Don't scan into directories to detect possible empty directory a priori
                            -- "deep": Scan into directories to detect empty or grouped empty directories a priori.
-    cwd_target = {
-      sidebar = "tab",   -- sidebar is when position = left or right
-      current = "window" -- current is when position = current
-    },
     -- The renderer section provides the renderers that will be used to render the tree.
     --   The first level is the node type.
     --   For each node type, you can specify a list of components to render.

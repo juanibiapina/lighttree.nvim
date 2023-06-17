@@ -215,21 +215,7 @@ local get_params_for_cwd = function(state)
   -- the id is either the tabid for sidebars or the winid for splits
   local winid = state.id == tabid and -1 or state.id
 
-  if state.cwd_target then
-    local target = state.cwd_target.current
-
-    if target == "window" then
-      return winid, to_tabnr(tabid)
-    elseif target == "global" then
-      return -1, -1
-    elseif target == "none" then
-      return nil, nil
-    else -- default to tab
-      return -1, to_tabnr(tabid)
-    end
-  else
-    return winid, to_tabnr(tabid)
-  end
+  return winid, to_tabnr(tabid)
 end
 
 M.get_cwd = function(state)
