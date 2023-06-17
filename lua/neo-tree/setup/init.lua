@@ -395,14 +395,13 @@ M.merge_config = function(user_config)
   normalize_mappings(user_config)
   merge_renderers(default_config, nil, user_config)
 
-  local source_name = "filesystem"
   local mod_root = "neo-tree.sources.filesystem"
 
   local module = require(mod_root)
-  local source_default_config = default_config[source_name]
+  local source_default_config = default_config["filesystem"]
   source_default_config.components = require("neo-tree.sources.common.components")
   source_default_config.commands = require("neo-tree.sources.filesystem.commands")
-  source_default_config.name = source_name
+  source_default_config.name = "filesystem"
 
   if user_config.use_default_mappings == false then
     default_config.window.mappings = {}
@@ -410,7 +409,7 @@ M.merge_config = function(user_config)
   end
   -- Make sure all the mappings are normalized so they will merge properly.
   normalize_mappings(source_default_config)
-  normalize_mappings(user_config[source_name])
+  normalize_mappings(user_config["filesystem"])
   -- merge the global config with the source specific config
   source_default_config.window = vim.tbl_deep_extend(
     "force",
@@ -430,11 +429,11 @@ M.merge_config = function(user_config)
 
   file_nesting.setup(M.config.nesting_rules)
 
-  for name, rndr in pairs(M.config[source_name].renderers) do
-    M.config[source_name].renderers[name] = merge_global_components_config(rndr, M.config)
+  for name, rndr in pairs(M.config["filesystem"].renderers) do
+    M.config["filesystem"].renderers[name] = merge_global_components_config(rndr, M.config)
   end
-  manager.setup(source_name, M.config[source_name], M.config, module)
-  manager.redraw(source_name)
+  manager.setup("filesystem", M.config["filesystem"], M.config, module)
+  manager.redraw("filesystem")
 
   events.subscribe({
     event = events.VIM_COLORSCHEME,

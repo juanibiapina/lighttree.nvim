@@ -322,7 +322,7 @@ end
 -- making changes to the nodes that would affect how their components are
 -- rendered.
 M.redraw = function(source_name)
-  M._for_each_state(source_name, function(state)
+  M._for_each_state("filesystem", function(state)
     renderer.redraw(state)
   end)
 end
