@@ -27,7 +27,6 @@ M.hijack = function()
     return false
   end
 
-  local should_open_current = true
   local winid = vim.api.nvim_get_current_win()
   local dir_bufnr = vim.api.nvim_get_current_buf()
 
@@ -49,12 +48,6 @@ M.hijack = function()
         end
       end
     end
-    if not should_open_current then
-      if replace_with_bufnr == dir_bufnr or replace_with_bufnr < 1 then
-        replace_with_bufnr = vim.api.nvim_create_buf(true, false)
-        log.trace("Created new buffer for netrw hijack", replace_with_bufnr)
-      end
-    end
     if replace_with_bufnr > 0 then
       log.trace("Replacing buffer in netrw hijack", replace_with_bufnr)
       pcall(vim.api.nvim_win_set_buf, winid, replace_with_bufnr)
@@ -65,7 +58,7 @@ M.hijack = function()
     end)
 
     local state
-    if should_open_current and not is_currently_neo_tree then
+    if not is_currently_neo_tree then
       log.debug("hijack_netrw: opening current")
       state = manager.get_state("filesystem", nil, winid)
       state.current_position = "current"
