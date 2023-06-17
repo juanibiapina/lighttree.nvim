@@ -145,7 +145,6 @@ use {
             },
             ["<2-LeftMouse>"] = "open",
             ["<cr>"] = "open",
-            -- ["<cr>"] = "open_drop",
             ["C"] = "close_node",
             -- ['C'] = 'close_all_subnodes',
             ["z"] = "close_all_nodes",

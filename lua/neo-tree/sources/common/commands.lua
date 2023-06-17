@@ -516,14 +516,6 @@ M.open = function(state, toggle_directory)
   open_with_cmd(state, "e", toggle_directory)
 end
 
----Open file or directory or focus it if a buffer already exists with it
----@param state table The state of the source
----@param toggle_directory function The function to call to toggle a directory
----open/closed
-M.open_drop = function(state, toggle_directory)
-  open_with_cmd(state, "drop", toggle_directory)
-end
-
 M.rename = function(state, callback)
   local tree = state.tree
   local node = tree:get_node()

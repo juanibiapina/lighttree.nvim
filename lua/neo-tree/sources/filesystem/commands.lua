@@ -145,9 +145,6 @@ end
 M.open = function(state)
   cc.open(state, utils.wrap(fs.toggle_directory, state))
 end
-M.open_drop = function(state)
-  cc.open_drop(state, utils.wrap(fs.toggle_directory, state))
-end
 
 M.refresh = refresh
 
