@@ -243,39 +243,6 @@ local config = {
         --".null-ls_*",
       },
     },
-    find_by_full_path_words = false,  -- `false` means it only searches the tail of a path.
-                                      -- `true` will change the filter into a full path
-                                      -- search with space as an implicit ".*", so
-                                      -- `fi init`
-                                      -- will match: `./sources/filesystem/init.lua
-    --find_command = "fd", -- this is determined automatically, you probably don't need to set it
-    --find_args = {  -- you can specify extra args to pass to the find command.
-    --  fd = {
-      --  "--exclude", ".git",
-      --  "--exclude",  "node_modules"
-    --  }
-    --},
-    ---- or use a function instead of list of strings
-    --find_args = function(cmd, path, search_term, args)
-    --  if cmd ~= "fd" then
-    --    return args
-    --  end
-    --  --maybe you want to force the filter to always include hidden files:
-    --  table.insert(args, "--hidden")
-    --  -- but no one ever wants to see .git files
-    --  table.insert(args, "--exclude")
-    --  table.insert(args, ".git")
-    --  -- or node_modules
-    --  table.insert(args, "--exclude")
-    --  table.insert(args, "node_modules")
-    --  --here is where it pays to use the function, you can exclude more for
-    --  --short search terms, or vary based on the directory
-    --  if string.len(search_term) < 4 and path == "/home/cseickel" then
-    --    table.insert(args, "--exclude")
-    --    table.insert(args, "Library")
-    --  end
-    --  return args
-    --end,
     group_empty_dirs = false, -- when true, empty folders will be grouped together
     use_libuv_file_watcher = false, -- This will use the OS level file watchers to detect changes
                                     -- instead of relying on nvim autocmd events.
