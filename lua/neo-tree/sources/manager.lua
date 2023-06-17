@@ -11,22 +11,14 @@ local log = require("neo-tree.log")
 local fs_watch = require("neo-tree.sources.filesystem.lib.fs_watch")
 
 local M = {}
-local source_data = nil
+local source_data = {
+  name = "filesystem",
+  state_by_tab = {},
+  state_by_win = {},
+  subscriptions = {},
+}
 local all_states = {}
 local default_configs = {}
-
-local get_source_data = function()
-  if source_data then
-    return source_data
-  end
-  source_data = {
-    name = "filesystem",
-    state_by_tab = {},
-    state_by_win = {},
-    subscriptions = {},
-  }
-  return source_data
-end
 
 local function create_state(tabid, sd, winid)
   local default_config = default_configs[sd.name]
@@ -56,7 +48,7 @@ M.set_default_config = function(source_name, config)
     error("set_default_config: source_name cannot be nil")
   end
   default_configs[source_name] = config
-  local sd = get_source_data()
+  local sd = source_data
   for tabid, tab_config in pairs(sd.state_by_tab) do
     sd.state_by_tab[tabid] = vim.tbl_deep_extend("force", tab_config, config)
   end
@@ -66,7 +58,7 @@ end
 --position. How do we know which one to return when this is called?
 M.get_state = function(tabid, winid)
   tabid = tabid or vim.api.nvim_get_current_tabpage()
-  local sd = get_source_data()
+  local sd = source_data
   if type(winid) == "number" then
     local win_state = sd.state_by_win[winid]
     if not win_state then
@@ -112,7 +104,7 @@ M.subscribe = function(source_name, event)
   if source_name == nil then
     error("subscribe: source_name cannot be nil")
   end
-  local sd = get_source_data()
+  local sd = source_data
   if not sd.subscriptions then
     sd.subscriptions = {}
   end
@@ -128,7 +120,7 @@ M.unsubscribe = function(source_name, event)
   if source_name == nil then
     error("unsubscribe: source_name cannot be nil")
   end
-  local sd = get_source_data()
+  local sd = source_data
   log.trace("unsubscribing to event: " .. event.id or event.event)
   if sd.subscriptions then
     for sub, _ in pairs(sd.subscriptions) do
@@ -145,7 +137,7 @@ M.unsubscribe_all = function(source_name)
   if source_name == nil then
     error("unsubscribe_all: source_name cannot be nil")
   end
-  local sd = get_source_data()
+  local sd = source_data
   if sd.subscriptions then
     for event, subscribed in pairs(sd.subscriptions) do
       if subscribed then
@@ -319,7 +311,7 @@ M.navigate = function(state_or_source_name, path, path_to_reveal, callback, asyn
     log.error("navigate: state_or_source_name must be a string or a table")
   end
   log.trace("navigate", source_name, path, path_to_reveal)
-  local mod = get_source_data().module
+  local mod = source_data.module
   if not mod then
     mod = require("neo-tree.sources." .. source_name)
   end
@@ -392,7 +384,7 @@ M.setup = function(source_name, config, global_config, module)
   if success then
     success, err = pcall(module.setup, config, global_config)
     if success then
-      get_source_data().module = module
+      source_data.module = module
     else
       log.error("Source " .. source_name .. " setup failed: " .. err)
     end
