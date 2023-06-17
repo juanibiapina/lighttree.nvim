@@ -11,25 +11,21 @@ local log = require("neo-tree.log")
 local fs_watch = require("neo-tree.sources.filesystem.lib.fs_watch")
 
 local M = {}
-local source_data = {}
+local source_data = nil
 local all_states = {}
 local default_configs = {}
 
 local get_source_data = function()
-  source_name = "filesystem"
-
-  local sd = source_data[source_name]
-  if sd then
-    return sd
+  if source_data then
+    return source_data
   end
-  sd = {
-    name = source_name,
+  source_data = {
+    name = "filesystem",
     state_by_tab = {},
     state_by_win = {},
     subscriptions = {},
   }
-  source_data[source_name] = sd
-  return sd
+  return source_data
 end
 
 local function create_state(tabid, sd, winid)
@@ -258,8 +254,8 @@ end
 local dispose_state = function(state)
   pcall(fs_scan.stop_watchers, state)
   pcall(renderer.close, state)
-  source_data[state.name].state_by_tab[state.id] = nil
-  source_data[state.name].state_by_win[state.id] = nil
+  source_data.state_by_tab[state.id] = nil
+  source_data.state_by_win[state.id] = nil
 end
 
 M.dispose_invalid_tabs = function()
