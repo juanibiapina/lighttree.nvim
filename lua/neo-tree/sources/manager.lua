@@ -241,26 +241,6 @@ M.set_cwd = function(state)
   end
 end
 
-local dispose_state = function(state)
-  pcall(fs_scan.stop_watchers, state)
-  pcall(renderer.close, state)
-  source_data.state_by_tab[state.id] = nil
-  source_data.state_by_win[state.id] = nil
-end
-
-M.dispose_window = function(winid)
-  if not winid then
-    error("dispose_window: winid cannot be nil")
-  end
-  for i, state in ipairs(all_states) do
-    if state.winid == winid then
-      log.trace(state.name, " disposing of window: ", winid, state.name)
-      dispose_state(state)
-      table.remove(all_states, i)
-    end
-  end
-end
-
 ---Redraws the tree with updated modified markers without scanning the filesystem again.
 M.opened_buffers_changed = function(source_name, args)
   if not type(args) == "table" then

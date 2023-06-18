@@ -413,16 +413,6 @@ M.merge_config = function(user_config)
     id = "neo-tree-win-enter",
   })
 
-  --Dispose ourselves if the window closes
-  events.subscribe({
-    event = events.VIM_WIN_CLOSED,
-    handler = function(args)
-      local winid = tonumber(args.afile)
-      log.debug("VIM_WIN_CLOSED: disposing state for window", winid)
-      manager.dispose_window(winid)
-    end,
-  })
-
   local rt = utils.get_value(M.config, "resize_timer_interval", 50, true)
   require("neo-tree.ui.renderer").resize_timer_interval = rt
 
