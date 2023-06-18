@@ -102,8 +102,6 @@ end
 ---@param config table Configuration table containing any keys that the user
 --wants to change from the defaults. May be empty to accept default values.
 M.setup = function(config, global_config)
-  config.enable_git_status = global_config.enable_git_status
-
   for _, key in ipairs({ "hide_by_pattern", "never_show_by_pattern" }) do
     local list = config.filtered_items[key]
     if type(list) == "table" then
