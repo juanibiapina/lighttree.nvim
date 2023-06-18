@@ -380,7 +380,7 @@ M.merge_config = function(user_config)
   for name, rndr in pairs(M.config["filesystem"].renderers) do
     M.config["filesystem"].renderers[name] = merge_global_components_config(rndr, M.config)
   end
-  manager.setup("filesystem", M.config["filesystem"], M.config, module)
+  manager.setup(M.config["filesystem"], M.config, module)
   manager.redraw("filesystem")
 
   events.subscribe({

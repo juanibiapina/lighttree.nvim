@@ -329,13 +329,12 @@ M.validate_source = function(source_name, module)
   end
 end
 
----Configures the plugin, should be called before the plugin is used.
----@param source_name string Name of the source.
 ---@param config table Configuration table containing merged configuration for the source.
 ---@param global_config table Global configuration table, shared between all sources.
 ---@param module table Module containing the source's code.
-M.setup = function(source_name, config, global_config, module)
-  log.debug(source_name, " setup ", config)
+M.setup = function(config, global_config, module)
+  source_name = "filesystem"
+
   M.unsubscribe_all(source_name)
   M.set_default_config(source_name, config)
   if module == nil then
