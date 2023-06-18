@@ -578,9 +578,7 @@ M.position = {
 ---@param state table State of the tree.
 M.redraw = function(state)
   if state.tree and M.tree_is_visible(state) then
-    log.trace("Redrawing tree", state.name, state.id)
     render_tree(state)
-    log.trace("  Redrawing tree done", state.name, state.id)
   end
 end
 ---Visit all nodes ina tree recursively and reduce to a single value.
