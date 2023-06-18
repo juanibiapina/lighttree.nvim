@@ -15,7 +15,6 @@ local config = {
     max_lines = 10000, -- How many lines of git status results to process. Anything after this will be dropped.
                        -- Anything before this will be used. The last items to be processed are the untracked files.
   },
-  log_to_file = false, -- true, false, "/path/to/file.log", use :NeoTreeLogs to show the file
   popup_border_style = "NC", -- "double", "none", "rounded", "shadow", "single" or "solid"
   resize_timer_interval = 500, -- in ms, needed for containers to redraw right aligned and faded content
                                -- set to -1 to disable the resize timer entirely

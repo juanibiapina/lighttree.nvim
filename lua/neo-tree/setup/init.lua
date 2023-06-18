@@ -316,12 +316,6 @@ M.merge_config = function(user_config)
   local default_config = vim.deepcopy(defaults)
   user_config = vim.deepcopy(user_config or {})
 
-  if user_config.log_level ~= nil then
-    M.set_log_level(user_config.log_level)
-  end
-  log.use_file(user_config.log_to_file, true)
-  log.debug("setup")
-
   events.clear_all_events()
   define_events()
 
