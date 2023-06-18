@@ -193,12 +193,6 @@ local config = {
                                    -- "never"  means directory scans are never async.
     scan_mode = "shallow", -- "shallow": Don't scan into directories to detect possible empty directory a priori
                            -- "deep": Scan into directories to detect empty or grouped empty directories a priori.
-    -- The renderer section provides the renderers that will be used to render the tree.
-    --   The first level is the node type.
-    --   For each node type, you can specify a list of components to render.
-    --       Components are rendered in the order they are specified.
-    --         The first field in each component is the name of the function to call.
-    --         The rest of the fields are passed to the function as the "config" argument.
     filtered_items = {
       visible = false, -- when true, they will just be displayed differently than normal items
       force_visible_in_empty_folder = false, -- when true, hidden files will be shown if the root folder is otherwise empty
