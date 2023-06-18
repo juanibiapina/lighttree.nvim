@@ -256,21 +256,7 @@ M.opened_buffers_changed = function(source_name, args)
   end
 end
 
----Navigate to the given path.
----@param state_or_source_name string|table The state or source name to navigate.
----@param path string Path to navigate to. If empty, will navigate to the cwd.
----@param path_to_reveal string Node to focus after the items are loaded.
----@param callback function Callback to call after the items are loaded.
----@param async boolean Whether to load the items asynchronously, may not be respected by all sources.
-M.navigate = function(state_or_source_name, path, path_to_reveal, callback, async)
-  local state
-
-  if type(state_or_source_name) == "string" then
-    state = M.get_state()
-  elseif type(state_or_source_name) == "table" then
-    state = state_or_source_name
-  end
-
+M.navigate = function(state, path, path_to_reveal, callback, async)
   local mod = require("neo-tree.sources.filesystem")
   mod.navigate(state, path, path_to_reveal, callback, async)
 end
