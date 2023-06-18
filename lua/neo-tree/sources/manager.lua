@@ -3,12 +3,10 @@
 
 local vim = vim
 local utils = require("neo-tree.utils")
-local fs_scan = require("neo-tree.sources.filesystem.lib.fs_scan")
 local renderer = require("neo-tree.ui.renderer")
 local inputs = require("neo-tree.ui.inputs")
 local events = require("neo-tree.events")
 local log = require("neo-tree.log")
-local fs_watch = require("neo-tree.sources.filesystem.lib.fs_watch")
 
 local M = {}
 local source_data = {
