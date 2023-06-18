@@ -351,9 +351,7 @@ M.merge_config = function(user_config)
   normalize_mappings(user_config)
   merge_renderers(default_config, nil, user_config)
 
-  local mod_root = "neo-tree.sources.filesystem"
-
-  local module = require(mod_root)
+  local module = require("neo-tree.sources.filesystem")
   local source_default_config = default_config["filesystem"]
   source_default_config.components = require("neo-tree.sources.common.components")
   source_default_config.commands = require("neo-tree.sources.filesystem.commands")
