@@ -308,27 +308,6 @@ M.refresh = function(source_name, callback)
   end
 end
 
-M.validate_source = function(source_name, module)
-  if source_name == nil then
-    error("register_source: source_name cannot be nil")
-  end
-  if module == nil then
-    error("register_source: module cannot be nil")
-  end
-  if type(module) ~= "table" then
-    error("register_source: module must be a table")
-  end
-  local required_functions = {
-    "navigate",
-    "setup",
-  }
-  for _, name in ipairs(required_functions) do
-    if type(module[name]) ~= "function" then
-      error("Source " .. source_name .. " must have a " .. name .. " function")
-    end
-  end
-end
-
 ---@param config table Configuration table containing merged configuration for the source.
 ---@param global_config table Global configuration table, shared between all sources.
 M.setup = function(config, global_config)
@@ -336,16 +315,12 @@ M.setup = function(config, global_config)
 
   M.unsubscribe_all("filesystem")
   M.set_default_config("filesystem", config)
-  local success, err = pcall(M.validate_source, "filesystem", module)
+
+  success, err = pcall(module.setup, config, global_config)
   if success then
-    success, err = pcall(module.setup, config, global_config)
-    if success then
-      source_data.module = module
-    else
-      log.error("Source " .. "filesystem" .. " setup failed: " .. err)
-    end
+    source_data.module = module
   else
-    log.error("Source " .. "filesystem" .. " is invalid: " .. err)
+    log.error("Source " .. "filesystem" .. " setup failed: " .. err)
   end
 end
 
