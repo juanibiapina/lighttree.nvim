@@ -78,10 +78,6 @@ function create_item(context, path, _type, bufnr)
       item.filtered_by = item.filtered_by or {}
       item.filtered_by.name = true
     end
-    if utils.is_filtered_by_pattern(f.hide_by_pattern, path, name) then
-      item.filtered_by = item.filtered_by or {}
-      item.filtered_by.pattern = true
-    end
     if f.hide_dotfiles and string.sub(name, 1, 1) == "." then
       item.filtered_by = item.filtered_by or {}
       item.filtered_by.dotfiles = true

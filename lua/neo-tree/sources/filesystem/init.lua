@@ -9,7 +9,6 @@ local events = require("neo-tree.events")
 local log = require("neo-tree.log")
 local manager = require("neo-tree.sources.manager")
 local git = require("neo-tree.git")
-local glob = require("neo-tree.sources.filesystem.lib.globtopattern")
 
 local M = {
   name = "filesystem",
@@ -102,15 +101,6 @@ end
 ---@param config table Configuration table containing any keys that the user
 --wants to change from the defaults. May be empty to accept default values.
 M.setup = function(config, global_config)
-  for _, key in ipairs({ "hide_by_pattern" }) do
-    local list = config.filtered_items[key]
-    if type(list) == "table" then
-      for i, pattern in ipairs(list) do
-        list[i] = glob.globtopattern(pattern)
-      end
-    end
-  end
-
   for _, key in ipairs({ "hide_by_name" }) do
     local list = config.filtered_items[key]
     if type(list) == "table" then

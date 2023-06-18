@@ -492,10 +492,6 @@ highlight group which will be applied when they are visible, see
             "thumbs.db",
             --"node_modules",
           },
-          hide_by_pattern = {
-            --"*.meta",
-            --"*/src/*/tsconfig.json",
-          },
         },
       }
     })
@@ -514,9 +510,6 @@ that determines if a file or directory is hidden.
 
 The `hide_by_name` option is a list of file/folder names that should be
 hidden. This is an exact match.
-
-The `hide_by_pattern` option uses glob syntax, which is converted to lua
-patterns. No guarantees on how it handles advanced patterns.
 
 
 NETRW HIJACK BEHAVIOR                                    *neo-tree-netrw-hijack*
