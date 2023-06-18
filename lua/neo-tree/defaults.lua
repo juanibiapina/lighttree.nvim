@@ -218,10 +218,6 @@ local config = {
       always_show = { -- remains visible even if other settings would normally hide it
         --".gitignored",
       },
-      never_show = { -- remains hidden even if visible is toggled to true, this overrides always_show
-        --".DS_Store",
-        --"thumbs.db"
-      },
     },
     group_empty_dirs = false, -- when true, empty folders will be grouped together
     use_libuv_file_watcher = false, -- This will use the OS level file watchers to detect changes

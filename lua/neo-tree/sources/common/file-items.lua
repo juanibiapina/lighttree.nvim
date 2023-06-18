@@ -74,10 +74,6 @@ function create_item(context, path, _type, bufnr)
   local f = state.filtered_items
   local is_not_root = not utils.is_subpath(path, context.state.path)
   if f and is_not_root then
-    if f.never_show[name] then
-      item.filtered_by = item.filtered_by or {}
-      item.filtered_by.never_show = true
-    end
     if f.always_show[name] then
       item.filtered_by = item.filtered_by or {}
       item.filtered_by.always_show = true

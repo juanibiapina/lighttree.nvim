@@ -30,12 +30,8 @@ local on_directory_loaded = function(context, dir_path)
           log.error("file_event_callback: ", err)
           return
         end
-        if context.is_a_never_show_file(fname) then
-          -- don't fire events for nodes that are designated as "never show"
-          return
-        else
-          events.fire_event(events.FS_EVENT, { afile = target_path })
-        end
+
+        events.fire_event(events.FS_EVENT, { afile = target_path })
       end)
 
       log.trace("Adding fs watcher for ", target_path)
@@ -422,17 +418,6 @@ M.get_items = function(state, parent_id, path_to_reveal, callback, async, recurs
   end
 
   local filtered_items = state.filtered_items or {}
-  context.is_a_never_show_file = function(fname)
-    if fname then
-      local _, name = utils.split_path(fname)
-      if name then
-        if filtered_items.never_show and filtered_items.never_show[name] then
-          return true
-        end
-      end
-    end
-    return false
-  end
   table.insert(context.paths_to_load, path)
   if async then
     async_scan(context, path)
