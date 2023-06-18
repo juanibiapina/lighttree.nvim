@@ -337,9 +337,6 @@ M.setup = function(config, global_config, module)
 
   M.unsubscribe_all(source_name)
   M.set_default_config(source_name, config)
-  if module == nil then
-    module = require("neo-tree.sources." .. source_name)
-  end
   local success, err = pcall(M.validate_source, source_name, module)
   if success then
     success, err = pcall(module.setup, config, global_config)
