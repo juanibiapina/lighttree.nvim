@@ -835,20 +835,6 @@ NeoTreeWindowsHidden      Used for icons and names that are hidden on Windows.
 
 EVENTS                                                        *neo-tree-events*
 
-Events are one way to customize the behavior of Neo-tree. You can add event
-handlers to your config in the `event_handlers` section, which should be a list
-of objects in the form:
-
->lua
-    {
-      event = "event_name",
-      handler = function(arg)
-        -- do something, the value of arg varies by event.
-      end,
-      id = "optional unique id, only meaningful if you want to unsubscribe later"
-    }
-<
-
 The following events are available:
 
 "before_render"~

@@ -342,12 +342,6 @@ M.merge_config = function(user_config)
     callback = bufleave,
   })
 
-  if user_config.event_handlers ~= nil then
-    for _, handler in ipairs(user_config.event_handlers) do
-      events.subscribe(handler)
-    end
-  end
-
   highlights.setup()
 
   require("neo-tree.command.parser").setup()
