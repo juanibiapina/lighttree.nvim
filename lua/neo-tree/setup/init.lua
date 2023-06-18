@@ -224,28 +224,6 @@ M.win_enter_event = function()
         return
       end
     end
-    -- it's a neo-tree window, ignore
-    return
-  end
-
-  M.config.prior_windows = M.config.prior_windows or {}
-
-  local tabid = vim.api.nvim_get_current_tabpage()
-  local tab_windows = M.config.prior_windows[tabid]
-  if tab_windows == nil then
-    tab_windows = {}
-    M.config.prior_windows[tabid] = tab_windows
-  end
-  table.insert(tab_windows, win_id)
-
-  -- prune the history when it gets too big
-  if #tab_windows > 100 then
-    local new_array = {}
-    local win_count = #tab_windows
-    for i = 80, win_count do
-      table.insert(new_array, tab_windows[i])
-    end
-    M.config.prior_windows[tabid] = new_array
   end
 end
 

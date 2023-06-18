@@ -81,61 +81,6 @@ local start_resize_monitor = function()
   vim.defer_fn(check_window_size, interval)
 end
 
-M.close = function(state)
-  local window_existed = false
-  if state and state.winid then
-    if M.window_exists(state) then
-      local bufnr = vim.api.nvim_win_get_buf(state.winid)
-      -- if bufnr is different then we expect,  then it was taken over by
-      -- another buffer, so we can't delete it now
-      if bufnr == state.bufnr then
-        window_existed = true
-        if state.current_position == "current" then
-          -- we are going to hide the buffer instead of closing the window
-          M.position.save(state)
-          local new_buf = vim.fn.bufnr("#")
-          if new_buf < 1 then
-            new_buf = vim.api.nvim_create_buf(true, false)
-          end
-          vim.api.nvim_win_set_buf(state.winid, new_buf)
-        else
-          local win_list = vim.api.nvim_tabpage_list_wins(0)
-          if #win_list > 1 then
-            local args = {
-              position = state.current_position,
-              source = state.name,
-              winid = state.winid,
-              tabnr = tabid_to_tabnr(state.tabid), -- for compatibility
-              tabid = state.tabid,
-            }
-            events.fire_event(events.NEO_TREE_WINDOW_BEFORE_CLOSE, args)
-            -- focus the prior used window if we are closing the currently focused window
-            local current_winid = vim.api.nvim_get_current_win()
-            if current_winid == state.winid then
-              local pwin = require("neo-tree").get_prior_window()
-              if type(pwin) == "number" and pwin > 0 then
-                pcall(vim.api.nvim_set_current_win, pwin)
-              end
-            end
-            -- if the window was a float, changing the current win would have closed it already
-            pcall(vim.api.nvim_win_close, state.winid, true)
-            events.fire_event(events.NEO_TREE_WINDOW_AFTER_CLOSE, args)
-          end
-        end
-      end
-    end
-    state.winid = nil
-  end
-  local bufnr = utils.get_value(state, "bufnr", 0, true)
-  if bufnr > 0 then
-    if vim.api.nvim_buf_is_valid(bufnr) then
-      vim.api.nvim_buf_delete(bufnr, { force = true })
-    end
-    state.bufnr = nil
-  end
-  return window_existed
-end
-
 M.get_nui_popup = function(winid)
   for _, win in ipairs(floating_windows) do
     if win.winid == winid then
