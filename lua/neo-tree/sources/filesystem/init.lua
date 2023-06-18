@@ -111,7 +111,7 @@ M.setup = function(config, global_config)
     end
   end
 
-  for _, key in ipairs({ "hide_by_name", "always_show" }) do
+  for _, key in ipairs({ "hide_by_name" }) do
     local list = config.filtered_items[key]
     if type(list) == "table" then
       config.filtered_items[key] = utils.list_to_dict(list)

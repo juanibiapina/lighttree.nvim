@@ -496,9 +496,6 @@ highlight group which will be applied when they are visible, see
             --"*.meta",
             --"*/src/*/tsconfig.json",
           },
-          always_show = { -- remains visible even if other settings would normally hide it
-            --".gitignored",
-          },
         },
       }
     })
@@ -520,9 +517,6 @@ hidden. This is an exact match.
 
 The `hide_by_pattern` option uses glob syntax, which is converted to lua
 patterns. No guarantees on how it handles advanced patterns.
-
-The `always_show` option is a list of file/folder names that will always be 
-visible, even if other settings would normally hide it.
 
 
 NETRW HIJACK BEHAVIOR                                    *neo-tree-netrw-hijack*

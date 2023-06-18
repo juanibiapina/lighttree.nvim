@@ -185,9 +185,6 @@ use {
               --"*.meta",
               --"*/src/*/tsconfig.json",
             },
-            always_show = { -- remains visible even if other settings would normally hide it
-              --".gitignored",
-            },
           },
           group_empty_dirs = false, -- when true, empty folders will be grouped together
           use_libuv_file_watcher = false, -- This will use the OS level file watchers to detect changes
