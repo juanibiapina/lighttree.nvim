@@ -413,19 +413,6 @@ M.merge_config = function(user_config)
     id = "neo-tree-win-enter",
   })
 
-  --Dispose ourselves if the tab closes
-  events.subscribe({
-    event = events.VIM_TAB_CLOSED,
-    handler = function(args)
-      local tabnr = tonumber(args.afile)
-      log.debug("VIM_TAB_CLOSED: disposing state for tabnr", tabnr)
-      -- Internally we use tabids to track state but <afile> is tabnr of a tab that has already been
-      -- closed so there is no way to get its tabid. Instead dispose all tabs that are no longer valid.
-      -- Must be scheduled because nvim_tabpage_is_valid does not work inside TabClosed event callback.
-      vim.schedule_wrap(manager.dispose_invalid_tabs)()
-    end,
-  })
-
   --Dispose ourselves if the window closes
   events.subscribe({
     event = events.VIM_WIN_CLOSED,

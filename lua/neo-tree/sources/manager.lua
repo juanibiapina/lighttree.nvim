@@ -248,19 +248,6 @@ local dispose_state = function(state)
   source_data.state_by_win[state.id] = nil
 end
 
-M.dispose_invalid_tabs = function()
-  -- Iterate in reverse because we are removing items during loop
-  for i = #all_states,1,-1 do
-    local state = all_states[i]
-    -- if not valid_tabs[state.tabid] then
-    if not vim.api.nvim_tabpage_is_valid(state.tabid) then
-      log.trace(state.name, " disposing of tab: ", state.tabid, state.name)
-      dispose_state(state)
-      table.remove(all_states, i)
-    end
-  end
-end
-
 M.dispose_window = function(winid)
   if not winid then
     error("dispose_window: winid cannot be nil")
