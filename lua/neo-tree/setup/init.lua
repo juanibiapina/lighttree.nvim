@@ -227,10 +227,6 @@ M.win_enter_event = function()
   end
 end
 
-M.set_log_level = function(level)
-  log.set_level(level)
-end
-
 local function merge_global_components_config(components, config)
   local indent_exists = false
   local merged_components = {}
