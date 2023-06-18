@@ -222,9 +222,6 @@ local config = {
         --".DS_Store",
         --"thumbs.db"
       },
-      never_show_by_pattern = { -- uses glob style patterns
-        --".null-ls_*",
-      },
     },
     group_empty_dirs = false, -- when true, empty folders will be grouped together
     use_libuv_file_watcher = false, -- This will use the OS level file watchers to detect changes

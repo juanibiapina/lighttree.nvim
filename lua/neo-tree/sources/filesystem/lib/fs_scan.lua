@@ -429,9 +429,6 @@ M.get_items = function(state, parent_id, path_to_reveal, callback, async, recurs
         if filtered_items.never_show and filtered_items.never_show[name] then
           return true
         end
-        if utils.is_filtered_by_pattern(filtered_items.never_show_by_pattern, fname, name) then
-          return true
-        end
       end
     end
     return false

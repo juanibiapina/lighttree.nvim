@@ -77,11 +77,6 @@ function create_item(context, path, _type, bufnr)
     if f.never_show[name] then
       item.filtered_by = item.filtered_by or {}
       item.filtered_by.never_show = true
-    else
-      if utils.is_filtered_by_pattern(f.never_show_by_pattern, path, name) then
-        item.filtered_by = item.filtered_by or {}
-        item.filtered_by.never_show = true
-      end
     end
     if f.always_show[name] then
       item.filtered_by = item.filtered_by or {}
