@@ -263,21 +263,15 @@ end
 ---@param callback function Callback to call after the items are loaded.
 ---@param async boolean Whether to load the items asynchronously, may not be respected by all sources.
 M.navigate = function(state_or_source_name, path, path_to_reveal, callback, async)
-  local state, source_name
+  local state
+
   if type(state_or_source_name) == "string" then
     state = M.get_state()
-    source_name = state_or_source_name
   elseif type(state_or_source_name) == "table" then
     state = state_or_source_name
-    source_name = "filesystem"
-  else
-    log.error("navigate: state_or_source_name must be a string or a table")
   end
-  log.trace("navigate", source_name, path, path_to_reveal)
-  local mod = source_data.module
-  if not mod then
-    mod = require("neo-tree.sources." .. source_name)
-  end
+
+  local mod = require("neo-tree.sources.filesystem")
   mod.navigate(state, path, path_to_reveal, callback, async)
 end
 
