@@ -291,17 +291,11 @@ end
 ---@param config table Configuration table containing merged configuration for the source.
 ---@param global_config table Global configuration table, shared between all sources.
 M.setup = function(config, global_config)
-  local module = require("neo-tree.sources.filesystem")
-
   M.unsubscribe_all("filesystem")
   M.set_default_config("filesystem", config)
 
-  success, err = pcall(module.setup, config, global_config)
-  if success then
-    source_data.module = module
-  else
-    log.error("Source " .. "filesystem" .. " setup failed: " .. err)
-  end
+  local module = require("neo-tree.sources.filesystem")
+  module.setup(config, global_config)
 end
 
 return M
