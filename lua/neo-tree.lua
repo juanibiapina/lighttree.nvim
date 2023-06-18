@@ -1,5 +1,3 @@
-local vim = vim
-local utils = require("neo-tree.utils")
 local log = require("neo-tree.log")
 local setup = require("neo-tree.setup")
 
