@@ -9,6 +9,7 @@ local events = require("neo-tree.events")
 local log = require("neo-tree.log")
 
 local M = {}
+
 local source_data = {
   name = "filesystem",
   state_by_tab = {},
@@ -17,6 +18,10 @@ local source_data = {
 }
 local all_states = {}
 local default_configs = {}
+
+local wrap = function(func)
+  return utils.wrap(func, "filesystem")
+end
 
 local function create_state(tabid, winid)
   local default_config = default_configs["filesystem"]
@@ -296,6 +301,55 @@ M.setup = function(config, global_config)
 
   local module = require("neo-tree.sources.filesystem")
   module.setup(config, global_config)
+
+  -- Respond to git events from git_status source or Fugitive
+  if global_config.enable_git_status then
+    M.subscribe("filesystem", {
+      event = events.GIT_EVENT,
+      handler = function()
+        M.refresh("filesystem")
+      end,
+    })
+  end
+
+  --Configure event handlers for file changes
+  if config.use_libuv_file_watcher then
+    M.subscribe("filesystem", {
+      event = events.FS_EVENT,
+      handler = wrap(M.refresh),
+    })
+  end
+
+  --Configure event handlers for cwd changes
+  M.subscribe("filesystem", {
+    event = events.VIM_DIR_CHANGED,
+    handler = wrap(M.dir_changed),
+  })
+
+  --Configure event handlers for lsp diagnostic updates
+  if global_config.enable_diagnostics then
+    M.subscribe("filesystem", {
+      event = events.VIM_DIAGNOSTIC_CHANGED,
+      handler = wrap(M.diagnostics_changed),
+    })
+  end
+
+  --Configure event handlers for modified files
+  if global_config.enable_modified_markers then
+    M.subscribe("filesystem", {
+      event = events.VIM_BUFFER_MODIFIED_SET,
+      handler = wrap(M.opened_buffers_changed),
+    })
+  end
+
+  if global_config.enable_opened_markers then
+    for _, event in ipairs({ events.VIM_BUFFER_ADDED, events.VIM_BUFFER_DELETED }) do
+      M.subscribe("filesystem", {
+        event = event,
+        handler = wrap(M.opened_buffers_changed),
+      })
+    end
+  end
 end
 
 return M
