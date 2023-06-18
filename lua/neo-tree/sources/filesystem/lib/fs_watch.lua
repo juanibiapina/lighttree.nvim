@@ -164,14 +164,4 @@ M.unwatch_git_index = function(path, async)
   end
 end
 
----Stop watching all directories. This is the nuclear option and it affects all
----sources.
-M.unwatch_all = function()
-  for _, h in pairs(watched) do
-    h.handle:stop()
-    h.handle = nil
-  end
-  watched = {}
-end
-
 return M
