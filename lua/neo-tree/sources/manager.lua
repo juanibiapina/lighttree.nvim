@@ -26,7 +26,6 @@ local function create_state(tabid, winid)
   state.tabid = tabid
   state.winid = winid
   state.id = winid or tabid
-  state.dirty = true
   state.position = {
     is = { restorable = false },
   }
@@ -170,7 +169,6 @@ M.dir_changed = function(source_name)
       M.navigate(state, cwd)
     else
       state.path = nil
-      state.dirty = true
     end
   end)
 end
@@ -341,8 +339,6 @@ M.refresh = function(source_name, callback)
       if not success then
         log.error(err)
       end
-    else
-      state.dirty = true
     end
   end
 end
