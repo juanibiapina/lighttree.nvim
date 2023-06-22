@@ -24,8 +24,7 @@ local make_two_char = function(symbol)
     return symbol
   end
 end
--- only works in the buffers component, but it's here so we don't have to defined
--- multple renderers.
+
 M.bufnr = function(config, node, state)
   local highlight = config.highlight or highlights.BUFFER_NUMBER
   local bufnr = node.extra and node.extra.bufnr
