@@ -4,4 +4,4 @@ endif
 let g:loaded_neo_tree = 1
 
 command! -nargs=* -complete=custom,v:lua.require'neo-tree.command'.complete_args
-            \ Neotree lua require("neo-tree.command")._command(<f-args>)
+            \ Lighttree lua require("neo-tree.command")._command(<f-args>)
