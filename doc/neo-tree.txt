@@ -27,14 +27,14 @@ Configuration ............... |neo-tree-configuration|
 
 INTRODUCTION                                             *neo-tree-introduction*
 
-Neo-tree is a plugin for nvim that can display tree structures in a sidebar,
+Lighttree is a plugin for nvim that can display tree structures in a sidebar,
 floating window, or in a split. The current version includes a filesystem
 browser, a buffer list, and a git status view.
 
 
 COMMANDS                                       *:Lightree*  *neo-tree-commands*
 
-Neo-tree does not define any default keybindings for nvim. Here are some
+Lighttree does not define any default keybindings for nvim. Here are some
 ideas:
 
 vim.api.nvim_set_keymap('n', '<leader>nt', ':Lighttree', {noremap = true, silent = true, desc = 'Open Lighttree in current window'})
@@ -407,9 +407,7 @@ passed to the command function:
 CONFIGURATION                                                                  ~
 ================================================================================
                                                         *neo-tree-configuration*
-Neo-tree is highly configurable and you should be able to make it do whatever
-you want without having to change the internal code. Here are the ways you can
-customize it:
+Lighttree can be customized in several ways:
 
 By setting config options in the |neo-tree-setup| function. This is for very
 common items and is how you would configure most lua plugins. You can also
@@ -465,9 +463,9 @@ existing global mappings to work.
 
 CURRENT WORKING DIRECTORY                                         *neo-tree-cwd*
 
-Neo-tree will maintain a one-way binding between the cwd of nvim and the root of
+Lighttree will maintain a one-way binding between the cwd of nvim and the root of
 the tree. Changing the current working directory of nvim will change the root in
-Neo-tree.
+Lighttree.
 
 
 FILTERED ITEMS                                         *neo-tree-filtered-items*
@@ -514,7 +512,7 @@ hidden. This is an exact match.
 
 NETRW HIJACK BEHAVIOR                                    *neo-tree-netrw-hijack*
 
-Neo-tree can and does hijack Netrw by default. This is configurable and can be
+Lighttree can and does hijack Netrw by default. This is configurable and can be
 disabled if you use Netrw, or have other plugins that use Netrw functionality.
 This can be controlled by setting the `hijack_netrw` option.
 
@@ -555,7 +553,7 @@ The default config has more examples of component configuration, use
 
 GIT STATUS                                                 *neo-tree-git-status*
 
-By default, Neo-tree will attempt to get the git status for files in the
+By default, Lighttree will attempt to get the git status for files in the
 current directory. It will use this information to add markers to the right of
 your files, and will set the highlight groups of files and directories.
 
@@ -635,7 +633,7 @@ you can set the `symbols` property to nil or false:
 
 DIAGNOSTICS                                               *neo-tree-diagnostics*
 
-By default, Neo-tree will display diagnostic symbols next to files. It will
+By default, Lighttree will display diagnostic symbols next to files. It will
 display the highest severity level for files, and errors only for directories.
 If you want to use symbols instead of "E", "W", "I", and H", you'll need to
 define those somewhere in your nvim configuration. Here is an example:
@@ -683,7 +681,7 @@ config when calling the setup function.
 
 INDENT MARKERS                                      *neo-tree-indent-markers*
 
-By default, indent markers (aka indent guides) are disabled. In Neo-tree
+By default, indent markers (aka indent guides) are disabled. In Lighttree
 indent is a component, so to enable indent markers, you need configure the
 `indent` component:
 
@@ -762,7 +760,7 @@ these yourself before the plugin loads, it will not be touched. If they do not
 exist, they will be created.
 
 NeoTreeBufferNumber       The buffer number shown in the buffers source.
-NeoTreeCursorLine         |hl-CursorLine| override in Neo-tree window.
+NeoTreeCursorLine         |hl-CursorLine| override in Lighttree window.
 NeoTreeDimText            Greyed out text used in various places.
 NeoTreeDirectoryIcon      Directory icon.
 NeoTreeDirectoryName      Directory name.
@@ -789,14 +787,14 @@ NeoTreeHiddenByName       Used for icons and names when `hide_by_name` is used.
 NeoTreeIndentMarker       The style of indentation markers (guides). By default,
                           the "Normal" highlight is used.
 NeoTreeExpander           Used for collapsed/expanded icons.
-NeoTreeNormal             |hl-Normal| override in Neo-tree window.
-NeoTreeNormalNC           |hl-NormalNC| override in Neo-tree window.
-NeoTreeSignColumn         |hl-SignColumn| override in Neo-tree window.
-NeoTreeStatusLine         |hl-StatusLine| override in Neo-tree window.
-NeoTreeStatusLineNC       |hl-StatusLineNC| override in Neo-tree window.
-NeoTreeVertSplit          |hl-VertSplit| override in Neo-tree window.
-NeoTreeWinSeparator       |hl-WinSeparator| override in Neo-tree window.
-NeoTreeEndOfBuffer        |hl-EndOfBuffer| override in Neo-tree window.
+NeoTreeNormal             |hl-Normal| override in Lighttree window.
+NeoTreeNormalNC           |hl-NormalNC| override in Lighttree window.
+NeoTreeSignColumn         |hl-SignColumn| override in Lighttree window.
+NeoTreeStatusLine         |hl-StatusLine| override in Lighttree window.
+NeoTreeStatusLineNC       |hl-StatusLineNC| override in Lighttree window.
+NeoTreeVertSplit          |hl-VertSplit| override in Lighttree window.
+NeoTreeWinSeparator       |hl-WinSeparator| override in Lighttree window.
+NeoTreeEndOfBuffer        |hl-EndOfBuffer| override in Lighttree window.
 NeoTreeRootName           The name of the root node.
 NeoTreeSymbolicLinkTarget Symbolic link target.
 NeoTreeTitleBar           Used for the title bar of pop-ups, when the border-style
@@ -848,7 +846,7 @@ Fired after a file (or folder) has been renamed. The arg is an table containing
 `source` and `destination` properties.
 
 "neo_tree_window_before_open"~
-Fired before opening a new Neo-tree window. Called with the following arg:
+Fired before opening a new Lighttree window. Called with the following arg:
                                                      *neo-tree-window-event-args*
 The event argument for all window events is a table with the following keys:
     `winid`    = the |winid| of the window being opened or closed.
@@ -858,15 +856,15 @@ The event argument for all window events is a table with the following keys:
     `position` = the position of the window, i.e. "left", "bottom", "right".
 
 "neo_tree_window_after_open"~
-Fired after opening a new Neo-tree window. Called with 
+Fired after opening a new Lighttree window. Called with 
 |neo-tree-window-event-args|.
 
 "neo_tree_window_before_close"~
-Fired before closing a Neo-tree window. Called with 
+Fired before closing a Lighttree window. Called with 
 |neo-tree-window-event-args|.
 
 "neo_tree_window_after_close"~
-Fired after closing a Neo-tree window. Called with 
+Fired after closing a Lighttree window. Called with 
 |neo-tree-window-event-args|.
 
 NOTE: The following events are used internally and not intended for end user
@@ -1145,7 +1143,7 @@ is much more dynamic and configurable:
 
 BUFFER VARIABLES                                     *neo-tree-buffer-variables*
 
-Neo-tree sets certain buffer options and variables that you may use in custom
+Lighttree sets certain buffer options and variables that you may use in custom
 code or integrations if you need it. The |filetype| of the main window is
 `neo-tree`. The buffer will also have these local variables set:
 

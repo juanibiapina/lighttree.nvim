@@ -13,7 +13,7 @@ local M = {
 
 ---Opens the Lighttree window
 ---@param args table The table can have the following keys:
----  reveal = boolean  Whether to reveal the current file in the Neo-tree window.
+---  reveal = boolean  Whether to reveal the current file in the Lighttree window.
 ---  reveal_file = string The specific file to reveal.
 ---  dir = string      The root directory to set.
 ---  git_base = string The git base used for diff

@@ -46,10 +46,10 @@ local unpack = unpack or table.unpack
 local notify = function(message, level_config)
   if type(vim.notify) == "table" then
     -- probably using nvim-notify
-    vim.notify(message, level_config.level, { title = "Neo-tree" })
+    vim.notify(message, level_config.level, { title = "Lighttree" })
   else
     local nameupper = level_config.name:upper()
-    local console_string = string.format("[Neo-tree %s] %s", nameupper, message)
+    local console_string = string.format("[Lighttree %s] %s", nameupper, message)
     vim.notify(console_string, level_config.level)
   end
 end

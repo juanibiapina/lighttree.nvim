@@ -236,7 +236,7 @@ M.render_component = function(component, item, state, remaining_width)
     end
   else
     local name = component[1] or "[missing_name]"
-    local msg = "Neo-tree: Component " .. name .. " not found."
+    local msg = "Lighttree: Component " .. name .. " not found."
     log.warn(msg)
     return { { text = msg, highlight = highlights.NORMAL } }
   end

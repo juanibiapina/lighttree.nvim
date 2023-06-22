@@ -1,10 +1,6 @@
-# Neo-tree.nvim
+# Lighttree.nvim
 
-Neo-tree is a Neovim plugin to browse the file system and other tree like
-structures in whatever style suits you, including sidebars, floating windows,
-netrw split style, or all of them at once!
-
-![Neo-tree file system](https://github.com/nvim-neo-tree/resources/blob/main/images/Neo-tree-with-right-aligned-symbols.png)
+Lighttree is a Neovim plugin to browse the file system.
 
 ## Minimal Quickstart
 
@@ -26,7 +22,7 @@ After installing, run:
 :Lighttree
 ```
 
-Press `?` in the Neo-tree window to view the list of mappings.
+Press `?` in the Lighttree window to view the list of mappings.
 
 
 ## Quickstart
