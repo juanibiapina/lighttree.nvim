@@ -32,18 +32,18 @@ floating window, or in a split. The current version includes a filesystem
 browser, a buffer list, and a git status view.
 
 
-COMMANDS                                       *:Neotree*  *neo-tree-commands*
+COMMANDS                                       *:Lightree*  *neo-tree-commands*
 
-Neo-tree does not define any default keybindings for nvim. The suggested
-keybindings are:
+Neo-tree does not define any default keybindings for nvim. Here are some
+ideas:
 
-    nnoremap | :Neotree reveal<cr>
-    nnoremap gd :Neotree float reveal_file=<cfile>
+vim.api.nvim_set_keymap('n', '<leader>nt', ':Lighttree', {noremap = true, silent = true, desc = 'Open Lighttree in current window'})
+vim.api.nvim_set_keymap('n', '<leader>nf', ':Lighttree reveal', {noremap = true, silent = true, desc = 'Find current file in Lighttree'})
+vim.api.nvim_set_keymap('n', '<leader>ns', ':vsplit<CR>:Lighttree', {noremap = true, silent = true, desc = 'Open Lighttree in a vertical split'})
 
-The single |:Neotree| command accepts a range of arguments that give you full
-control over the details of what and where it will show. Arguments can be
-specified as either a key=value pair or just as the value. The key=value form
-is more verbose but may help with clarity.
+Arguments to the |:Lighttree| command can be specified as either a key=value pair
+or just as the value. The key=value form is more verbose but may help with
+clarity.
 <
 These arguments can be specified in any order. Here is the full list of 
 arguments you can use:
@@ -65,7 +65,7 @@ branched off.
 Any git ref, commit, tag, or sha will work.
 
 reveal~
-This is a boolean flag. Adding this will make Neotree automatically find and 
+This is a boolean flag. Adding this will make Lighttree automatically find and 
 focus the current file when it opens.
 
 reveal_path~
@@ -84,8 +84,8 @@ MAPPINGS                                                                      ~
 HELP                                                            *neo-tree-help*
 
 ? = show_help: Shows a popup window with all of the mappings for the current
-               Neotree window. Pressing one of those keys will close the help
-               screen and execute the chosen command in the original Neotree
+               Lighttree window. Pressing one of those keys will close the help
+               screen and execute the chosen command in the original Lighttree
                window. NOTE that selecting a line in the help window and
                pressing enter will not execute that command, it will just
                execute whatever the enter key is mapped to.

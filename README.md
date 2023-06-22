@@ -23,7 +23,7 @@ use {
 
 After installing, run:
 ```
-:Neotree
+:Lighttree
 ```
 
 Press `?` in the Neo-tree window to view the list of mappings.
@@ -198,8 +198,6 @@ use {
           commands = {} -- Add a custom command or override a global one using the same function name
         },
       })
-
-      vim.cmd([[nnoremap \ :Neotree reveal<cr>]])
     end
 }
 ```
@@ -215,9 +213,7 @@ See `:h neo-tree` for full documentation. You can also preview that online at
 To see all of the default config options with commentary, you can view it online
 at [lua/neo-tree/defaults.lua](lua/neo-tree/defaults.lua).
 
-## The `:Neotree` Command
-
-The single `:Neotree` command accepts a range of arguments.
+## The `:Lighttree` Command
 
 Arguments can be specified as either a key=value pair or just as the value. The
 key=value form is more verbose but may help with clarity.
@@ -227,7 +223,7 @@ without any arguments, it will use default values for everything.
 
 ### Tab Completion
 
-Neotree supports tab completion for all arguments. Once a given argument has a value,
+Lighttree supports tab completion for all arguments. Once a given argument has a value,
 it will stop suggesting those completions. It will also offer completions for paths.
 The simplest way to disambiguate a path from another type of argument is to start
 them with `/` or `./`.
@@ -244,10 +240,10 @@ don't need the full dir=/path. You may use any value that can be passed to the
 current file. For example:
 
 ```
-:Neotree ./relative/path
-:Neotree /home/user/relative/path
-:Neotree dir=/home/user/relative/path
-:Neotree dir=relative/path
+:Lighttree ./relative/path
+:Lighttree /home/user/relative/path
+:Lighttree dir=/home/user/relative/path
+:Lighttree dir=relative/path
 ```
 
 #### `git_base`
@@ -260,14 +256,14 @@ branched off.
 Any git ref, commit, tag, or sha will work.
 
 ```
-:Neotree main
-:Neotree v1.0
-:Neotree git_base=8fe34be
-:Neotree git_base=HEAD
+:Lighttree main
+:Lighttree v1.0
+:Lighttree git_base=8fe34be
+:Lighttree git_base=HEAD
 ```
 
 #### `reveal`
-This is a boolean flag. Adding this will make Neotree automatically find and 
+This is a boolean flag. Adding this will make Lighttree automatically find and 
 focus the current file when it opens.
 
 #### `reveal_file`
@@ -278,16 +274,16 @@ be assumed to be this option. Like "dir", you can pass any value that can be
 passed to the 'expand' function. For example:
 
 ```
-:Neotree reveal_file=/home/user/my/file.text
-:Neotree dir=%:p:h:h reveal_file=%:p
-:Neotree %:p:h:h %:p
+:Lighttree reveal_file=/home/user/my/file.text
+:Lighttree dir=%:p:h:h reveal_file=%:p
+:Lighttree %:p:h:h %:p
 ```
 
-One neat trick you can do with this is to open a Neotree window which is
+One neat trick you can do with this is to open a Lighttree window which is
 focused on the file under the cursor using the `<cfile>` keyword:
 
 ```
-nnoremap gd :Neotree float reveal_file=<cfile>
+nnoremap gd :Lighttree float reveal_file=<cfile>
 ```
 
 See `:h neo-tree-commands` for details and a full listing of available arguments.

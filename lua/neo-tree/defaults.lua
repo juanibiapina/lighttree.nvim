@@ -187,7 +187,7 @@ local config = {
         ["]g"] = "next_git_modified",
       },
     },
-    async_directory_scan = "auto", -- "auto"   means refreshes are async, but it's synchronous when called from the Neotree commands.
+    async_directory_scan = "auto", -- "auto"   means refreshes are async, but it's synchronous when called from the Lighttree commands.
                                    -- "always" means directory scans are always async.
                                    -- "never"  means directory scans are never async.
     scan_mode = "shallow", -- "shallow": Don't scan into directories to detect possible empty directory a priori

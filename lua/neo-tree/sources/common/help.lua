@@ -60,7 +60,7 @@ M.show = function(state)
     zindex = 50,
     relative = "editor",
   }
-  local options = popups.popup_options("Neotree Help", width, options)
+  local options = popups.popup_options("Lighttree Help", width, options)
   local popup = Popup(options)
   popup:mount()
 
