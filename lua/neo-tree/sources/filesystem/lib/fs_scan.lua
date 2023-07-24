@@ -361,7 +361,6 @@ M.get_items = function(state, parent_id, path_to_reveal, callback, async, recurs
     end
   end
 
-  local filtered_items = state.filtered_items or {}
   table.insert(context.paths_to_load, path)
   if async then
     async_scan(context, path)
