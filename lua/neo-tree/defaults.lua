@@ -203,7 +203,6 @@ local config = {
         --"node_modules",
       },
     },
-    group_empty_dirs = false, -- when true, empty folders will be grouped together
     use_libuv_file_watcher = false, -- This will use the OS level file watchers to detect changes
                                     -- instead of relying on nvim autocmd events.
   },

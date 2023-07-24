@@ -904,26 +904,6 @@ draw = function(nodes, state, parent_id)
   M.position.restore(state)
 end
 
-local function group_empty_dirs(node)
-  if node.children == nil then
-    return node
-  end
-
-  local first_child = node.children[1]
-  if #node.children == 1 and first_child.type == "directory" then
-    -- this is the only path that changes the tree
-    -- at each step where we discover an empty directory, merge it's name with the parent
-    -- then skip over it
-    first_child.name = node.name .. utils.path_separator .. first_child.name
-    return group_empty_dirs(first_child)
-  else
-    for i, child in ipairs(node.children) do
-      node.children[i] = group_empty_dirs(child)
-    end
-    return node
-  end
-end
-
 ---Shows the given items as a tree.
 --@param sourceItems table The list of items to transform.
 --@param state table The current state of the plugin.
@@ -940,46 +920,6 @@ M.show_nodes = function(sourceItems, state, parentId, callback)
     success, parent = pcall(state.tree.get_node, state.tree, parentId)
     if success and parent then
       level = parent:get_depth()
-    end
-  end
-
-  if state.group_empty_dirs then
-    if parent then
-      -- this is a lazy load of a single sub folder
-      group_empty_dirs(sourceItems)
-      if #sourceItems == 1 and sourceItems[1].type == "directory" then
-        -- This folder needs to be grouped.
-        -- The goal is to just update the existing node in place.
-        -- To avoid digging into private internals of Nui, we will just export the entire level and replace
-        -- the one node. This keeps it in the right order, because nui doesn't have methods to replace something
-        -- in place.
-        -- We can't just mutate the existing node because we have to change it's id which would break Nui's
-        -- internal state.
-        local item = sourceItems[1]
-        parentId = parent:get_parent_id()
-        local siblings = state.tree:get_nodes(parentId)
-        for i, node in pairs(siblings) do
-          if node.id == parent.id then
-            item.name = parent.name .. utils.path_separator .. item.name
-            item.level = level - 1
-            item.is_loaded = utils.truthy(item.children)
-            siblings[i] = NuiTree.Node(item, item.children)
-            break
-          end
-        end
-        sourceItems = nil -- this is a signal to skip the rest of the processing
-        state.tree:set_nodes(siblings, parentId)
-      end
-    else
-      -- if we are rendering a whole tree, just group the children because we don'the
-      -- want to change the root nodes
-      for _, item in ipairs(sourceItems) do
-        if item.children ~= nil then
-          for i, child in ipairs(item.children) do
-            item.children[i] = group_empty_dirs(child)
-          end
-        end
-      end
     end
   end
 
