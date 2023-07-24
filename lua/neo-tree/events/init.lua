@@ -4,7 +4,6 @@ local log = require("neo-tree.log")
 local utils = require("neo-tree.utils")
 
 local M = {
-  -- Well known event names, you can make up your own
   FS_EVENT = "fs_event",
   GIT_EVENT = "git_event",
   GIT_STATUS_CHANGED = "git_status_changed",
@@ -24,7 +23,6 @@ local M = {
   VIM_DIR_CHANGED = "vim_dir_changed",
   VIM_INSERT_LEAVE = "vim_insert_leave",
   VIM_LEAVE = "vim_leave",
-  VIM_LSP_REQUEST = "vim_lsp_request",
   VIM_RESIZED = "vim_resized",
   VIM_TAB_CLOSED = "vim_tab_closed",
   VIM_TERMINAL_ENTER = "vim_terminal_enter",
