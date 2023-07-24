@@ -54,7 +54,7 @@ M._navigate_internal = function(state, path, path_to_reveal, callback, async)
   end
 
   local config = require("neo-tree").config
-  if config.enable_git_status and config.git_status_async then
+  if config.enable_git_status then
     git.status_async(state.path, state.git_base, config.git_status_async_options)
   end
 end
@@ -120,20 +120,10 @@ M.setup = function(config, global_config)
         end
       end,
     })
-  elseif global_config.enable_git_status and global_config.git_status_async then
+  elseif global_config.enable_git_status then
     manager.subscribe("filesystem", {
       event = events.GIT_STATUS_CHANGED,
       handler = wrap(manager.git_status_changed),
-    })
-  elseif global_config.enable_git_status then
-    manager.subscribe("filesystem", {
-      event = events.BEFORE_RENDER,
-      handler = function(state)
-        local this_state = manager.get_state()
-        if state == this_state then
-          state.git_status_lookup = git.status(state.git_base)
-        end
-      end,
     })
   end
 end

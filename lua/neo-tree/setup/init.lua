@@ -372,10 +372,6 @@ M.merge_config = function(user_config)
   -- apply the users config
   M.config = vim.tbl_deep_extend("force", default_config, user_config)
 
-  if not M.config.enable_git_status then
-    M.config.git_status_async = false
-  end
-
   for name, rndr in pairs(M.config["filesystem"].renderers) do
     M.config["filesystem"].renderers[name] = merge_global_components_config(rndr, M.config)
   end

@@ -6,7 +6,6 @@ local config = {
   enable_git_status = true,
   enable_modified_markers = true, -- Show markers for files with unsaved changes.
   enable_opened_markers = true,   -- Enable tracking of opened files.
-  git_status_async = true,
   -- These options are for people with VERY large git repos
   git_status_async_options = {
     batch_size = 1000, -- how many lines of git status results to process at a time

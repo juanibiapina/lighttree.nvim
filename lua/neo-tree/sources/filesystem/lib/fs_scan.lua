@@ -78,7 +78,7 @@ local render_context = function(context)
     if root.is_link then
       path = root.link_to
     end
-    fs_watch.watch_git_index(path, require("neo-tree").config.git_status_async)
+    fs_watch.watch_git_index(path, true)
   end
   fs_watch.updated_watched()
 
@@ -104,33 +104,27 @@ end
 local job_complete = function(context)
   local state = context.state
   local parent_id = context.parent_id
+
   if #context.all_items == 0 then
     log.info("No items, skipping git ignored/status lookups")
     render_context(context)
     return
   end
+
   if state.filtered_items.hide_gitignored or state.enable_git_status then
-    if require("neo-tree").config.git_status_async then
-      git.mark_ignored(state, context.all_items, function(all_items)
-        if parent_id then
-          vim.list_extend(state.git_ignored, all_items)
-        else
-          state.git_ignored = all_items
-        end
-        vim.schedule(function()
-          render_context(context)
-        end)
-      end)
-      return
-    else
-      local all_items = git.mark_ignored(state, context.all_items)
+    git.mark_ignored(state, context.all_items, function(all_items)
       if parent_id then
         vim.list_extend(state.git_ignored, all_items)
       else
         state.git_ignored = all_items
       end
-    end
+      vim.schedule(function()
+        render_context(context)
+      end)
+    end)
+    return
   end
+
   render_context(context)
 end
 
@@ -406,7 +400,7 @@ M.stop_watchers = function(state)
     local loaded_folders = renderer.select_nodes(state.tree, function(node)
       return node.type == "directory" and node.loaded
     end)
-    fs_watch.unwatch_git_index(state.path, require("neo-tree").config.git_status_async)
+    fs_watch.unwatch_git_index(state.path, true)
     for _, folder in ipairs(loaded_folders) do
       log.trace("Unwatching folder ", folder.path)
       if folder.is_link then
