@@ -749,66 +749,7 @@ NeoTreeWindowsHidden      Used for icons and names that are hidden on Windows.
 
 EVENTS                                                        *neo-tree-events*
 
-The following events are available:
-
-"file_open_requested"~
-Fired just before a file is opened. The arg is a table containing the `state`
-of the source being used, the `path` of the file to be opened, and `open_cmd`,
-which is the open command that was requested. `open_cmd` will be either |edit|,
-|split|, |vsplit|, |tabnew|. This function should return a table with a property called
-`handled` which is true if the file open operation was handled, or false if it
-was not. If `{ handled = true }` is not returned, the file will be opened using
-the built-in logic.
-
-"file_opened"~
-Fired after a file has been opened. You might use this to auto-close the window
-or clear the filter. The arg is the path of the file opened.
-
-"neo_tree_window_before_open"~
-Fired before opening a new Lighttree window. Called with the following arg:
-                                                     *neo-tree-window-event-args*
-The event argument for all window events is a table with the following keys:
-    `winid`    = the |winid| of the window being opened or closed.
-    `tabid`    = id of the tab that the window is in.
-    `tabnr`    = (deprecated) number of the tab that the window is in.
-    `source`   = the name of the source that is in the window, such as "filesystem".
-    `position` = the position of the window, i.e. "left", "bottom", "right".
-
-"neo_tree_window_after_open"~
-Fired after opening a new Lighttree window. Called with 
-|neo-tree-window-event-args|.
-
-"neo_tree_window_before_close"~
-Fired before closing a Lighttree window. Called with 
-|neo-tree-window-event-args|.
-
-"neo_tree_window_after_close"~
-Fired after closing a Lighttree window. Called with 
-|neo-tree-window-event-args|.
-
-NOTE: The following events are used internally and not intended for end user
-usage. You can use them if you want, but beware that they may be debounced, and
-the details of how frequently they are fired and what events are dropped will be
-changed without warning.
-
-"vim_buffer_changed"~
-Fired on the following autocmd events: |BufDelete|, |BufWritePost|,
-|BufFilePost|, |BufNew|
-
-"vim_buffer_enter"~
-Fired on the following autocmd events: |BufEnter|, |BufWinEnter|
-
-"vim_dir_changed"~
-Fired on the |DirChanged| autocmd event
-
-"vim_win_enter"~
-Fired on the |WinEnter| autocmd event
-
-"vim_colorscheme"~
-Fired on the |ColorScheme| autocmd event
-
-
-You can also define your own with:
+You can also define your own events with:
 >
 >lua
     require("neo-tree.events.queue").define_event(event_name, {
@@ -824,7 +765,7 @@ The setup function is run the first time the event is subscribed to. For an
 autocmd event, this would define the vim autocmd to connect it to fire_event().
 
 The `teardown` function is used when the last subscriber unsubscribes, and cleans
-up. This is like Dispose in other languages.
+up.
 
 `debounce_frequency` is the minimum number of milliseconds between each invocation
 of the event. The first event is guaranteed to fire, as well as the last one, but
