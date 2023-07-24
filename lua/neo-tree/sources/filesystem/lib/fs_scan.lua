@@ -256,16 +256,6 @@ local function async_scan(context, path)
               end
             end
           end
-
-          --local next_path = dir_complete(ctx, current_dir)
-          --if next_path then
-          --  local success, error = pcall(read_dir, next_path)
-          --  if not success then
-          --    log.error(next_path, ": ", error)
-          --  end
-          --else
-          --  on_exit()
-          --end
         end
 
         uv.fs_readdir(dir, on_fs_readdir)
@@ -275,11 +265,6 @@ local function async_scan(context, path)
     uv.fs_opendir(current_dir, on_fs_opendir)
   end
 
-  --local first = table.remove(context.paths_to_load)
-  --local success, err = pcall(read_dir, first)
-  --if not success then
-  --  log.error(first, ": ", err)
-  --end
   for i = 1, context.directories_to_scan do
     read_dir(context.paths_to_load[i], context)
   end
