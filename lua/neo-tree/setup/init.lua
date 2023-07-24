@@ -158,7 +158,6 @@ M.win_enter_event = function()
   end
 
   if vim.o.filetype == "neo-tree" then
-    local _, position = pcall(vim.api.nvim_buf_get_var, 0, "neo_tree_position")
     if true then
       -- make sure the buffer wasn't moved to a new window
       local neo_tree_winid = vim.api.nvim_buf_get_var(0, "neo_tree_winid")

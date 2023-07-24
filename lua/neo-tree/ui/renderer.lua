@@ -738,7 +738,6 @@ create_window = function(state)
     vim.api.nvim_buf_set_var(state.bufnr, "neo_tree_source", state.name)
     vim.api.nvim_buf_set_var(state.bufnr, "neo_tree_tabnr", tabid_to_tabnr(state.tabid))
     vim.api.nvim_buf_set_var(state.bufnr, "neo_tree_tabid", state.tabid)
-    vim.api.nvim_buf_set_var(state.bufnr, "neo_tree_position", "current")
     vim.api.nvim_buf_set_var(state.bufnr, "neo_tree_winid", state.winid)
   end
 
