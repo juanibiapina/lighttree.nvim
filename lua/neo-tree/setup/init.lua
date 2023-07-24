@@ -34,18 +34,6 @@ local define_events = function()
     debounce_strategy = utils.debounce_strategy.CALL_LAST_ONLY,
   })
 
-  local v = vim.version()
-  local diag_autocmd = "DiagnosticChanged"
-  if v.major < 1 and v.minor < 6 then
-    diag_autocmd = "User LspDiagnosticsChanged"
-  end
-  events.define_autocmd_event(events.VIM_DIAGNOSTIC_CHANGED, { diag_autocmd }, 500, function(args)
-    args.diagnostics_lookup = utils.get_diagnostic_counts()
-    return args
-  end)
-
-
-
   events.define_autocmd_event(events.VIM_BUFFER_ENTER, { "BufEnter", "BufWinEnter" }, 0)
   events.define_autocmd_event(events.VIM_COLORSCHEME, { "ColorScheme" }, 0)
   events.define_autocmd_event(events.VIM_DIR_CHANGED, { "DirChanged" }, 200, nil, true)

@@ -3,8 +3,6 @@ local utils = require("neo-tree.utils")
 local log = require("neo-tree.log")
 local git = require("neo-tree.git")
 
-local unused_to_produce_diagnostic = {}
-
 local function sort_items(a, b)
   if a.type == b.type then
     return a.path < b.path

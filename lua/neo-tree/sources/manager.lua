@@ -150,17 +150,6 @@ M.unsubscribe_all = function(source_name)
   sd.subscriptions = {}
 end
 
----Redraws the tree with updated diagnostics without scanning the filesystem again.
-M.diagnostics_changed = function(source_name, args)
-  if not type(args) == "table" then
-    error("diagnostics_changed: args must be a table")
-  end
-  M._for_each_state(source_name, function(state)
-    state.diagnostics_lookup = args.diagnostics_lookup
-    renderer.redraw(state)
-  end)
-end
-
 ---Called by autocmds when the cwd dir is changed. This will change the root.
 M.dir_changed = function(source_name)
   M._for_each_state(source_name, function(state)
@@ -308,14 +297,6 @@ M.setup = function(config, global_config)
     event = events.VIM_DIR_CHANGED,
     handler = wrap(M.dir_changed),
   })
-
-  --Configure event handlers for lsp diagnostic updates
-  if global_config.enable_diagnostics then
-    M.subscribe("filesystem", {
-      event = events.VIM_DIAGNOSTIC_CHANGED,
-      handler = wrap(M.diagnostics_changed),
-    })
-  end
 end
 
 return M

@@ -39,56 +39,6 @@ end
 
 M.container = container.render
 
-M.diagnostics = function(config, node, state)
-  local diag = state.diagnostics_lookup or {}
-  local diag_state = diag[node:get_id()]
-  if config.hide_when_expanded and node.type == "directory" and node:is_expanded() then
-    return {}
-  end
-  if not diag_state then
-    return {}
-  end
-  if config.errors_only and diag_state.severity_number > 1 then
-    return {}
-  end
-  local severity = diag_state.severity_string
-  local defined = vim.fn.sign_getdefined("DiagnosticSign" .. severity)
-  if not defined then
-    -- backwards compatibility...
-    local old_severity = severity
-    if severity == "Warning" then
-      old_severity = "Warn"
-    elseif severity == "Information" then
-      old_severity = "Info"
-    end
-    defined = vim.fn.sign_getdefined("LspDiagnosticsSign" .. old_severity)
-  end
-  defined = defined and defined[1]
-
-  -- check for overrides in the component config
-  local severity_lower = severity:lower()
-  if config.symbols and config.symbols[severity_lower] then
-    defined = defined or { texthl = "Diagnostic" .. severity }
-    defined.text = config.symbols[severity_lower]
-  end
-  if config.highlights and config.highlights[severity_lower] then
-    defined = defined or { text = severity:sub(1, 1) }
-    defined.texthl = config.highlights[severity_lower]
-  end
-
-  if defined and defined.text and defined.texthl then
-    return {
-      text = make_two_char(defined.text),
-      highlight = defined.texthl,
-    }
-  else
-    return {
-      text = severity:sub(1, 1),
-      highlight = "Diagnostic" .. severity,
-    }
-  end
-end
-
 M.git_status = function(config, node, state)
   local git_status_lookup = state.git_status_lookup
   if config.hide_when_expanded and node.type == "directory" and node:is_expanded() then

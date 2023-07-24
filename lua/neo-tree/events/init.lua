@@ -9,7 +9,6 @@ local M = {
   GIT_STATUS_CHANGED = "git_status_changed",
   VIM_BUFFER_ENTER = "vim_buffer_enter",
   VIM_COLORSCHEME = "vim_colorscheme",
-  VIM_DIAGNOSTIC_CHANGED = "vim_diagnostic_changed",
   VIM_DIR_CHANGED = "vim_dir_changed",
   VIM_LEAVE = "vim_leave",
   VIM_RESIZED = "vim_resized",

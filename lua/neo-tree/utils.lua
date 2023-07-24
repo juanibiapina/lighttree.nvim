@@ -17,20 +17,6 @@ table.unpack = table.unpack or unpack
 
 local M = {}
 
-local diag_severity_to_string = function(severity)
-  if severity == vim.diagnostic.severity.ERROR then
-    return "Error"
-  elseif severity == vim.diagnostic.severity.WARN then
-    return "Warn"
-  elseif severity == vim.diagnostic.severity.INFO then
-    return "Info"
-  elseif severity == vim.diagnostic.severity.HINT then
-    return "Hint"
-  else
-    return nil
-  end
-end
-
 local tracked_functions = {}
 M.debounce_strategy = {
   CALL_FIRST_AND_LAST = 0,
@@ -200,45 +186,6 @@ M.find_buffer_by_name = function(name)
     end
   end
   return -1
-end
-
----Gets diagnostic severity counts for all files
----@return table table { file_path = { Error = int, Warning = int, Information = int, Hint = int, Unknown = int } }
-M.get_diagnostic_counts = function()
-  local d = vim.diagnostic.get()
-  local lookup = {}
-  for _, diag in ipairs(d) do
-    if diag.source == "Lua Diagnostics." and diag.message == "Undefined global `vim`." then
-      -- ignore this diagnostic
-    else
-      local success, file_name = pcall(vim.api.nvim_buf_get_name, diag.bufnr)
-      if success then
-        local sev = diag_severity_to_string(diag.severity)
-        if sev then
-          local entry = lookup[file_name] or { severity_number = 4 }
-          entry[sev] = (entry[sev] or 0) + 1
-          entry.severity_number = math.min(entry.severity_number, diag.severity)
-          entry.severity_string = diag_severity_to_string(entry.severity_number)
-          lookup[file_name] = entry
-        end
-      end
-    end
-  end
-
-  for file_name, entry in pairs(lookup) do
-    -- Now bubble this status up to the parent directories
-    local parts = M.split(file_name, M.path_separator)
-    table.remove(parts) -- pop the last part so we don't override the file's status
-    M.reduce(parts, "", function(acc, part)
-      local path = (M.is_windows and acc == "") and part or M.path_join(acc, part)
-      local path_entry = lookup[path] or { severity_number = 4 }
-      path_entry.severity_number = math.min(path_entry.severity_number, entry.severity_number)
-      path_entry.severity_string = diag_severity_to_string(path_entry.severity_number)
-      lookup[path] = path_entry
-      return path
-    end)
-  end
-  return lookup
 end
 
 ---Resolves some variable to a string. The object can be either a string or a

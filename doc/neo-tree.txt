@@ -15,7 +15,6 @@ Configuration ............... |neo-tree-configuration|
   Hijack Netrw Behavior ..... |neo-tree-netrw-hijack|
   Component Configs ......... |neo-tree-component-configs|
   Git Status ................ |neo-tree-git-status|
-  Diagnostics ............... |neo-tree-diagnostics|
   Indent markers ............ |neo-tree-indent-markers|
   Expanders ................. |neo-tree-expanders|
   Highlights ................ |neo-tree-highlights|
@@ -626,54 +625,6 @@ you can set the `symbols` property to nil or false:
     })
 <
 
-DIAGNOSTICS                                               *neo-tree-diagnostics*
-
-By default, Lighttree will display diagnostic symbols next to files. It will
-display the highest severity level for files, and errors only for directories.
-If you want to use symbols instead of "E", "W", "I", and H", you'll need to
-define those somewhere in your nvim configuration. Here is an example:
-
->lua
-    vim.fn.sign_define("LspDiagnosticsSignError",
-        {text = " ", texthl = "LspDiagnosticsSignError"})
-    vim.fn.sign_define("LspDiagnosticsSignWarning",
-        {text = " ", texthl = "LspDiagnosticsSignWarning"})
-    vim.fn.sign_define("LspDiagnosticsSignInformation",
-        {text = " ", texthl = "LspDiagnosticsSignInformation"})
-    vim.fn.sign_define("LspDiagnosticsSignHint",
-        {text = "", texthl = "LspDiagnosticsSignHint"})
-<
-
-Alternatively, you can also specify the signs and/or highlights in the
-neo-tree setup call like this:
-
->lua
-    require("neo-tree").setup({
-      default_component_configs = {
-        diagnostics = {
-          symbols = {
-            hint = "H",
-            info = "I",
-            warn = "!",
-            error = "X",
-          },
-          highlights = {
-            hint = "DiagnosticSignHint",
-            info = "DiagnosticSignInfo",
-            warn = "DiagnosticSignWarn",
-            error = "DiagnosticSignError",
-          },
-        },
-      }
-    })
->
-Anything not specified in the `default_component_configs` will fallback to the
-`sign_define` method.
-
-To disable this feature entirely, set `enable_diagnostics = false` in your
-config when calling the setup function.
-
-
 INDENT MARKERS                                      *neo-tree-indent-markers*
 
 By default, indent markers (aka indent guides) are disabled. In Lighttree
@@ -840,11 +791,6 @@ usage. You can use them if you want, but beware that they may be debounced, and
 the details of how frequently they are fired and what events are dropped will be
 changed without warning.
 
-"vim_diagnostic_changed"~
-Fired on the |DiagnosticChanged| autocmd event. The arg is a table with one
-property: `diagnostics_lookup`, which is a table where the keys are file names
-and the values are tables with diagnostic counts by severity level.
-
 "vim_buffer_changed"~
 Fired on the following autocmd events: |BufDelete|, |BufWritePost|,
 |BufFilePost|, |BufNew|
@@ -877,10 +823,6 @@ You can also define your own with:
 
 The setup function is run the first time the event is subscribed to. For an
 autocmd event, this would define the vim autocmd to connect it to fire_event().
-
-The `seed` function is run at the beginning of every event firing. The diagnostics
-event uses this to collect the diagnostic information and pass it to all
-subscribers.
 
 The `teardown` function is used when the last subscriber unsubscribes, and cleans
 up. This is like Dispose in other languages.
@@ -1014,10 +956,9 @@ Each component in the content list can use these additional properties:
 
 Example~
 
-This example container has the name on the left hand side, and the
-diagnostics and git status aligned to the right hand side of the window. The
-diagnostics and git_status will always be shown, and the name will be clipped if
-there is not enough space:
+This example container has the name on the left hand side, and git status
+aligned to the right hand side of the window. git_status will always be shown,
+and the name will be clipped if there is not enough space:
 >lua
       {
         "container",
@@ -1029,7 +970,6 @@ there is not enough space:
             use_git_status_colors = true,
             zindex = 10
           },
-          { "diagnostics",  zindex = 20, align = "right" },
           { "git_status", zindex = 20, align = "right" },
         },
       }

@@ -2,7 +2,6 @@ local config = {
   -- popup_border_style is for input and confirmation dialogs.
   -- Configurtaion of floating window is done in the individual source sections.
   -- "NC" is a special style that works well with NormalNC set
-  enable_diagnostics = true,
   enable_git_status = true,
   -- These options are for people with VERY large git repos
   git_status_async_options = {
@@ -82,7 +81,6 @@ local config = {
           --   highlight = "NeoTreeSymbolicLinkTarget",
           -- },
           { "clipboard", zindex = 10 },
-          { "diagnostics", errors_only = true, zindex = 20, align = "right", hide_when_expanded = true },
           { "git_status", zindex = 20, align = "right", hide_when_expanded = true },
         },
       },
@@ -103,7 +101,6 @@ local config = {
           --   highlight = "NeoTreeSymbolicLinkTarget",
           -- },
           { "clipboard", zindex = 10 },
-          { "diagnostics",  zindex = 20, align = "right" },
           { "git_status", zindex = 20, align = "right" },
         },
       },
