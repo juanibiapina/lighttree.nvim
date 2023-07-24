@@ -785,37 +785,14 @@ M.is_window_valid = function(winid)
   end
 end
 
----Determines if the window exists and is valid.
----@param state table The current state of the plugin.
----@return boolean True if the window exists and is valid, false otherwise.
 M.window_exists = function(state)
-  local window_exists
   local winid = utils.get_value(state, "winid", 0, true)
   local bufnr = utils.get_value(state, "bufnr", 0, true)
-  local position = "current"
 
-  if winid == 0 then
-    window_exists = false
-  elseif position == "current" then
-    window_exists = vim.api.nvim_win_is_valid(winid)
-      and vim.api.nvim_buf_is_valid(bufnr)
-      and vim.api.nvim_win_get_buf(winid) == bufnr
-  else
-    local isvalid = M.is_window_valid(winid)
-    window_exists = isvalid and (vim.api.nvim_win_get_number(winid) > 0)
-    if not window_exists then
-      state.winid = nil
-      if bufnr > 0 and vim.api.nvim_buf_is_valid(bufnr) then
-        state.bufnr = nil
-        local success, err = pcall(vim.api.nvim_buf_delete, bufnr, { force = true })
-        if not success and err:match("E523") then
-          vim.schedule_wrap(function()
-            vim.api.nvim_buf_delete(bufnr, { force = true })
-          end)()
-        end
-      end
-    end
-  end
+  local window_exists = vim.api.nvim_win_is_valid(winid)
+    and vim.api.nvim_buf_is_valid(bufnr)
+    and vim.api.nvim_win_get_buf(winid) == bufnr
+
   return window_exists
 end
 
@@ -891,8 +868,6 @@ end
 --@param parentId string Optional. The id of the parent node to display these nodes
 --at; defaults to nil.
 M.show_nodes = function(sourceItems, state, parentId, callback)
-  --local id = string.format("show_nodes %s:%s [%s]", state.name, state.force_float, state.tabid)
-  --utils.debounce(id, function()
   local parent
   local level = 0
   if parentId ~= nil then
