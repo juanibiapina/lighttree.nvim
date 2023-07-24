@@ -58,17 +58,6 @@ local fire_event_internal = function(event, args)
   if queue:is_empty() then
     return nil
   end
-  local seed = utils.get_value(event_definitions, event .. ".seed")
-  if seed ~= nil then
-    local success, result = pcall(seed, args)
-    if success and result then
-      log.trace("Seed for " .. event .. " returned: " .. tostring(result))
-    elseif success then
-      log.trace("Seed for " .. event .. " returned falsy, cancelling event")
-    else
-      log.error("Error in seed function for " .. event .. ": " .. result)
-    end
-  end
 
   return queue:for_each(function(event_handler)
     local remove_node = event_handler == nil or event_handler.cancelled

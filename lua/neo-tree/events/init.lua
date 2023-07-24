@@ -15,7 +15,7 @@ local M = {
   VIM_WIN_ENTER = "vim_win_enter",
 }
 
-M.define_autocmd_event = function(event_name, autocmds, debounce_frequency, seed_fn, nested)
+M.define_autocmd_event = function(event_name, autocmds, debounce_frequency, nested)
   local opts = {
     setup = function()
       local tpl =
@@ -37,7 +37,6 @@ M.define_autocmd_event = function(event_name, autocmds, debounce_frequency, seed
       log.trace("Registering autocmds: %s", table.concat(cmds, "\n"))
       vim.cmd(table.concat(cmds, "\n"))
     end,
-    seed = seed_fn,
     teardown = function()
       log.trace("Teardown autocmds for ", event_name)
       vim.cmd(string.format("autocmd! NeoTreeEvent_%s", event_name))

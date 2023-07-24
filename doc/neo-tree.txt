@@ -813,7 +813,6 @@ You can also define your own with:
 >lua
     require("neo-tree.events.queue").define_event(event_name, {
       setup = <function>,
-      seed = <function>,
       teardown = <function>,
       debounce_frequency = <number>,
       once = <boolean>,
