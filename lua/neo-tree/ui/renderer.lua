@@ -720,7 +720,6 @@ create_window = function(state)
     tabnr = tabid_to_tabnr(state.tabid), -- for compatibility
     tabid = state.tabid,
   }
-  events.fire_event(events.NEO_TREE_WINDOW_BEFORE_OPEN, event_args)
 
   -- state.id is always the window id or tabnr that this state was created for
   -- in the case of a position = current state object, it will be the window id
@@ -744,7 +743,6 @@ create_window = function(state)
   vim.api.nvim_win_set_buf(winid, bufnr)
 
   event_args.winid = state.winid
-  events.fire_event(events.NEO_TREE_WINDOW_AFTER_OPEN, event_args)
 
   if type(state.bufnr) == "number" then
     vim.api.nvim_buf_set_var(state.bufnr, "neo_tree_source", state.name)
