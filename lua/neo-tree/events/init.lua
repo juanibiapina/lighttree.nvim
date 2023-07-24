@@ -5,8 +5,6 @@ local utils = require("neo-tree.utils")
 
 local M = {
   -- Well known event names, you can make up your own
-  FILE_OPEN_REQUESTED = "file_open_requested",
-  FILE_OPENED = "file_opened",
   BEFORE_FILE_RENAME = "before_file_rename",
   FS_EVENT = "fs_event",
   GIT_EVENT = "git_event",

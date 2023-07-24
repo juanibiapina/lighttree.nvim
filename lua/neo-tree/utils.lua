@@ -513,24 +513,12 @@ M.open_file = function(state, path, open_cmd, bufnr)
     local events = require("neo-tree.events")
     local result = true
     local err = nil
-    local event_result = events.fire_event(events.FILE_OPEN_REQUESTED, {
-      state = state,
-      path = path,
-      open_cmd = open_cmd,
-      bufnr = bufnr,
-    }) or {}
-
-    if event_result.handled then
-      events.fire_event(events.FILE_OPENED, path)
-      return
-    end
 
     result, err = pcall(vim.cmd, open_cmd .. " " .. bufnr_or_path)
 
     if result or err == "Vim(edit):E325: ATTENTION" then
       -- fixes #321
       vim.api.nvim_buf_set_option(0, "buflisted", true)
-      events.fire_event(events.FILE_OPENED, path)
     else
       log.error("Error opening file:", err)
     end
