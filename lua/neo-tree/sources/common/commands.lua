@@ -107,37 +107,6 @@ M.add_directory = function(state, callback)
   fs_actions.create_directory(in_directory, callback, using_root_directory)
 end
 
-M.expand_all_nodes = function(state, toggle_directory)
-  if toggle_directory == nil then
-    toggle_directory = function(_, node)
-      node:expand()
-    end
-  end
-  --state.explicitly_opened_directories = state.explicitly_opened_directories or {}
-
-  local expand_node
-  expand_node = function(node)
-    local id = node:get_id()
-    if node.type == "directory" and not node:is_expanded() then
-      toggle_directory(state, node)
-      node = state.tree:get_node(id)
-    end
-    local children = state.tree:get_nodes(id)
-    if children then
-      for _, child in ipairs(children) do
-        if child.type == "directory" then
-          expand_node(child)
-        end
-      end
-    end
-  end
-
-  for _, node in ipairs(state.tree:get_nodes()) do
-    expand_node(node)
-  end
-  renderer.redraw(state)
-end
-
 M.close_node = function(state, callback)
   local tree = state.tree
   local node = tree:get_node()
