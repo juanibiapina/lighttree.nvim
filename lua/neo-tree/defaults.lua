@@ -103,7 +103,6 @@ local config = {
           --   highlight = "NeoTreeSymbolicLinkTarget",
           -- },
           { "clipboard", zindex = 10 },
-          { "bufnr", zindex = 10 },
           { "diagnostics",  zindex = 20, align = "right" },
           { "git_status", zindex = 20, align = "right" },
         },
@@ -117,7 +116,6 @@ local config = {
       { "indent" },
       { "icon" },
       { "name" },
-      { "bufnr" }
     }
   },
   window = { -- see https://github.com/MunifTanjim/nui.nvim/tree/main/lua/nui/popup for

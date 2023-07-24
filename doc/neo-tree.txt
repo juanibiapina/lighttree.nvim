@@ -754,7 +754,6 @@ The following highlight groups are defined by this plugin. If you set any of
 these yourself before the plugin loads, it will not be touched. If they do not
 exist, they will be created.
 
-NeoTreeBufferNumber       The buffer number shown in the buffers source.
 NeoTreeCursorLine         |hl-CursorLine| override in Lighttree window.
 NeoTreeDimText            Greyed out text used in various places.
 NeoTreeDirectoryIcon      Directory icon.

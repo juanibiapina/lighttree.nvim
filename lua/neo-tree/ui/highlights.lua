@@ -6,7 +6,6 @@ local M = {}
 ---@type integer
 M.ns_id = vim.api.nvim_create_namespace("neo-tree.nvim")
 
-M.BUFFER_NUMBER = "NeoTreeBufferNumber"
 M.CURSOR_LINE = "NeoTreeCursorLine"
 M.DIM_TEXT = "NeoTreeDimText"
 M.DIRECTORY_ICON = "NeoTreeDirectoryIcon"
@@ -228,7 +227,6 @@ M.setup = function()
   end
   M.create_highlight_group(M.TITLE_BAR, {}, float_border_hl.foreground, title_fg)
 
-  M.create_highlight_group(M.BUFFER_NUMBER, { "SpecialChar" })
   M.create_highlight_group(M.DIM_TEXT, {}, nil, "505050")
   M.create_highlight_group(M.MESSAGE, {}, nil, "505050", "italic")
   M.create_highlight_group(M.FADE_TEXT_1, {}, nil, "626262")
