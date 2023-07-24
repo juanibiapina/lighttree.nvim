@@ -514,9 +514,8 @@ M.position = {
 }
 
 ---Redraw the tree without relaoding from the source.
----@param state table State of the tree.
 M.redraw = function(state)
-  if state.tree and M.tree_is_visible(state) then
+  if state.tree then
     render_tree(state)
   end
 end
