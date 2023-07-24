@@ -4,8 +4,6 @@ local config = {
   -- "NC" is a special style that works well with NormalNC set
   enable_diagnostics = true,
   enable_git_status = true,
-  enable_modified_markers = true, -- Show markers for files with unsaved changes.
-  enable_opened_markers = true,   -- Enable tracking of opened files.
   -- These options are for people with VERY large git repos
   git_status_async_options = {
     batch_size = 1000, -- how many lines of git status results to process at a time
@@ -47,10 +45,6 @@ local config = {
       -- then these will never be used.
       default = "*",
       highlight = "NeoTreeFileIcon"
-    },
-    modified = {
-      symbol = "[+] ",
-      highlight = "NeoTreeModified",
     },
     name = {
       trailing_slash = false,
@@ -110,7 +104,6 @@ local config = {
           -- },
           { "clipboard", zindex = 10 },
           { "bufnr", zindex = 10 },
-          { "modified", zindex = 20, align = "right" },
           { "diagnostics",  zindex = 20, align = "right" },
           { "git_status", zindex = 20, align = "right" },
         },

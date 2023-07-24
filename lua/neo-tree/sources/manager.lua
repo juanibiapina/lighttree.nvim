@@ -244,23 +244,6 @@ M.set_cwd = function(state)
   end
 end
 
----Redraws the tree with updated modified markers without scanning the filesystem again.
-M.opened_buffers_changed = function(source_name, args)
-  if not type(args) == "table" then
-    error("opened_buffers_changed: args must be a table")
-  end
-  if type(args.opened_buffers) == "table" then
-    M._for_each_state(source_name, function(state)
-      if utils.tbl_equals(args.opened_buffers, state.opened_buffers) then
-        -- no changes, no need to redraw
-        return
-      end
-      state.opened_buffers = args.opened_buffers
-      renderer.redraw(state)
-    end)
-  end
-end
-
 M.navigate = function(state, path, path_to_reveal, callback, async)
   local mod = require("neo-tree.sources.filesystem")
   mod.navigate(state, path, path_to_reveal, callback, async)
@@ -332,23 +315,6 @@ M.setup = function(config, global_config)
       event = events.VIM_DIAGNOSTIC_CHANGED,
       handler = wrap(M.diagnostics_changed),
     })
-  end
-
-  --Configure event handlers for modified files
-  if global_config.enable_modified_markers then
-    M.subscribe("filesystem", {
-      event = events.VIM_BUFFER_MODIFIED_SET,
-      handler = wrap(M.opened_buffers_changed),
-    })
-  end
-
-  if global_config.enable_opened_markers then
-    for _, event in ipairs({ events.VIM_BUFFER_ADDED, events.VIM_BUFFER_DELETED }) do
-      M.subscribe("filesystem", {
-        event = event,
-        handler = wrap(M.opened_buffers_changed),
-      })
-    end
   end
 end
 

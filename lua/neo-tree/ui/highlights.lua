@@ -33,7 +33,6 @@ M.GIT_UNSTAGED = "NeoTreeGitUnstaged"
 M.HIDDEN_BY_NAME = "NeoTreeHiddenByName"
 M.INDENT_MARKER = "NeoTreeIndentMarker"
 M.MESSAGE = "NeoTreeMessage"
-M.MODIFIED = "NeoTreeModified"
 M.NORMAL = "NeoTreeNormal"
 M.NORMALNC = "NeoTreeNormalNC"
 M.SIGNCOLUMN = "NeoTreeSignColumn"
@@ -247,7 +246,6 @@ M.setup = function()
   M.create_highlight_group(M.ROOT_NAME, {}, nil, nil, "bold,italic")
   M.create_highlight_group(M.INDENT_MARKER, { M.DIM_TEXT })
   M.create_highlight_group(M.EXPANDER, { M.DIM_TEXT })
-  M.create_highlight_group(M.MODIFIED, {}, nil, "d7d787")
   M.create_highlight_group(M.WINDOWS_HIDDEN, { M.DOTFILE }, nil, nil)
 
   M.create_highlight_group(M.GIT_ADDED, { "GitGutterAdd", "GitSignsAdd" }, nil, "5faf5f")

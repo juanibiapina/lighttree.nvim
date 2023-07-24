@@ -46,25 +46,7 @@ local define_events = function()
 
 
 
-  local update_opened_buffers = function(args)
-    args.opened_buffers = utils.get_opened_buffers()
-    return args
-  end
-
-  events.define_autocmd_event(events.VIM_BUFFER_ADDED, { "BufAdd" }, 200, update_opened_buffers)
-  events.define_autocmd_event(
-    events.VIM_BUFFER_DELETED,
-    { "BufDelete" },
-    200,
-    update_opened_buffers
-  )
   events.define_autocmd_event(events.VIM_BUFFER_ENTER, { "BufEnter", "BufWinEnter" }, 0)
-  events.define_autocmd_event(
-    events.VIM_BUFFER_MODIFIED_SET,
-    { "BufModifiedSet" },
-    0,
-    update_opened_buffers
-  )
   events.define_autocmd_event(events.VIM_COLORSCHEME, { "ColorScheme" }, 0)
   events.define_autocmd_event(events.VIM_DIR_CHANGED, { "DirChanged" }, 200, nil, true)
   events.define_autocmd_event(events.VIM_LEAVE, { "VimLeavePre" })

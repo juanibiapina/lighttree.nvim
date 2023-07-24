@@ -268,20 +268,6 @@ M.icon = function(config, node, state)
   }
 end
 
-M.modified = function(config, node, state)
-  local opened_buffers = state.opened_buffers or {}
-  local buf_info = opened_buffers[node.path]
-
-  if buf_info and buf_info.modified then
-    return {
-      text = (make_two_char(config.symbol) or "[+]"),
-      highlight = config.highlight or highlights.MODIFIED,
-    }
-  else
-    return {}
-  end
-end
-
 M.name = function(config, node, state)
   local highlight = config.highlight or highlights.FILE_NAME
   local text = node.name
