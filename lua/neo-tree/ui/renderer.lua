@@ -932,9 +932,6 @@ M.show_nodes = function(sourceItems, state, parentId, callback)
     render_tree(state)
   end
 
-  vim.schedule(function()
-    events.fire_event(events.AFTER_RENDER, state)
-  end)
   if type(callback) == "function" then
     vim.schedule(callback)
   end

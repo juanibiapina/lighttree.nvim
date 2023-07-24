@@ -801,10 +801,6 @@ EVENTS                                                        *neo-tree-events*
 
 The following events are available:
 
-"after_render"~
-Fired after the tree has been rendered. The argument passed is the state of the
-source, which is also passed to components and commands down the line.
-
 "file_added"~
 Fired after a file (or folder) has been created, either by using the "add"
 command or by copy and paste. The arg is the full path to the new file.
