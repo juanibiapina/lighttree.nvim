@@ -190,8 +190,6 @@ local config = {
     async_directory_scan = "auto", -- "auto"   means refreshes are async, but it's synchronous when called from the Lighttree commands.
                                    -- "always" means directory scans are always async.
                                    -- "never"  means directory scans are never async.
-    scan_mode = "shallow", -- "shallow": Don't scan into directories to detect possible empty directory a priori
-                           -- "deep": Scan into directories to detect empty or grouped empty directories a priori.
     filtered_items = {
       visible = false, -- when true, they will just be displayed differently than normal items
       force_visible_in_empty_folder = false, -- when true, hidden files will be shown if the root folder is otherwise empty
