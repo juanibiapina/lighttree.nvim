@@ -158,33 +158,31 @@ M.win_enter_event = function()
   end
 
   if vim.o.filetype == "neo-tree" then
-    if true then
-      -- make sure the buffer wasn't moved to a new window
-      local neo_tree_winid = vim.api.nvim_buf_get_var(0, "neo_tree_winid")
-      local current_winid = vim.api.nvim_get_current_win()
-      local current_bufnr = vim.api.nvim_get_current_buf()
-      if neo_tree_winid ~= current_winid then
-        -- At this point we know that either the neo-tree window was split,
-        -- or the neo-tree buffer is being shown in another window for some other reason.
-        -- Sometime the split is just the first step in the process of opening somethig else,
-        -- so instead of fixing this right away, we add a short delay and check back again to see
-        -- if the buffer is still in this window.
-        local old_state = manager.get_state(nil, neo_tree_winid)
-        vim.schedule(function()
-          local bufnr = vim.api.nvim_get_current_buf()
-          if bufnr ~= current_bufnr then
-            -- The neo-tree buffer was replaced with something else, so we don't need to do anything.
-            return
-          end
-          -- create a new tree for this window
-          local state = manager.get_state(nil, current_winid)
-          state.path = old_state.path
-          local renderer = require("neo-tree.ui.renderer")
-          state.force_open_folders = renderer.get_expanded_nodes(old_state.tree)
-          require("neo-tree.sources.filesystem")._navigate_internal(state, nil, nil, nil, false)
-        end)
-        return
-      end
+    -- make sure the buffer wasn't moved to a new window
+    local neo_tree_winid = vim.api.nvim_buf_get_var(0, "neo_tree_winid")
+    local current_winid = vim.api.nvim_get_current_win()
+    local current_bufnr = vim.api.nvim_get_current_buf()
+    if neo_tree_winid ~= current_winid then
+      -- At this point we know that either the neo-tree window was split,
+      -- or the neo-tree buffer is being shown in another window for some other reason.
+      -- Sometime the split is just the first step in the process of opening somethig else,
+      -- so instead of fixing this right away, we add a short delay and check back again to see
+      -- if the buffer is still in this window.
+      local old_state = manager.get_state(nil, neo_tree_winid)
+      vim.schedule(function()
+        local bufnr = vim.api.nvim_get_current_buf()
+        if bufnr ~= current_bufnr then
+          -- The neo-tree buffer was replaced with something else, so we don't need to do anything.
+          return
+        end
+        -- create a new tree for this window
+        local state = manager.get_state(nil, current_winid)
+        state.path = old_state.path
+        local renderer = require("neo-tree.ui.renderer")
+        state.force_open_folders = renderer.get_expanded_nodes(old_state.tree)
+        require("neo-tree.sources.filesystem")._navigate_internal(state, nil, nil, nil, false)
+      end)
+      return
     end
   end
 end
