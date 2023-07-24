@@ -5,10 +5,6 @@ local utils = require("neo-tree.utils")
 
 local M = {
   -- Well known event names, you can make up your own
-  FILE_ADDED = "file_added",
-  FILE_DELETED = "file_deleted",
-  BEFORE_FILE_MOVE = "before_file_move",
-  FILE_MOVED = "file_moved",
   FILE_OPEN_REQUESTED = "file_open_requested",
   FILE_OPENED = "file_opened",
   BEFORE_FILE_RENAME = "before_file_rename",

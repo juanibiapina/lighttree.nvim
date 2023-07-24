@@ -801,18 +801,6 @@ EVENTS                                                        *neo-tree-events*
 
 The following events are available:
 
-"file_added"~
-Fired after a file (or folder) has been created, either by using the "add"
-command or by copy and paste. The arg is the full path to the new file.
-
-"file_deleted"~
-Fired after a file (or folder) has been deleted. The arg is the full path to the
-deleted file.
-
-"file_moved"~
-Fired after a file (or folder) has been moved. The arg is a table containing
-`source` and `destination` properties.
-
 "file_open_requested"~
 Fired just before a file is opened. The arg is a table containing the `state`
 of the source being used, the `path` of the file to be opened, and `open_cmd`,

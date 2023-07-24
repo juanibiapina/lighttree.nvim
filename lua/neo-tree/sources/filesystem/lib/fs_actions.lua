@@ -168,23 +168,11 @@ M.move_node = function(source, destination, callback, using_root_directory)
           rename_buffer(source, dest)
         end)
         vim.schedule(function()
-          events.fire_event(events.FILE_MOVED, {
-            source = source,
-            destination = dest,
-          })
           if callback then
             callback(source, dest)
           end
         end)
       end)
-    end
-    local event_result = events.fire_event(events.BEFORE_FILE_MOVE, {
-      source = source,
-      destination = dest,
-      callback = move_file,
-    }) or {}
-    if event_result.handled then
-      return
     end
     move_file()
   end, 'Move "' .. name .. '" to:')
@@ -257,7 +245,6 @@ M.copy_node = function(source, _destination, callback, using_root_directory)
     end
 
     vim.schedule(function()
-      events.fire_event(events.FILE_ADDED, destination)
       if callback then
         callback(source, destination)
       end
@@ -306,7 +293,6 @@ M.create_directory = function(in_directory, callback, using_root_directory)
       loop.fs_mkdir(destination, 493)
 
       vim.schedule(function()
-        events.fire_event(events.FILE_ADDED, destination)
         if callback then
           callback(destination)
         end
@@ -378,7 +364,6 @@ M.create_node = function(in_directory, callback, using_root_directory)
         end
 
         vim.schedule(function()
-          events.fire_event(events.FILE_ADDED, destination)
           if callback then
             callback(destination)
           end
@@ -501,7 +486,6 @@ M.delete_node = function(path, callback, noconfirm)
     end
 
     vim.schedule(function()
-      events.fire_event(events.FILE_DELETED, path)
       if callback then
         callback(path)
       end
