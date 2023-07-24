@@ -108,19 +108,7 @@ M.setup = function(config, global_config)
     end
   end
 
-  --Configure events for before_render
-  if config.before_render then
-    --convert to new event system
-    manager.subscribe("filesystem", {
-      event = events.BEFORE_RENDER,
-      handler = function(state)
-        local this_state = manager.get_state()
-        if state == this_state then
-          config.before_render(this_state)
-        end
-      end,
-    })
-  elseif global_config.enable_git_status then
+  if global_config.enable_git_status then
     manager.subscribe("filesystem", {
       event = events.GIT_STATUS_CHANGED,
       handler = wrap(manager.git_status_changed),

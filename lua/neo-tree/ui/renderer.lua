@@ -912,7 +912,6 @@ end
 M.show_nodes = function(sourceItems, state, parentId, callback)
   --local id = string.format("show_nodes %s:%s [%s]", state.name, state.force_float, state.tabid)
   --utils.debounce(id, function()
-  events.fire_event(events.BEFORE_RENDER, state)
   local parent
   local level = 0
   if parentId ~= nil then

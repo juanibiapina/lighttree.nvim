@@ -430,12 +430,7 @@ you want to see.
 
 By adding or replacing |neo-tree-components|. Components are the functions
 called by the renderers, and they return the text and highlight group to be
-displayed. If you want to gather extra data just once per render to be used by a
-custom component, you can do so in the "before_render" event (see
-|neo-tree-events|), set that data on the `state` object, and reference it in the
-component. See the wiki for some examples of custom components:
-https://github.com/nvim-neo-tree/neo-tree.nvim/wiki/Recipes#components
-
+displayed.
 
 SETUP                                                           *neo-tree-setup*
 
@@ -806,12 +801,6 @@ EVENTS                                                        *neo-tree-events*
 
 The following events are available:
 
-"before_render"~
-Fired after items have been collected from the source but before drawing the
-nodes of the tree. This is the best place to gather additional data to be used
-by components. The argument passed is the state of the source, which is also
-passed to components and commands down the line.
-
 "after_render"~
 Fired after the tree has been rendered. The argument passed is the state of the
 source, which is also passed to components and commands down the line.
@@ -1083,9 +1072,7 @@ Each component function is called with the following args:
 
   `state` This is the state of the plugin. This object is persistent for the
   life of the source, with one state object per source per tab. the entirety of
-  all state and source level configuration is in this one object. Aside from
-  configuration, it can also hold anything you may want to set in a
-  "before_render" event.
+  all state and source level configuration is in this one object.
 
 For example, here is the simplest possible component:
 
