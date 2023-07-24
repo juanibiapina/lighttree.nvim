@@ -19,7 +19,6 @@ local wrap = function(func)
 end
 
 M._navigate_internal = function(state, path, path_to_reveal, callback, async)
-  log.trace("navigate_internal", state.current_position, path, path_to_reveal)
   local path_changed = false
   if not path then
     path = state.path

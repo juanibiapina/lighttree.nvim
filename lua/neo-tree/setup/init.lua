@@ -159,7 +159,7 @@ M.win_enter_event = function()
 
   if vim.o.filetype == "neo-tree" then
     local _, position = pcall(vim.api.nvim_buf_get_var, 0, "neo_tree_position")
-    if position == "current" then
+    if true then
       -- make sure the buffer wasn't moved to a new window
       local neo_tree_winid = vim.api.nvim_buf_get_var(0, "neo_tree_winid")
       local current_winid = vim.api.nvim_get_current_win()
@@ -180,7 +180,6 @@ M.win_enter_event = function()
           -- create a new tree for this window
           local state = manager.get_state(nil, current_winid)
           state.path = old_state.path
-          state.current_position = "current"
           local renderer = require("neo-tree.ui.renderer")
           state.force_open_folders = renderer.get_expanded_nodes(old_state.tree)
           require("neo-tree.sources.filesystem")._navigate_internal(state, nil, nil, nil, false)

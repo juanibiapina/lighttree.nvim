@@ -40,11 +40,7 @@ M.show = function(state)
 
   local width = math.min(60, max_width + 1)
 
-  if state.current_position == "right" then
-    col = vim.o.columns - tree_width - width - 1
-  else
-    col = tree_width - 1
-  end
+  col = tree_width - 1
 
   local options = {
     position = {

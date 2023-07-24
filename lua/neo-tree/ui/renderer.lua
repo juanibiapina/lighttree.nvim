@@ -690,7 +690,6 @@ end
 
 create_window = function(state)
   local relative = utils.resolve_config_option(state, "window.relative", "editor")
-  state.current_position = "current"
 
   local bufname = string.format("neo-tree %s [%s]", state.name, state.id)
   local size_opt, default_size
@@ -698,7 +697,7 @@ create_window = function(state)
   local win_options = {
     ns_id = highlights.ns_id,
     size = utils.resolve_config_option(state, size_opt, default_size),
-    position = state.current_position,
+    position = "current",
     relative = relative,
     buf_options = {
       buftype = "nofile",
@@ -715,7 +714,7 @@ create_window = function(state)
 
   local win
   local event_args = {
-    position = state.current_position,
+    position = "current",
     source = state.name,
     tabnr = tabid_to_tabnr(state.tabid), -- for compatibility
     tabid = state.tabid,
@@ -748,7 +747,7 @@ create_window = function(state)
     vim.api.nvim_buf_set_var(state.bufnr, "neo_tree_source", state.name)
     vim.api.nvim_buf_set_var(state.bufnr, "neo_tree_tabnr", tabid_to_tabnr(state.tabid))
     vim.api.nvim_buf_set_var(state.bufnr, "neo_tree_tabid", state.tabid)
-    vim.api.nvim_buf_set_var(state.bufnr, "neo_tree_position", state.current_position)
+    vim.api.nvim_buf_set_var(state.bufnr, "neo_tree_position", "current")
     vim.api.nvim_buf_set_var(state.bufnr, "neo_tree_winid", state.winid)
   end
 
