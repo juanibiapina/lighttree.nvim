@@ -315,14 +315,6 @@ local function sync_scan(context, path_to_scan)
   end
 end
 
-M.get_items_sync = function(state, parent_id, path_to_reveal, callback)
-  return M.get_items(state, parent_id, path_to_reveal, callback, false)
-end
-
-M.get_items_async = function(state, parent_id, path_to_reveal, callback)
-  M.get_items(state, parent_id, path_to_reveal, callback, true)
-end
-
 M.get_items = function(state, parent_id, path_to_reveal, callback, async, recursive)
   if state.async_directory_scan == "always" then
     async = true
