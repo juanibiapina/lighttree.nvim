@@ -28,7 +28,7 @@ local function create_state(tabid, winid)
   local state = vim.deepcopy(default_config, { noref = 1 })
   state.tabid = tabid
   state.winid = winid
-  state.id = winid or tabid
+  state.id = winid
   state.position = {
     is = { restorable = false },
   }
