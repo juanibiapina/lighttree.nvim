@@ -8,7 +8,6 @@ local M = {
   FILE_OPEN_REQUESTED = "file_open_requested",
   FILE_OPENED = "file_opened",
   BEFORE_FILE_RENAME = "before_file_rename",
-  FILE_RENAMED = "file_renamed",
   FS_EVENT = "fs_event",
   GIT_EVENT = "git_event",
   GIT_STATUS_CHANGED = "git_status_changed",

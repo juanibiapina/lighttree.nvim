@@ -814,10 +814,6 @@ the built-in logic.
 Fired after a file has been opened. You might use this to auto-close the window
 or clear the filter. The arg is the path of the file opened.
 
-"file_renamed"~
-Fired after a file (or folder) has been renamed. The arg is an table containing
-`source` and `destination` properties.
-
 "neo_tree_window_before_open"~
 Fired before opening a new Lighttree window. Called with the following arg:
                                                      *neo-tree-window-event-args*

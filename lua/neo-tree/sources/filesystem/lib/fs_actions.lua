@@ -539,10 +539,6 @@ M.rename_node = function(path, callback)
 
     local complete = vim.schedule_wrap(function()
       rename_buffer(path, destination)
-      events.fire_event(events.FILE_RENAMED, {
-        source = path,
-        destination = destination,
-      })
       if callback then
         callback(path, destination)
       end
