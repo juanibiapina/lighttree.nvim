@@ -713,13 +713,6 @@ create_window = function(state)
   }
 
   local win
-  local event_args = {
-    position = "current",
-    source = state.name,
-    tabnr = tabid_to_tabnr(state.tabid), -- for compatibility
-    tabid = state.tabid,
-  }
-
   -- state.id is always the window id or tabnr that this state was created for
   -- in the case of a position = current state object, it will be the window id
   local winid = state.winid
@@ -740,8 +733,6 @@ create_window = function(state)
   vim.api.nvim_buf_set_option(bufnr, "modifiable", false)
   vim.api.nvim_buf_set_option(bufnr, "undolevels", -1)
   vim.api.nvim_win_set_buf(winid, bufnr)
-
-  event_args.winid = state.winid
 
   if type(state.bufnr) == "number" then
     vim.api.nvim_buf_set_var(state.bufnr, "neo_tree_source", state.name)
