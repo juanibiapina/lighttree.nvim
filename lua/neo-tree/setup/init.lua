@@ -66,7 +66,6 @@ local define_events = function()
     update_opened_buffers
   )
   events.define_autocmd_event(events.VIM_COLORSCHEME, { "ColorScheme" }, 0)
-  events.define_autocmd_event(events.VIM_CURSOR_MOVED, { "CursorMoved" }, 100)
   events.define_autocmd_event(events.VIM_DIR_CHANGED, { "DirChanged" }, 200, nil, true)
   events.define_autocmd_event(events.VIM_INSERT_LEAVE, { "InsertLeave" }, 200)
   events.define_autocmd_event(events.VIM_LEAVE, { "VimLeavePre" })

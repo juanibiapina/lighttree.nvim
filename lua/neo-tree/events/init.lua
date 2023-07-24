@@ -18,7 +18,6 @@ local M = {
   VIM_BUFFER_ENTER = "vim_buffer_enter",
   VIM_BUFFER_MODIFIED_SET = "vim_buffer_modified_set",
   VIM_COLORSCHEME = "vim_colorscheme",
-  VIM_CURSOR_MOVED = "vim_cursor_moved",
   VIM_DIAGNOSTIC_CHANGED = "vim_diagnostic_changed",
   VIM_DIR_CHANGED = "vim_dir_changed",
   VIM_INSERT_LEAVE = "vim_insert_leave",
