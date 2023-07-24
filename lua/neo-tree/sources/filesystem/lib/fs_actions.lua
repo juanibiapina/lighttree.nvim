@@ -556,14 +556,6 @@ M.rename_node = function(path, callback)
       end)
     end
 
-    local event_result = events.fire_event(events.BEFORE_FILE_RENAME, {
-      source = path,
-      destination = destination,
-      callback = fs_rename,
-    }) or {}
-    if event_result.handled then
-      return
-    end
     fs_rename()
   end)
 end
