@@ -24,10 +24,6 @@ local update_floating_windows = function()
   floating_windows = valid_windows
 end
 
-local tabid_to_tabnr = function(tabid)
-  return vim.api.nvim_tabpage_is_valid(tabid) and vim.api.nvim_tabpage_get_number(tabid)
-end
-
 local resize_monitor_timer = nil
 local start_resize_monitor = function()
   local interval = M.resize_timer_interval or -1
@@ -736,8 +732,6 @@ create_window = function(state)
 
   if type(state.bufnr) == "number" then
     vim.api.nvim_buf_set_var(state.bufnr, "neo_tree_source", state.name)
-    vim.api.nvim_buf_set_var(state.bufnr, "neo_tree_tabnr", tabid_to_tabnr(state.tabid))
-    vim.api.nvim_buf_set_var(state.bufnr, "neo_tree_tabid", state.tabid)
     vim.api.nvim_buf_set_var(state.bufnr, "neo_tree_winid", state.winid)
   end
 
